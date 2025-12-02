@@ -1,19 +1,21 @@
 <script setup lang="ts">
 import { computed, reactive, ref, type PropType } from 'vue'
 import { appColors } from '@/colors'
+import type { Pot } from '@/types'
 
 const props = defineProps({
-  pots: { type: Array, required: true },
+  pots: { type: Object as PropType<Pot>},
 })
 
 const formData = reactive({
-  potName: '',
-  potTarget: '',
-  selectedColor: '#000000'
+  potName: props.pots?.name || '',
+  potTarget: props.pots?.target || '',
+  selectedColor: props.pots?.theme || '#000000'
 });
 
 const handleSubmit = async () => {
   console.log('Dados do formulário:', formData);
+  close()
 }
 
 function close() {
@@ -28,14 +30,12 @@ const emit = defineEmits<{
   <Teleport to="body">
     <div class="pots__new">
       <div class="pots__new__header">
-        <h1>Add New Pot</h1>
+        <h1>{{ props.pots ? 'Edit Pot' : 'Add New Pot' }}</h1>
         <img src="@/assets/images/icon-close-modal.svg" alt="close" @click="close()"/>
       </div>
 
       <p class="pots__new__description">
-        Create a pot to set savings targets. These can help keep you on track as you save for
-        special purchases.
-      </p>
+        {{ props.pots ? 'If your saving targets change, feel free to update your pots.' : 'Create a pot to set savings targets. These can help keep you on track as you save for' }}      </p>
       <form @submit.prevent="handleSubmit" class="pots__new__form">
         <label for="pot-name">Pot Name</label>
         <input id="pot-name" v-model="formData.potName" type="text" placeholder="e.g. Rainy Days" />
@@ -44,14 +44,13 @@ const emit = defineEmits<{
         <input id="pot-target" v-model="formData.potTarget" type="number" placeholder="$ e.g. 2000" min="0" />
 
         <label for="theme">Theme</label>
-        <select id="theme" v-model="formData.selectedColor">
+        <select id="theme" v-model="formData.selectedColor" :value="formData.selectedColor">
           <option v-for="(colorName, colorValue) in Object.keys(appColors)" :key="colorName"
             :value="Object.values(appColors)[colorValue]">
             {{ colorName }}
           </option>
         </select>
-
-        <button type="submit" @click="handleSubmit" class="pots__new__button">Add Pot</button>
+        <button type="submit" @click="handleSubmit" class="pots__new__button">{{ props.pots ? 'Save Changes' : 'Add Pot' }}</button>
       </form>
     </div>
   </Teleport>

@@ -5,7 +5,6 @@ import Card from './Card.vue'
 import type { ComponentsItens } from '@/types.ts'
 import { getImageUrl } from '@/common/common.ts'
 
-
 const totalSaved = computed(() => {
   return data.pots.reduce((total, pot) => total + (pot.total ?? 0), 0)
 })

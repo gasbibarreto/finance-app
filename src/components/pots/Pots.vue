@@ -10,6 +10,10 @@ const pots = computed(() => {
   return data.pots
 })
 
+function editPot(pot: any) {
+  console.log(pot)
+}
+
 function potsPercentage(pot: { total: number; target: number }): number {
   return pot.total / pot.target
 }
@@ -18,15 +22,14 @@ function potsPercentage(pot: { total: number; target: number }): number {
   <div class="pots">
     <div class="pots__header">
       <h1>Pots</h1>
-      <button @click="showNewPotModal = true">
-        + Add New Pot
-      </button>
-      <AddNew :pots="pots" v-if="showNewPotModal" @close-new-pot="showNewPotModal = false" />
+      <button @click="showNewPotModal = true">+ Add New Pot</button>
+      <AddNew v-if="showNewPotModal" @close-new-pot="showNewPotModal = false" />
     </div>
     <div class="pots__card">
       <ul class="pots__card__list">
-        <li v-for="pot in pots">
+        <li v-for="(pot, i) in pots">
           <CardPots
+            :pots="pots[i]"
             :pots-title="pot.name"
             :pots-value="pot.total"
             :pots-percentage="potsPercentage(pot)"
@@ -50,15 +53,16 @@ function potsPercentage(pot: { total: number; target: number }): number {
       opacity: 1;
       color: @grey-900;
     }
+
     button {
-    background-color: @grey-900;
-    color: @white;
-    padding: @spacing-100 @spacing-200;
-    border-radius: @spacing-100;
-    border: none;
-    cursor: pointer;
-    font-size: @font-size-xs;
-  }
+      background-color: @grey-900;
+      color: @white;
+      padding: @spacing-100 @spacing-200;
+      border-radius: @spacing-100;
+      border: none;
+      cursor: pointer;
+      font-size: @font-size-xs;
+    }
   }
 
   &__card {
@@ -73,5 +77,4 @@ function potsPercentage(pot: { total: number; target: number }): number {
     }
   }
 }
-
 </style>
