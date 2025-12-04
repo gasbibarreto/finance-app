@@ -15,18 +15,24 @@ const emit = defineEmits<{
   <Teleport to="body">
     <div class="pots__new">
       <div class="pots__new__header">
-      <h1>{{ addMoneyWithdrawTitle }}</h1>
-      <img src="@/assets/images/icon-close-modal.svg" alt="close" @click="close()"/>
-    </div>
-    <div class="pots__new__content">
-      <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus  hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet.</p>
-      <form class="pots__new__form">
-        <label for="amount">{{ addMoneyWithdrawTitle.includes('Add') ? 'Amount to Add' : 'Amount to Withdraw' }}</label>
-        <input id="amount" type="number" placeholder="$ 20" />
-      </form>
-      <button type="submit" class="pots__new__button">{{ addMoneyWithdrawTitle.includes('Add') ? 'Confirm Addition' : 'Confirm Withdraw' }}</button>
-    </div>
-
+        <h1>{{ addMoneyWithdrawTitle }}</h1>
+        <img src="@/assets/images/icon-close-modal.svg" alt="close" @click="close()" />
+      </div>
+      <div class="pots__new__content">
+        <p>
+          Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit.
+          Pellentesque aliquet nibh nec urna. In nisi neque, aliquet.
+        </p>
+        <form class="pots__new__form">
+          <label for="amount">{{
+            addMoneyWithdrawTitle.includes('Add') ? 'Amount to Add' : 'Amount to Withdraw'
+          }}</label>
+          <input id="amount" type="number" placeholder="$ 20" />
+        </form>
+        <button type="submit" class="pots__new__button">
+          {{ addMoneyWithdrawTitle.includes('Add') ? 'Confirm Addition' : 'Confirm Withdraw' }}
+        </button>
+      </div>
     </div>
   </Teleport>
 </template>

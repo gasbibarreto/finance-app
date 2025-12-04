@@ -2,7 +2,7 @@
 import CardPots from './CardPots.vue'
 import data from '../../assets/data/data.json'
 import { computed, ref } from 'vue'
-import AddNew from './actionsModal/AddNew.vue'
+import AddNew from '../AddNew.vue'
 
 const showNewPotModal = ref<Boolean>(false)
 

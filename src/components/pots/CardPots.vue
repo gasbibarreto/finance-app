@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, type PropType } from 'vue'
 import AddMoneyAndWithdraw from './actionsModal/AddMoneyAndWithdraw.vue'
-import AddNew from './actionsModal/AddNew.vue'
+import AddNew from '../AddNew.vue'
 import PotsActions from './actionsModal/DeletePots.vue'
 import type { Pot } from '@/types'
 
@@ -35,7 +35,6 @@ function handleCloseEdit() {
 
 function handleDeletePot() {
   openModalDelete.value = false
-  // Aqui você pode adicionar a lógica para deletar o pot
 }
 
 function handleCancelDelete() {
@@ -46,25 +45,22 @@ function handleCancelDelete() {
   <div class="card">
     <div class="card__header">
       <div class="card__header__title">
-        <span 
-          class="card__header__bullet" 
-          :style="{ backgroundColor: props.pots.theme }"
-        ></span>
+        <span class="card__header__bullet" :style="{ backgroundColor: props.pots.theme }"></span>
         <h1>{{ potsTitle }}</h1>
-      <img
-        src="@/assets/images/icon-ellipsis.svg"
-        @click="openModalActions = true"
-        alt="ellipsis"
-      />
-    </div>
+        <img
+          src="@/assets/images/icon-ellipsis.svg"
+          @click="openModalActions = true"
+          alt="ellipsis"
+        />
+      </div>
       <div class="card__header__actions" v-if="openModalActions">
-        <button @click="handleEditClick">Edit Pot</button>
-        <button @click="handleDeleteClick">Delete Pot</button>
+        <div class="card__header__actions__handle" @click="handleEditClick">Edit Pot</div>
+        <div class="card__header__actions__handle" @click="handleDeleteClick">Delete Pot</div>
       </div>
       <AddNew v-if="openModalEdit" :pots="pots" @close-new-pot="handleCloseEdit" />
-      <PotsActions 
-        v-if="openModalDelete" 
-        :pots-title="props.potsTitle" 
+      <PotsActions
+        v-if="openModalDelete"
+        :pots-title="props.potsTitle"
         @delete-pot="handleDeletePot"
         @cancel="handleCancelDelete"
       />
@@ -132,21 +128,33 @@ function handleCancelDelete() {
       opacity: 1;
       color: @grey-900;
     }
+
+    &__actions {
+      gap: @spacing-200;
+      margin-top: @spacing-300;
+
+      &__handle {
+        border: none;
+        cursor: pointer;
+        font-size: @font-size-xs;
+        font-weight: @font-weight-light;
+      }
+    }
   }
 
   &__total {
-      display: flex;
-      justify-content: space-between;
-      gap: @spacing-100;
-      margin-top: @spacing-300;
-    }
+    display: flex;
+    justify-content: space-between;
+    gap: @spacing-100;
+    margin-top: @spacing-300;
+  }
 
-&__target {
-  display: flex;
-  justify-content: space-between;
-  gap: @spacing-100;
-  margin-top: @spacing-200;
-}
+  &__target {
+    display: flex;
+    justify-content: space-between;
+    gap: @spacing-100;
+    margin-top: @spacing-200;
+  }
 
   &__actions {
     display: flex;
@@ -170,7 +178,7 @@ function handleCancelDelete() {
         gap: 16px;
         border-radius: 8px;
         padding: @spacing-200;
-      } 
+      }
 
       &:last-child {
         width: 227px;

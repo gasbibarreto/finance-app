@@ -1,14 +1,27 @@
 <script setup lang="ts">
 import data from '@/assets/data/data.json'
-import { computed, onMounted, ref } from 'vue'
+import { computed, ref } from 'vue'
 
 // Variables
 const term = ref()
 const category = ref('All Transactions')
 const sortedItens = ref(['Latest', 'Oldest', 'A to Z', 'Z to A', 'Highest', 'Lowest'])
 const selectedSort = ref('Latest')
+const pageNumber = ref(1);
+const pageNumberTotal = ref(5);
+const itemsPerPage = ref(10);
+
 
 // Computed
+
+const startIndex = computed(() => {
+  return (pageNumber.value - 1) * itemsPerPage.value
+})
+
+const endIndex = computed(() => {
+  return startIndex.value + itemsPerPage.value
+})
+
 const sortTransactions = computed(() => {
   let transactionsCopy = [...data.transactions]
 
@@ -62,6 +75,12 @@ const sortTransactions = computed(() => {
     console.log('else')
   }
 
+  if(transactionsCopy.length < pageNumber.value) {
+    return
+  } else {
+    transactionsCopy = transactionsCopy.slice(startIndex.value, endIndex.value)
+  }
+
   return transactionsCopy
 })
 
@@ -79,6 +98,11 @@ const categoryList = computed(() => {
 function getAvatarUrl(url: string) {
   return new URL(url, import.meta.url).href
 }
+
+function changePage(page: number) {
+  pageNumber.value = page
+}
+
 </script>
 <template>
   <div class="transactions">
@@ -131,10 +155,22 @@ function getAvatarUrl(url: string) {
           </tbody>
         </table>
       </div>
+      <nav>
+      <div>
+        <button @click="changePage(pageNumber -1 )" :disabled="pageNumber === 1">Previous</button>
+      </div>
+      <div>
+        <button 
+        v-for="page in pageNumberTotal" :key="page" @click="changePage(page)" :disabled="pageNumber === page">{{ page }}
+      </button>
+      </div>
+      <div>
+        <button @click="changePage(pageNumber + 1)" :disabled="pageNumber === pageNumberTotal">Next</button>
+      </div>
+    </nav>
     </div>
   </div>
 </template>
-
 <style lang="less" scoped>
 .transactions {
   &__content {
