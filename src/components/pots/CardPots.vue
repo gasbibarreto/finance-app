@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref, type PropType } from 'vue'
-import AddMoneyAndWithdraw from './actionsModal/AddMoneyAndWithdraw.vue'
+import AddMoneyOrWithdraw from './actionsModal/AddMoneyOrWithdraw.vue'
 import AddNew from '../AddNew.vue'
 import PotsActions from './actionsModal/DeletePots.vue'
-import type { Pot } from '@/types'
+import { formatCurrency } from '@/common/common'
 
 const openModalMoney = ref(false)
 const openModalActions = ref(false)
@@ -12,11 +12,11 @@ const openModalEdit = ref(false)
 const openModalDelete = ref(false)
 
 const props = defineProps({
-  pots: { type: Object as PropType<Pot>, required: true },
   potsTitle: { type: String, required: true },
   potsValue: { type: Number },
   potsPercentage: { type: Number },
   potsTargetValue: { type: Number },
+  potsTheme: { type: String },
 })
 
 function handleEditClick() {
@@ -45,7 +45,7 @@ function handleCancelDelete() {
   <div class="card">
     <div class="card__header">
       <div class="card__header__title">
-        <span class="card__header__bullet" :style="{ backgroundColor: props.pots.theme }"></span>
+        <span class="card__header__bullet" :style="{ backgroundColor: potsTheme }"></span>
         <h1>{{ potsTitle }}</h1>
         <img
           src="@/assets/images/icon-ellipsis.svg"
@@ -57,7 +57,14 @@ function handleCancelDelete() {
         <div class="card__header__actions__handle" @click="handleEditClick">Edit Pot</div>
         <div class="card__header__actions__handle" @click="handleDeleteClick">Delete Pot</div>
       </div>
-      <AddNew v-if="openModalEdit" :pots="pots" @close-new-pot="handleCloseEdit" />
+      <AddNew
+        v-if="openModalEdit"
+        :pots-name="potsTitle"
+        :pots-total="potsValue"
+        :pots-target="potsTargetValue"
+        :pots-theme="potsTheme"
+        @close-new-pot="handleCloseEdit"
+      />
       <PotsActions
         v-if="openModalDelete"
         :pots-title="props.potsTitle"
@@ -67,26 +74,28 @@ function handleCancelDelete() {
     </div>
     <div class="card__total">
       <p>Total saved</p>
-      <p>{{ potsValue }}</p>
+      <p>{{ formatCurrency(potsValue || 0) }}</p>
     </div>
     <div class="card__target">
-      <p>%{{ potsPercentage }}</p>
-      <p>Target of ${{ potsTargetValue }}</p>
+      <p>{{ potsPercentage }}%</p>
+      <p>Target of {{ potsTargetValue }}</p>
     </div>
     <div class="card__actions">
       <div>
         <button @click="openModalMoney = true">+ Add Money</button>
-        <AddMoneyAndWithdraw
+        <AddMoneyOrWithdraw
           v-if="openModalMoney"
-          :add-money-withdraw-title="`Add money to ${props.potsTitle}`"
+          :add-money-withdraw-title="props.potsTitle"
+          :money="true"
           @close-add-money-withdraw="openModalMoney = false"
         />
       </div>
       <div>
         <button @click="openModalWithdraw = true">+ Withdraw</button>
-        <AddMoneyAndWithdraw
+        <AddMoneyOrWithdraw
           v-if="openModalWithdraw"
-          :add-money-withdraw-title="`Withdraw from ${props.potsTitle}`"
+          :add-money-withdraw-title="props.potsTitle"
+          :withdraw="true"
           @close-add-money-withdraw="openModalWithdraw = false"
         />
       </div>
@@ -147,6 +156,22 @@ function handleCancelDelete() {
     justify-content: space-between;
     gap: @spacing-100;
     margin-top: @spacing-300;
+
+    p {
+      font-size: @font-size-xs;
+      font-weight: @font-weight-normal;
+      line-height: 120%;
+      opacity: 1;
+      color: @grey-500;
+    }
+
+    p:last-child {
+      font-size: @font-size-xl;
+      font-weight: @font-weight-bold;
+      line-height: 120%;
+      opacity: 1;
+      color: @grey-900;
+    }
   }
 
   &__target {

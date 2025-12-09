@@ -26,6 +26,23 @@
 @orange: #be6c49;
 @white: #ffffff;
 
+// Fonts
+@font-face {
+  font-family: 'Public Sans';
+  src: url('./assets/fonts/PublicSans-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Public Sans';
+  src: url('./assets/fonts/PublicSans-Italic-VariableFont_wght.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
 // Typo
 @font-family-base: 'Public Sans', sans-serif;
 
@@ -55,7 +72,14 @@
   margin: 0px;
 }
 
+html,
 body {
   font-family: @font-family-base;
   background-color: @beige-100;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#app {
+  font-family: @font-family-base;
 }

@@ -1,27 +1,48 @@
 <script setup lang="ts">
-import { computed, reactive, ref, type PropType } from 'vue'
+import { reactive, ref, type PropType } from 'vue'
 import { appColors } from '@/colors'
 import type { Pot } from '@/types'
+import { useFinanceStore } from '@/stores/finance'
 
 const props = defineProps({
-  pots: { type: Object as PropType<Pot> },
+  potsName: { type: String },
+  potsTotal: { type: Number },
+  potsTarget: { type: Number },
+  potsTheme: { type: String },
 })
 
 const formData = reactive({
-  potName: props.pots?.name || '',
-  potTarget: props.pots?.target || '',
-  selectedColor: props.pots?.theme || '#000000',
+  potName: props.potsName || '',
+  potTotal: props.potsTotal || '',
+  potTarget: props.potsTarget || '',
+  selectedColor: props.potsTheme || '#000000',
 })
 
-const handleSubmit = async () => {
-  console.log('Dados do formulário:', formData)
-  close()
+// STORE
+const financeStore = useFinanceStore()
+
+const handleSubmit = () => {
+  const potData: Pot = {
+    name: formData.potName.trim(),
+    total: Number(formData.potTotal),
+    target: Number(formData.potTarget),
+    theme: formData.selectedColor,
+  }
+
+  if (props.potsName) {
+    financeStore.updatePot(props.potsName, potData)
+  } else {
+    financeStore.addPot(potData)
+  }
+  handleClose()
 }
 
-function close() {
+// FUNCTIONS
+function handleClose() {
   emit('closeNewPot')
 }
 
+// EMITS
 const emit = defineEmits<{
   (e: 'closeNewPot'): void
 }>()
@@ -30,18 +51,18 @@ const emit = defineEmits<{
   <Teleport to="body">
     <div class="pots__new">
       <div class="pots__new__header">
-        <h1>{{ props.pots ? 'Edit Pot' : 'Add New Pot' }}</h1>
-        <img src="@/assets/images/icon-close-modal.svg" alt="close" @click="close()" />
+        <h1>{{ props.potsName ? 'Edit Pot' : 'Add New Pot' }}</h1>
+        <img src="@/assets/images/icon-close-modal.svg" alt="close" @click="handleClose()" />
       </div>
 
       <p class="pots__new__description">
         {{
-          props.pots
+          props.potsName
             ? 'If your saving targets change, feel free to update your pots.'
             : 'Create a pot to set savings targets. These can help keep you on track as you save for'
         }}
       </p>
-      <form @submit.prevent="handleSubmit" class="pots__new__form">
+      <form class="pots__new__form" @submit.prevent="handleSubmit()">
         <label for="pot-name">Pot Name</label>
         <input id="pot-name" v-model="formData.potName" type="text" placeholder="e.g. Rainy Days" />
 
@@ -64,8 +85,8 @@ const emit = defineEmits<{
             {{ colorName }}
           </option>
         </select>
-        <button type="submit" @click="handleSubmit" class="pots__new__button">
-          {{ props.pots ? 'Save Changes' : 'Add Pot' }}
+        <button type="submit" class="pots__new__button">
+          {{ props.potsName ? 'Save Changes' : 'Add Pot' }}
         </button>
       </form>
     </div>

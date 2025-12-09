@@ -3,25 +3,26 @@ import data from '@/assets/data/data.json'
 import { computed, ref, type Component } from 'vue'
 import Card from './Card.vue'
 import type { ComponentsItens } from '@/types.ts'
-import { getImageUrl } from '@/common/common.ts'
+import { getImageUrl, formatCurrency } from '@/common/common'
+import { useFinanceStore } from '@/stores/finance'
 
+// STORE
+const financeStore = useFinanceStore()
+const balance = computed(() => financeStore.balance)
+const pots = computed(() => financeStore.pots.slice(0, 4))
+const transactions = computed(() => financeStore.transactions.slice(0, 5))
+const budgets = computed(() => financeStore.budgets)
+
+// POTS
 const totalSaved = computed(() => {
-  return data.pots.reduce((total, pot) => total + (pot.total ?? 0), 0)
-})
-
-const pots = computed(() => {
-  return data.pots.slice(0, 4)
-})
-
-const transactions = computed(() => {
-  return data.transactions.slice(0, 5)
+  return pots.value.reduce((total, pot) => total + (pot.total ?? 0), 0)
 })
 
 // RECORRING BILLS
 const recurringBillsPaied = computed(() => {
   // capturar pagamentos com data anterior a hoje
   const dateToday = new Date().getDate()
-  const paidBillsPerDate = data.transactions.filter((bill) => {
+  const paidBillsPerDate = transactions.value.filter((bill) => {
     const billDate = new Date(bill.date).getDate()
     if (bill.recurring === true && billDate < dateToday) {
       return bill.amount
@@ -36,7 +37,7 @@ const recurringBillsPaied = computed(() => {
 const recurringBillsUpcoming = computed(() => {
   // capturar pagamentos com data posterior a hoje
   const dateToday = new Date().getDate()
-  const upcomingBillsPerDate = data.transactions.filter((bill) => {
+  const upcomingBillsPerDate = transactions.value.filter((bill) => {
     const billDate = new Date(bill.date).getDate()
     if (bill.recurring === true && billDate >= dateToday) {
       return bill.amount
@@ -60,52 +61,9 @@ const recurringBillsDue = computed(() => {
   return Math.ceil(Math.abs(dueBillsPerDate.reduce((total, bill) => total + (bill.amount ?? 0), 0)))
 })
 
-const transactionsByCategoryTotal = computed(() => {
-  const groupedCategory = data.transactions.reduce(
-    (acumulador, transaction) => {
-      const chave = transaction.category
-      const valor = transaction.amount
-
-      const categories = ['Entertainment', 'Bills', 'Dining Out', 'Personal Care']
-      const dateToday = new Date().getDate()
-      const transactionlDate = new Date(transaction.date).getDate()
-
-      categories.find((category) => {
-        if (category === chave && transactionlDate < dateToday) {
-          if (!acumulador[chave]) {
-            acumulador[chave] = 0
-          }
-          acumulador[chave] += valor ?? 0
-        }
-      })
-
-      return acumulador
-    },
-    {} as Record<string, number>,
-  )
-
-  return Math.abs(Object.values(groupedCategory).reduce((total, amount) => total + amount, 0))
-})
-
-// BUDGET
-const budget = computed(() => {
-  return data.budgets
-})
-
-const budgetTotal = computed(() => {
-  return budget.value.reduce((total, item) => total + (item.maximum ?? 0), 0)
-})
-
 // FUNCTIONS
 function redirectToView(viewName: ComponentsItens) {
   emit('selectedMenuItem', viewName)
-}
-
-function formatCurrency(amount: number): string {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-  }).format(amount)
 }
 
 function formatDate(dateString: string): string {
@@ -117,11 +75,11 @@ function formatDate(dateString: string): string {
   })
 }
 
+// EMITS
 const emit = defineEmits<{
   (e: 'selectedMenuItem', value: ComponentsItens): void
 }>()
 </script>
-
 <template>
   <div class="overview">
     <h1 class="overview__title">Overview</h1>
@@ -129,17 +87,17 @@ const emit = defineEmits<{
     <section class="overview__summary">
       <div class="overview__summary-card overview__summary-card--balance">
         <h2>Current Balance</h2>
-        <p>{{ formatCurrency(data.balance.current) }}</p>
+        <p>{{ formatCurrency(balance.current) }}</p>
       </div>
 
       <div class="overview__summary-card overview__summary-card--income">
         <h2>Current Income</h2>
-        <p>{{ formatCurrency(data.balance.income) }}</p>
+        <p>{{ formatCurrency(balance.income) }}</p>
       </div>
 
       <div class="overview__summary-card overview__summary-card--expenses">
         <h2>Current Expenses</h2>
-        <p>{{ formatCurrency(data.balance.expenses) }}</p>
+        <p>{{ formatCurrency(balance.expenses) }}</p>
       </div>
     </section>
 
@@ -207,7 +165,7 @@ const emit = defineEmits<{
             <div class="overview__budgets__categories">
               <ul>
                 <li
-                  v-for="budget in budget"
+                  v-for="budget in budgets"
                   :key="budget.category"
                   :style="{ borderLeft: '4px solid ' + budget.theme }"
                 >
@@ -245,7 +203,6 @@ const emit = defineEmits<{
     </section>
   </div>
 </template>
-
 <style scoped lang="less">
 .overview {
   display: flex;

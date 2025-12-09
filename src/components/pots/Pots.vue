@@ -1,21 +1,20 @@
 <script setup lang="ts">
 import CardPots from './CardPots.vue'
-import data from '../../assets/data/data.json'
 import { computed, ref } from 'vue'
+import { formatCurrency } from '@/common/common'
 import AddNew from '../AddNew.vue'
+import { formatPercentage } from '@/common/common'
+import { useFinanceStore } from '@/stores/finance'
 
 const showNewPotModal = ref<Boolean>(false)
 
-const pots = computed(() => {
-  return data.pots
-})
+// STORE
+const financeStore = useFinanceStore()
+const pots = computed(() => financeStore.pots)
 
-function editPot(pot: any) {
-  console.log(pot)
-}
-
+// FUNCTIONS
 function potsPercentage(pot: { total: number; target: number }): number {
-  return pot.total / pot.target
+  return formatPercentage((pot.total / pot.target) * 100)
 }
 </script>
 <template>
@@ -27,13 +26,13 @@ function potsPercentage(pot: { total: number; target: number }): number {
     </div>
     <div class="pots__card">
       <ul class="pots__card__list">
-        <li v-for="(pot, i) in pots">
+        <li v-for="pot in pots" :key="pot.name">
           <CardPots
-            :pots="pots[i]"
             :pots-title="pot.name"
             :pots-value="pot.total"
             :pots-percentage="potsPercentage(pot)"
             :pots-target-value="pot.target"
+            :pots-theme="pot.theme"
           />
         </li>
       </ul>

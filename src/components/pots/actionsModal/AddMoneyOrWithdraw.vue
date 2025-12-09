@@ -1,7 +1,25 @@
 <script setup lang="ts">
+import { useFinanceStore } from '@/stores/finance'
+import { ref } from 'vue'
+
 const props = defineProps({
   addMoneyWithdrawTitle: { type: String, required: true },
+  money: { type: Boolean },
+  withdraw: { type: Boolean },
 })
+
+const financeStore = useFinanceStore()
+
+const amount = ref(0)
+
+const handleSubmitMoneyOrWithdraw = () => {
+  if (props.money) {
+    financeStore.addMoneyToPot(props.addMoneyWithdrawTitle, amount.value)
+  } else {
+    financeStore.withdrawMoneyFromPot(props.addMoneyWithdrawTitle, amount.value)
+  }
+  close()
+}
 
 function close() {
   emit('closeAddMoneyWithdraw')
@@ -23,15 +41,13 @@ const emit = defineEmits<{
           Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit.
           Pellentesque aliquet nibh nec urna. In nisi neque, aliquet.
         </p>
-        <form class="pots__new__form">
-          <label for="amount">{{
-            addMoneyWithdrawTitle.includes('Add') ? 'Amount to Add' : 'Amount to Withdraw'
-          }}</label>
-          <input id="amount" type="number" placeholder="$ 20" />
+        <form class="pots__new__form" @submit.prevent="handleSubmitMoneyOrWithdraw()">
+          <label for="amount">{{ props.money ? 'Amount to Add' : 'Amount to Withdraw' }}</label>
+          <input id="amount" type="number" v-model="amount" placeholder="$ 20" min="0" />
+          <button type="submit" class="pots__new__button">
+            {{ props.money ? 'Confirm Addition' : 'Confirm Withdraw' }}
+          </button>
         </form>
-        <button type="submit" class="pots__new__button">
-          {{ addMoneyWithdrawTitle.includes('Add') ? 'Confirm Addition' : 'Confirm Withdraw' }}
-        </button>
       </div>
     </div>
   </Teleport>
@@ -93,19 +109,19 @@ const emit = defineEmits<{
         border-width: 1px;
         padding: @spacing-150 @spacing-250;
       }
-    }
 
-    button {
-      background-color: @grey-900;
-      color: @white;
-      font-size: @font-size-sm;
-      font-weight: @font-weight-normal;
-      line-height: 150%;
-      letter-spacing: 0px;
-      padding: @spacing-200;
-      border-radius: @spacing-100;
-      cursor: pointer;
-      border: none;
+      button {
+        background-color: @grey-900;
+        color: @white;
+        font-size: @font-size-sm;
+        font-weight: @font-weight-normal;
+        line-height: 150%;
+        letter-spacing: 0px;
+        padding: @spacing-200;
+        border-radius: @spacing-100;
+        cursor: pointer;
+        border: none;
+      }
     }
   }
 }

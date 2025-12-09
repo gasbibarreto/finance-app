@@ -4,7 +4,7 @@ import Overview from './components/Overview.vue'
 import Transactions from './components/Transactions.vue'
 import Pots from './components/pots/Pots.vue'
 import RecurringBills from './components/RecurringBills.vue'
-import Budgets from './components/Budgets.vue'
+import Budgets from './components/budgets/Budgets.vue'
 import { markRaw, ref, type Component } from 'vue'
 import type { ComponentsItens } from './types'
 
