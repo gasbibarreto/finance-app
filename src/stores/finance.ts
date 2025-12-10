@@ -120,9 +120,13 @@ export const useFinanceStore = defineStore('finance', () => {
     }
   }
 
-  function deletePot(index: number) {
-    if (pots.value[index]) {
-      pots.value.splice(index, 1)
+  function deletePot(name: String) {
+    const potIndex = pots.value.findIndex((pot) => pot.name.toLowerCase() === name.toLowerCase())
+    if (pots.value[potIndex]) {
+      console.log('potIndex', potIndex)
+      pots.value.splice(potIndex, 1)
+    } else {
+      console.warn(`Pot "${name}" not found to delete`)
     }
   }
 

@@ -5,7 +5,7 @@ import type { Pot } from '@/types'
 import { useFinanceStore } from '@/stores/finance'
 
 const props = defineProps({
-  potsName: { type: String },
+  potsName: { type: String, required: true },
   potsTotal: { type: Number },
   potsTarget: { type: Number },
   potsTheme: { type: String },

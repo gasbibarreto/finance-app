@@ -1,7 +1,14 @@
 <script setup lang="ts">
+import { computed } from 'vue'
+
 const props = defineProps({
   title: { type: String, required: true },
-  cardAction: { type: String },
+  cardAction: { type: String, required: false },
+  styleColor: { type: Boolean, required: false },
+})
+
+const backgroundColor = computed(() => {
+  return props.styleColor ? 'beige-100' : 'white'
 })
 
 const emit = defineEmits<{
@@ -31,7 +38,7 @@ const onActionClick = () => {
 <style scoped lang="less">
 .card {
   &__content {
-    background-color: @white;
+    background-color: v-bind(backgroundColor);
     border-radius: 12px;
     padding: @spacing-300;
     margin-bottom: @spacing-150;

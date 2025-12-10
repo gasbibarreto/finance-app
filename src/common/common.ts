@@ -10,8 +10,10 @@ export function formatCurrency(amount: number): string {
 }
 
 export function formatPercentage(amount: number): number {
-  return Number(new Intl.NumberFormat('en-US', {
-    minimumFractionDigits: 1, 
-    maximumFractionDigits: 2
-  }).format(amount))
+  return Number(
+    new Intl.NumberFormat('en-US', {
+      minimumFractionDigits: 1,
+      maximumFractionDigits: 2,
+    }).format(amount),
+  )
 }

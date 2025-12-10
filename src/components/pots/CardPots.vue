@@ -4,6 +4,9 @@ import AddMoneyOrWithdraw from './actionsModal/AddMoneyOrWithdraw.vue'
 import AddNew from '../AddNew.vue'
 import PotsActions from './actionsModal/DeletePots.vue'
 import { formatCurrency } from '@/common/common'
+import { useFinanceStore } from '@/stores/finance'
+
+const financeStore = useFinanceStore()
 
 const openModalMoney = ref(false)
 const openModalActions = ref(false)
@@ -33,7 +36,9 @@ function handleCloseEdit() {
   openModalEdit.value = false
 }
 
-function handleDeletePot() {
+function handleDeletePot(potsTitle: string) {
+  console.log(potsTitle)
+  financeStore.deletePot(potsTitle)
   openModalDelete.value = false
 }
 
@@ -68,8 +73,8 @@ function handleCancelDelete() {
       <PotsActions
         v-if="openModalDelete"
         :pots-title="props.potsTitle"
-        @delete-pot="handleDeletePot"
-        @cancel="handleCancelDelete"
+        @delete-pot="handleDeletePot(props.potsTitle)"
+        @cancel="handleCancelDelete()"
       />
     </div>
     <div class="card__total">

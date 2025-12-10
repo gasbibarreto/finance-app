@@ -12,6 +12,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "lib": ["ES2024", "DOM", "DOM.Iterable"]
   },
 }
