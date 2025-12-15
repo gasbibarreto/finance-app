@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import type { PropType } from 'vue'
+import { ref, type PropType } from 'vue'
 import type { Budget } from '@/types'
 import { formatCurrency } from '@/common/common'
 import type { Transaction } from '@/types'
 import Card from '../Card.vue'
+import ActionsModal from '../actionsModal/ActionsModal.vue'
 
 defineProps({
   budget: {
@@ -16,6 +17,8 @@ defineProps({
   },
 })
 
+const openModalActions = ref(false)
+
 function redirectToView(view: string) {
   console.log(view)
 }
@@ -23,7 +26,22 @@ function redirectToView(view: string) {
 <template>
   <div class="card-budget">
     <div class="card-budget__header">
+      <span class="card-budget__header__bullet" :style="{ backgroundColor: budget.theme }"></span>
       <h2>{{ budget.category }}</h2>
+      <div class="card-budget__header__icon-wrapper">
+        <img
+          src="@/assets/images/icon-ellipsis.svg"
+          @click="openModalActions = !openModalActions"
+          alt="ellipsis"
+        />
+        <ActionsModal
+          v-if="openModalActions"
+          :actions-title="budget.category"
+          :actions-value="budget.maximum"
+          :actions-theme="budget.theme"
+          @close-actions-modal="openModalActions = false"
+        />
+      </div>
     </div>
     <div class="card-budget__content">
       <p>{{ 'Maximum of ' + formatCurrency(budget.maximum) }}</p>
@@ -54,6 +72,31 @@ function redirectToView(view: string) {
   border-radius: @spacing-150;
   margin-top: @spacing-300;
   padding: @spacing-250;
+    
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: @spacing-100;
+
+    &__bullet {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    &__icon-wrapper {
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
+    }
+  }
+
+  &__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
   &__list {
     padding: 10px;

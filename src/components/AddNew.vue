@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { reactive, ref, type PropType } from 'vue'
-import { appColors } from '@/colors'
+import { reactive } from 'vue'
 import type { Pot } from '@/types'
 import { useFinanceStore } from '@/stores/finance'
+import { useColors } from '@/composables/useColors'
+
+const { colorOptions } = useColors()
 
 const props = defineProps({
-  potsName: { type: String, required: true },
+  potsName: { type: String },
   potsTotal: { type: Number },
   potsTarget: { type: Number },
   potsTheme: { type: String },
@@ -28,6 +30,8 @@ const handleSubmit = () => {
     target: Number(formData.potTarget),
     theme: formData.selectedColor,
   }
+
+  console.log(potData)
 
   if (props.potsName) {
     financeStore.updatePot(props.potsName, potData)
@@ -78,11 +82,11 @@ const emit = defineEmits<{
         <label for="theme">Theme</label>
         <select id="theme" v-model="formData.selectedColor">
           <option
-            v-for="(colorName, colorValue) in Object.keys(appColors)"
-            :key="colorName"
-            :value="Object.values(appColors)[colorValue]"
+            v-for="color in colorOptions"
+            :key="color.name"
+            :value="color.value"
           >
-            {{ colorName }}
+            {{ color.displayName }}
           </option>
         </select>
         <button type="submit" class="pots__new__button">

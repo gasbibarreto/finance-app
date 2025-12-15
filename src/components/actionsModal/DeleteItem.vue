@@ -5,15 +5,18 @@ const props = defineProps({
 
 function deletePot() {
   emit('deletePot')
+  emit('closeDeleteItem')
 }
 
 function cancel() {
   emit('cancel')
+  emit('closeDeleteItem')
 }
 
 const emit = defineEmits<{
   (e: 'deletePot'): void
   (e: 'cancel'): void
+  (e: 'closeDeleteItem'): void
 }>()
 </script>
 <template>

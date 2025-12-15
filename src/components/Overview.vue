@@ -10,7 +10,7 @@ import { useFinanceStore } from '@/stores/finance'
 const financeStore = useFinanceStore()
 const balance = computed(() => financeStore.balance)
 const pots = computed(() => financeStore.pots.slice(0, 4))
-const transactions = computed(() => financeStore.transactions.slice(0, 5))
+const transactions = computed(() => financeStore.transactions)
 const budgets = computed(() => financeStore.budgets)
 
 // POTS
@@ -43,10 +43,12 @@ const recurringBillsUpcoming = computed(() => {
       return bill.amount
     }
   })
+  console.log(upcomingBillsPerDate)
 
   return Math.ceil(
     Math.abs(upcomingBillsPerDate.reduce((total, bill) => total + (bill.amount ?? 0), 0)),
   )
+
 })
 
 const recurringBillsDue = computed(() => {

@@ -1,18 +1,12 @@
 <script setup lang="ts">
-import { ref, type PropType } from 'vue'
-import AddMoneyOrWithdraw from './actionsModal/AddMoneyOrWithdraw.vue'
-import AddNew from '../AddNew.vue'
-import PotsActions from './actionsModal/DeletePots.vue'
+import { ref } from 'vue'
+import AddMoneyOrWithdraw from '../actionsModal/AddMoneyOrWithdraw.vue'
+import ActionsModal from '../actionsModal/ActionsModal.vue'
 import { formatCurrency } from '@/common/common'
-import { useFinanceStore } from '@/stores/finance'
-
-const financeStore = useFinanceStore()
 
 const openModalMoney = ref(false)
 const openModalActions = ref(false)
 const openModalWithdraw = ref(false)
-const openModalEdit = ref(false)
-const openModalDelete = ref(false)
 
 const props = defineProps({
   potsTitle: { type: String, required: true },
@@ -21,30 +15,6 @@ const props = defineProps({
   potsTargetValue: { type: Number },
   potsTheme: { type: String },
 })
-
-function handleEditClick() {
-  openModalEdit.value = true
-  openModalActions.value = false
-}
-
-function handleDeleteClick() {
-  openModalDelete.value = true
-  openModalActions.value = false
-}
-
-function handleCloseEdit() {
-  openModalEdit.value = false
-}
-
-function handleDeletePot(potsTitle: string) {
-  console.log(potsTitle)
-  financeStore.deletePot(potsTitle)
-  openModalDelete.value = false
-}
-
-function handleCancelDelete() {
-  openModalDelete.value = false
-}
 </script>
 <template>
   <div class="card">
@@ -52,30 +22,22 @@ function handleCancelDelete() {
       <div class="card__header__title">
         <span class="card__header__bullet" :style="{ backgroundColor: potsTheme }"></span>
         <h1>{{ potsTitle }}</h1>
-        <img
-          src="@/assets/images/icon-ellipsis.svg"
-          @click="openModalActions = true"
-          alt="ellipsis"
+    </div>  
+    <div class="card__header__icon-wrapper">
+          <img
+            src="@/assets/images/icon-ellipsis.svg"
+            @click="openModalActions = !openModalActions"
+            alt="ellipsis"
+          />
+          <ActionsModal 
+          v-if="openModalActions"
+          :actions-title="potsTitle"
+          :actions-value="potsValue"
+          :actions-target-value="potsTargetValue"
+          :actions-theme="potsTheme"
+          @close-actions-modal="openModalActions = false"
         />
-      </div>
-      <div class="card__header__actions" v-if="openModalActions">
-        <div class="card__header__actions__handle" @click="handleEditClick">Edit Pot</div>
-        <div class="card__header__actions__handle" @click="handleDeleteClick">Delete Pot</div>
-      </div>
-      <AddNew
-        v-if="openModalEdit"
-        :pots-name="potsTitle"
-        :pots-total="potsValue"
-        :pots-target="potsTargetValue"
-        :pots-theme="potsTheme"
-        @close-new-pot="handleCloseEdit"
-      />
-      <PotsActions
-        v-if="openModalDelete"
-        :pots-title="props.potsTitle"
-        @delete-pot="handleDeletePot(props.potsTitle)"
-        @cancel="handleCancelDelete()"
-      />
+        </div>
     </div>
     <div class="card__total">
       <p>Total saved</p>
@@ -116,23 +78,26 @@ function handleCancelDelete() {
 
   &__header {
     display: flex;
-    justify-content: space-between;
     align-items: flex-start;
 
     &__title {
       display: flex;
-      justify-content: space-between;
       align-items: flex-start;
       gap: @spacing-100;
       width: 100%;
     }
 
     &__bullet {
-      display: inline-block;
       width: 12px;
       height: 12px;
       border-radius: 50%;
       flex-shrink: 0;
+    }
+
+    &__icon-wrapper {
+      position: relative;
+      display: inline-block;
+      cursor: pointer;
     }
 
     h1 {
