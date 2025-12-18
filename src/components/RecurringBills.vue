@@ -24,7 +24,7 @@ const totalBills = computed(
 const recurringBillsFiltered = computed(() => {
   let recurringBillsCopy = [...recurringBills.value]
 
-  const selectedSort = {
+  const selectedSortFunction = {
     Latest: function latest(a: any, b: any) {
       return new Date(b.date).getTime() - new Date(a.date).getTime()
     },
@@ -51,8 +51,8 @@ const recurringBillsFiltered = computed(() => {
     )
   }
 
-  if (sortedBills.value in selectedSort) {
-    recurringBillsCopy.sort((a, b) => selectedSort[sortedBills.value as SortItens](a, b))
+  if (sortedBills.value in selectedSortFunction) {
+    recurringBillsCopy.sort((a, b) => selectedSortFunction[sortedBills.value as SortItens](a, b))
   }
 
   return recurringBillsCopy

@@ -90,6 +90,9 @@ const emit = defineEmits<{
         }
       }
     }
+
+    @media (max-width: 768px) {
+    }
   }
 
   &__top {
