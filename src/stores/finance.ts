@@ -1,34 +1,7 @@
 import { ref, computed, reactive } from 'vue'
 import { defineStore } from 'pinia'
 import dataJson from '@/assets/data/data.json'
-
-export interface Transaction {
-  avatar: string
-  name: string
-  category: string
-  date: string
-  amount: number
-  recurring: boolean
-}
-
-export interface Budget {
-  category: string
-  maximum: number
-  theme: string
-}
-
-export interface Pot {
-  name: string
-  total: number
-  target: number
-  theme: string
-}
-
-export interface Balance {
-  current: number
-  income: number
-  expenses: number
-}
+import type { Balance, Budget, Pot, Transaction } from '@/interfaces'
 
 export const useFinanceStore = defineStore('finance', () => {
   // Estado reativo dos dados
@@ -82,20 +55,85 @@ export const useFinanceStore = defineStore('finance', () => {
     }
   }
 
+  // RECURRING BILLS
+  const recurringBillsPaied = computed(() => {
+    // capturar pagamentos com data anterior a hoje
+    const dateToday = new Date().getDate()
+    const paidBillsPerDate = transactions.value.filter((bill) => {
+      const billDate = new Date(bill.date).getDate()
+      if (bill.recurring === true && billDate < dateToday) {
+        return bill.amount
+      }
+    })
+    const total = Math.ceil(
+      Math.abs(paidBillsPerDate.reduce((total, bill) => total + (bill.amount ?? 0), 0)),
+    )
+    const count = paidBillsPerDate.length ?? 0
+    return {
+      total,
+      count,
+    }
+  })
+
+  const recurringBillsUpcoming = computed(() => {
+    // capturar pagamentos com data posterior a hoje
+    const dateToday = new Date().getDate()
+    const upcomingBillsPerDate = transactions.value.filter((bill) => {
+      const billDate = new Date(bill.date).getDate()
+      if (bill.recurring === true && billDate >= dateToday) {
+        return bill.amount
+      }
+    })
+
+    const total = Math.ceil(
+      Math.abs(upcomingBillsPerDate.reduce((total, bill) => total + (bill.amount ?? 0), 0)),
+    )
+    const count = upcomingBillsPerDate.length ?? 0
+    return {
+      total,
+      count,
+    }
+  })
+
+  const recurringBillsDue = computed(() => {
+    // capturar pagamentos com data igual a hoje
+    const dateToday = new Date().getDate()
+    const dueBillsPerDate = transactions.value.filter((bill) => {
+      const billDate = new Date(bill.date).getDate()
+      if (bill.recurring === true && billDate === dateToday) {
+        return bill.amount
+      }
+    })
+    const total = Math.ceil(
+      Math.abs(dueBillsPerDate.reduce((total, bill) => total + (bill.amount ?? 0), 0)),
+    )
+    const count = dueBillsPerDate.length ?? 0
+    return {
+      total,
+      count,
+    }
+  })
+
   // Funções para manipular budgets
   function addBudget(newBudget: Budget) {
     budgets.value.push(newBudget)
   }
 
-  function updateBudget(index: number, updatedBudget: Partial<Budget>) {
-    if (budgets.value[index]) {
-      Object.assign(budgets.value[index], updatedBudget)
+  function updateBudget(category: string, updatedBudget: Partial<Budget>) {
+    const budgetIndex = budgets.value.findIndex((budget) => budget.category === category)
+    if (budgetIndex !== -1 && budgets.value[budgetIndex]) {
+      Object.assign(budgets.value[budgetIndex], updatedBudget)
+    } else {
+      console.warn(`Budget "${category}" not found to update`)
     }
   }
 
-  function deleteBudget(index: number) {
-    if (budgets.value[index]) {
-      budgets.value.splice(index, 1)
+  function deleteBudget(category: string) {
+    const budgetIndex = budgets.value.findIndex((budget) => budget.category === category)
+    if (budgetIndex !== -1 && budgets.value[budgetIndex]) {
+      budgets.value.splice(budgetIndex, 1)
+    } else {
+      console.warn(`Budget "${category}" not found to update`)
     }
   }
 
@@ -175,6 +213,9 @@ export const useFinanceStore = defineStore('finance', () => {
     pots,
     // Computed
     updatedBalance,
+    recurringBillsPaied,
+    recurringBillsUpcoming,
+    recurringBillsDue,
     // Funções de transações
     addTransaction,
     updateTransaction,

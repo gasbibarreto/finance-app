@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ComponentsItens } from '@/types'
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 
 const menuItems = [
   { name: 'Overview', icon: 'icon-nav-overview.svg' },

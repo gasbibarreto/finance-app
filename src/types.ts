@@ -1,23 +1,5 @@
-export type ComponentsItens = 'Overview' | 'Transactions' | 'Budgets' | 'Pots' | 'Recurring Bills'
+type ComponentsItens = 'Overview' | 'Transactions' | 'Budgets' | 'Pots' | 'Recurring Bills'
 
-export interface Pot {
-  name: string
-  target: number
-  total: number
-  theme: string
-}
+type SortItens = 'Latest' | 'Oldest' | 'A to Z' | 'Z to A' | 'Highest' | 'Lowest'
 
-export interface Budget {
-  category: string
-  maximum: number
-  theme: string
-}
-
-export interface Transaction {
-  avatar: string
-  name: string
-  category: string
-  date: string
-  amount: number
-  recurring: boolean
-}
+export type { ComponentsItens, SortItens }

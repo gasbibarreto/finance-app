@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import data from '@/assets/data/data.json'
 import { computed, ref, type Component } from 'vue'
 import Card from './Card.vue'
 import type { ComponentsItens } from '@/types.ts'
-import { getImageUrl, formatCurrency } from '@/common/common'
+import { formatCurrency } from '@/common/common'
 import { useFinanceStore } from '@/stores/finance'
+import TransactionsList from './transactions/TransactionsList.vue'
 
 // STORE
 const financeStore = useFinanceStore()
@@ -12,69 +12,18 @@ const balance = computed(() => financeStore.balance)
 const pots = computed(() => financeStore.pots.slice(0, 4))
 const transactions = computed(() => financeStore.transactions)
 const budgets = computed(() => financeStore.budgets)
+const recurringBillsPaied = computed(() => financeStore.recurringBillsPaied)
+const recurringBillsUpcoming = computed(() => financeStore.recurringBillsUpcoming)
+const recurringBillsDue = computed(() => financeStore.recurringBillsDue.total)
 
 // POTS
 const totalSaved = computed(() => {
   return pots.value.reduce((total, pot) => total + (pot.total ?? 0), 0)
 })
 
-// RECORRING BILLS
-const recurringBillsPaied = computed(() => {
-  // capturar pagamentos com data anterior a hoje
-  const dateToday = new Date().getDate()
-  const paidBillsPerDate = transactions.value.filter((bill) => {
-    const billDate = new Date(bill.date).getDate()
-    if (bill.recurring === true && billDate < dateToday) {
-      return bill.amount
-    }
-  })
-
-  return Math.ceil(
-    Math.abs(paidBillsPerDate.reduce((total, bill) => total + (bill.amount ?? 0), 0)),
-  )
-})
-
-const recurringBillsUpcoming = computed(() => {
-  // capturar pagamentos com data posterior a hoje
-  const dateToday = new Date().getDate()
-  const upcomingBillsPerDate = transactions.value.filter((bill) => {
-    const billDate = new Date(bill.date).getDate()
-    if (bill.recurring === true && billDate >= dateToday) {
-      return bill.amount
-    }
-  })
-  console.log(upcomingBillsPerDate)
-
-  return Math.ceil(
-    Math.abs(upcomingBillsPerDate.reduce((total, bill) => total + (bill.amount ?? 0), 0)),
-  )
-
-})
-
-const recurringBillsDue = computed(() => {
-  // capturar pagamentos com data igual a hoje
-  const dateToday = new Date().getDate()
-  const dueBillsPerDate = data.transactions.filter((bill) => {
-    const billDate = new Date(bill.date).getDate()
-    if (bill.recurring === true && billDate === dateToday) {
-      return bill.amount
-    }
-  })
-  return Math.ceil(Math.abs(dueBillsPerDate.reduce((total, bill) => total + (bill.amount ?? 0), 0)))
-})
-
 // FUNCTIONS
 function redirectToView(viewName: ComponentsItens) {
   emit('selectedMenuItem', viewName)
-}
-
-function formatDate(dateString: string): string {
-  const date = new Date(dateString)
-  return date.toLocaleDateString('en-US', {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-  })
 }
 
 // EMITS
@@ -136,25 +85,7 @@ const emit = defineEmits<{
           card-action="View All"
           @actionClick="redirectToView('Transactions')"
         >
-          <div class="overview__transaction">
-            <ul>
-              <li v-for="transaction in transactions" :key="transaction.name">
-                <div class="overview__transaction__name">
-                  <img :src="getImageUrl(transaction.avatar)" alt="" />
-                  <span>{{ transaction.name }}</span>
-                </div>
-                <div class="overview__transaction__amount">
-                  <span
-                    :class="{
-                      'overview__transaction__amount--color': transaction.amount > 0,
-                    }"
-                    >{{ formatCurrency(transaction.amount) }}
-                  </span>
-                  <span>{{ formatDate(transaction.date) }}</span>
-                </div>
-              </li>
-            </ul>
-          </div>
+          <TransactionsList :transactions="transactions.slice(0, 5)" />
         </Card>
       </div>
 
@@ -189,11 +120,11 @@ const emit = defineEmits<{
           <div class="overview__recurring-bills">
             <div class="overview__recurring-bills__paied">
               <p>Paid Bills</p>
-              <span>{{ formatCurrency(recurringBillsPaied) }}</span>
+              <span>{{ formatCurrency(recurringBillsPaied.total) }}</span>
             </div>
             <div class="overview__recurring-bills__upcoming">
               <p>Upcoming Bills</p>
-              <span>{{ formatCurrency(recurringBillsUpcoming) }}</span>
+              <span>{{ formatCurrency(recurringBillsUpcoming.total) }}</span>
             </div>
             <div class="overview__recurring-bills__due">
               <p>Due Bills</p>
@@ -347,62 +278,6 @@ const emit = defineEmits<{
           font-size: @font-size-xs;
           font-weight: @font-weight-bold;
         }
-      }
-    }
-  }
-
-  .overview__transaction {
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    li {
-      display: flex;
-      border-bottom: 1px solid @grey-100;
-      padding-top: 12px;
-      padding-bottom: 10px;
-    }
-
-    img {
-      width: @spacing-500;
-      height: @spacing-500;
-      border-radius: 50%;
-      margin-right: @spacing-150;
-    }
-
-    &__name {
-      display: flex;
-      flex: 1;
-      align-items: center;
-      margin-bottom: @spacing-150;
-
-      span {
-        font-size: @font-size-sm;
-        font-weight: @font-weight-bold;
-      }
-    }
-
-    &__amount {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: @spacing-100;
-
-      span:first-child {
-        font-weight: @font-weight-bold;
-        font-style: Regular;
-        font-size: @font-size-sm;
-      }
-
-      span:last-child {
-        font-weight: @font-weight-normal;
-        font-style: Regular;
-        font-size: @font-size-xs;
-      }
-
-      &--color {
-        color: @green;
       }
     }
   }

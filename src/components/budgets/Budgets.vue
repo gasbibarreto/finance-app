@@ -17,12 +17,15 @@ function handleShowNewBudgetModal() {
   console.log('showNewBudgetModal', showNewBudgetModal.value)
 }
 
-function totalSpendingAmountByCategory (category: string) {
+function totalSpendingAmountByCategory(category: string) {
   const groupedByCategory = Object.groupBy(
     transactions.value,
     (transaction) => transaction.category,
   )
-  const total = groupedByCategory[category]?.reduce((total, transaction) => total + transaction.amount, 0)
+  const total = groupedByCategory[category]?.reduce(
+    (total, transaction) => total + transaction.amount,
+    0,
+  )
   const absoluteTotal = Math.abs(total ?? 0)
   return absoluteTotal ? formatCurrency(absoluteTotal) : '$0.00'
 }
@@ -34,7 +37,6 @@ function filterTransactionsByCategory(category: string) {
   )
   return groupedByCategory[category]?.slice(0, 3)
 }
-
 </script>
 <template>
   <div class="budgets">
@@ -55,7 +57,7 @@ function filterTransactionsByCategory(category: string) {
           >
             <div class="budgets__content__card__total__list__item">
               <span>{{ item.category }}</span>
-              <span>{{ totalSpendingAmountByCategory(item.category)}}</span>
+              <span>{{ totalSpendingAmountByCategory(item.category) }}</span>
               <span>of {{ formatCurrency(item.maximum) }}</span>
             </div>
           </li>

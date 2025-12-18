@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref, type PropType } from 'vue'
-import type { Budget } from '@/types'
+import type { Budget, Transaction } from '@/interfaces'
 import { formatCurrency } from '@/common/common'
-import type { Transaction } from '@/types'
 import Card from '../Card.vue'
 import ActionsModal from '../actionsModal/ActionsModal.vue'
+import TransactionsList from '../transactions/TransactionsList.vue'
 
 defineProps({
   budget: {
@@ -26,8 +26,13 @@ function redirectToView(view: string) {
 <template>
   <div class="card-budget">
     <div class="card-budget__header">
-      <span class="card-budget__header__bullet" :style="{ backgroundColor: budget.theme }"></span>
-      <h2>{{ budget.category }}</h2>
+      <div class="card-budget__header__title">
+        <span
+          class="card-budget__header__title__bullet"
+          :style="{ backgroundColor: budget.theme }"
+        ></span>
+        <h2>{{ budget.category }}</h2>
+      </div>
       <div class="card-budget__header__icon-wrapper">
         <img
           src="@/assets/images/icon-ellipsis.svg"
@@ -36,6 +41,7 @@ function redirectToView(view: string) {
         />
         <ActionsModal
           v-if="openModalActions"
+          :actions-type="'Budget'"
           :actions-title="budget.category"
           :actions-value="budget.maximum"
           :actions-theme="budget.theme"
@@ -55,13 +61,7 @@ function redirectToView(view: string) {
         :style-color="true"
         @actionClick="redirectToView('Transactions')"
       >
-        <ul class="card-budget__list__transactions">
-          <li v-for="item in transactions" :key="Object.keys(item)[0]">
-            <p>{{ item.name }}</p>
-            <p>{{ formatCurrency(item.amount) }}</p>
-            <p>{{ item.date }}</p>
-          </li>
-        </ul>
+        <TransactionsList :transactions="transactions.slice(0, 3)" />
       </Card>
     </div>
   </div>
@@ -72,17 +72,24 @@ function redirectToView(view: string) {
   border-radius: @spacing-150;
   margin-top: @spacing-300;
   padding: @spacing-250;
-    
+
   &__header {
     display: flex;
+    justify-content: space-between;
     align-items: center;
     gap: @spacing-100;
 
-    &__bullet {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      flex-shrink: 0;
+    &__title {
+      display: flex;
+      align-items: center;
+      gap: @spacing-100;
+
+      &__bullet {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        flex-shrink: 0;
+      }
     }
 
     &__icon-wrapper {
@@ -109,6 +116,15 @@ function redirectToView(view: string) {
       list-style: none;
       padding: 0;
       margin: 0;
+
+      &__item {
+        display: flex;
+        img {
+          width: 24px;
+          height: 24px;
+          border-radius: 50%;
+        }
+      }
     }
   }
 }

@@ -7,7 +7,7 @@ import { computed, onMounted, ref } from 'vue'
  */
 export function useColors() {
   const colorsLoaded = ref(false)
-  
+
   // Mapeamento dos nomes das cores (como definidos no LESS)
   const colorNames = [
     'green',
@@ -48,7 +48,7 @@ export function useColors() {
   }
 
   /**
-   * Normaliza uma cor hex para minúsculas
+   * Normaliza uma cor hex para minúsculas para que todas as cores do data.json consigam dar match com o que tem no arquivo less
    */
   function normalizeColor(color: string): string {
     if (color.startsWith('#')) {
@@ -56,7 +56,6 @@ export function useColors() {
     }
     return color
   }
-
 
   /**
    * Lista de cores disponíveis formatada para uso em selects

@@ -3,11 +3,12 @@ import data from '@/assets/data/data.json'
 import { computed, ref } from 'vue'
 import { getImageUrl } from '@/common/common'
 import { useFinanceStore } from '@/stores/finance'
+import type { SortItens } from '@/types'
 
 // Variables
 const term = ref()
 const category = ref('All Transactions')
-const sortedItens = ref(['Latest', 'Oldest', 'A to Z', 'Z to A', 'Highest', 'Lowest'])
+const sortedItens = ref<SortItens[]>(['Latest', 'Oldest', 'A to Z', 'Z to A', 'Highest', 'Lowest'])
 const selectedSort = ref('Latest')
 const pageNumber = ref(1)
 const itemsPerPage = ref(10)
@@ -54,32 +55,26 @@ const sortTransactions = computed(() => {
     transactionsCopy.sort((a, b) => {
       return new Date(a.date).getTime() - new Date(b.date).getTime()
     })
-    console.log('OLDEST')
   } else if (selectedSort.value.includes('Latest')) {
     transactionsCopy.sort((a, b) => {
       return new Date(b.date).getTime() - new Date(a.date).getTime()
     })
-    console.log('lATEST')
   } else if (selectedSort.value.includes('A to Z')) {
     transactionsCopy.sort((a, b) => {
       return a.name.localeCompare(b.name)
     })
-    console.log('A to Z')
   } else if (selectedSort.value.includes('Z to A')) {
     transactionsCopy.sort((a, b) => {
       return b.name.localeCompare(a.name)
     })
-    console.log('Z to A')
   } else if (selectedSort.value === 'Highest') {
     transactionsCopy.sort((a, b) => {
       return b.amount - a.amount
     })
-    console.log('highest')
   } else {
     transactionsCopy.sort((a, b) => {
       return a.amount - b.amount
     })
-    console.log('else')
   }
 
   if (transactionsCopy.length > itemsPerPage.value) {

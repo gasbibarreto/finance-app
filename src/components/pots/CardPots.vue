@@ -22,22 +22,23 @@ const props = defineProps({
       <div class="card__header__title">
         <span class="card__header__bullet" :style="{ backgroundColor: potsTheme }"></span>
         <h1>{{ potsTitle }}</h1>
-    </div>  
-    <div class="card__header__icon-wrapper">
-          <img
-            src="@/assets/images/icon-ellipsis.svg"
-            @click="openModalActions = !openModalActions"
-            alt="ellipsis"
-          />
-          <ActionsModal 
+      </div>
+      <div class="card__header__icon-wrapper">
+        <img
+          src="@/assets/images/icon-ellipsis.svg"
+          @click="openModalActions = !openModalActions"
+          alt="ellipsis"
+        />
+        <ActionsModal
           v-if="openModalActions"
+          :actions-type="'Pot'"
           :actions-title="potsTitle"
           :actions-value="potsValue"
           :actions-target-value="potsTargetValue"
           :actions-theme="potsTheme"
           @close-actions-modal="openModalActions = false"
         />
-        </div>
+      </div>
     </div>
     <div class="card__total">
       <p>Total saved</p>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import Menu from './components/Menu.vue'
 import Overview from './components/Overview.vue'
-import Transactions from './components/Transactions.vue'
+import Transactions from './components/transactions/Transactions.vue'
 import Pots from './components/pots/Pots.vue'
 import RecurringBills from './components/RecurringBills.vue'
 import Budgets from './components/budgets/Budgets.vue'

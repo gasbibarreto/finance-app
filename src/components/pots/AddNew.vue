@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
-import type { Pot } from '@/types'
+import type { Pot } from '@/interfaces'
 import { useFinanceStore } from '@/stores/finance'
 import { useColors } from '@/composables/useColors'
 
@@ -11,6 +11,7 @@ const props = defineProps({
   potsTotal: { type: Number },
   potsTarget: { type: Number },
   potsTheme: { type: String },
+  openModalEdit: { type: Boolean, default: false },
 })
 
 const formData = reactive({
@@ -55,13 +56,13 @@ const emit = defineEmits<{
   <Teleport to="body">
     <div class="pots__new">
       <div class="pots__new__header">
-        <h1>{{ props.potsName ? 'Edit Pot' : 'Add New Pot' }}</h1>
+        <h1>{{ openModalEdit ? 'Edit Pot' : 'Add New Pot' }}</h1>
         <img src="@/assets/images/icon-close-modal.svg" alt="close" @click="handleClose()" />
       </div>
 
       <p class="pots__new__description">
         {{
-          props.potsName
+          openModalEdit
             ? 'If your saving targets change, feel free to update your pots.'
             : 'Create a pot to set savings targets. These can help keep you on track as you save for'
         }}
@@ -81,16 +82,12 @@ const emit = defineEmits<{
 
         <label for="theme">Theme</label>
         <select id="theme" v-model="formData.selectedColor">
-          <option
-            v-for="color in colorOptions"
-            :key="color.name"
-            :value="color.value"
-          >
+          <option v-for="color in colorOptions" :key="color.name" :value="color.value">
             {{ color.displayName }}
           </option>
         </select>
         <button type="submit" class="pots__new__button">
-          {{ props.potsName ? 'Save Changes' : 'Add Pot' }}
+          {{ openModalEdit ? 'Save Changes' : 'Add Pot' }}
         </button>
       </form>
     </div>
