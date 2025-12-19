@@ -52,3 +52,34 @@ npm run test:unit
 ```sh
 npm run lint
 ```
+
+## Deploy para GitHub Pages
+
+### Configuração Inicial
+
+1. **Ajuste o nome do repositório no `vite.config.ts`**:
+   - Se seu repositório GitHub for `seu-usuario/personal-finance-app`, o `base` deve ser `/personal-finance-app/`
+   - Se for `seu-usuario/finance-app`, mantenha `/finance-app/`
+   - Se for a raiz do repositório (ex: `seu-usuario/seu-usuario.github.io`), use `base: '/'`
+
+2. **Faça o deploy**:
+   ```sh
+   npm run deploy
+   ```
+
+   Este comando irá:
+   - Executar o build do projeto (`predeploy`)
+   - Publicar a pasta `dist` na branch `gh-pages` do seu repositório
+
+### Configuração no GitHub
+
+1. Vá em **Settings** > **Pages** do seu repositório
+2. Em **Source**, selecione a branch `gh-pages` e a pasta `/ (root)`
+3. Salve as configurações
+4. Aguarde alguns minutos para o GitHub processar
+5. Seu site estará disponível em: `https://seu-usuario.github.io/nome-do-repositorio/`
+
+### Nota Importante
+
+- O caminho `base` no `vite.config.ts` deve corresponder ao nome do seu repositório GitHub
+- Se você mudar o nome do repositório, atualize o `base` no `vite.config.ts` e faça um novo deploy

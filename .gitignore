@@ -34,3 +34,6 @@ coverage
 
 # Vitest
 __screenshots__/
+
+# Arquivos gerados pelo vue-tsc durante type-check
+*.vue.js

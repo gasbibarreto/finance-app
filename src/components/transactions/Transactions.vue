@@ -23,7 +23,7 @@ const pageNumberTotal = computed(() => {
 })
 
 const startIndex = computed(() => {
-    return (pageNumber.value - 1) * itemsPerPage.value
+  return (pageNumber.value - 1) * itemsPerPage.value
 })
 
 const endIndex = computed(() => {
@@ -163,7 +163,7 @@ function changePage(page: number) {
               v-for="page in pageNumberTotal"
               :key="page"
               @click="changePage(page)"
-              :class="{'selected': pageNumber == page }"
+              :class="{ selected: pageNumber == page }"
             >
               {{ page }}
             </button>
@@ -259,7 +259,6 @@ function changePage(page: number) {
         margin-bottom: @spacing-100;
 
         thead {
-
           th {
             text-align: left;
             font-size: @font-size-xs;
@@ -307,35 +306,33 @@ function changePage(page: number) {
     }
 
     &__pagination {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: @spacing-100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: @spacing-100;
 
-    button {
-      background-color: transparent;
-      border: 1px solid @grey-500;
-      border-radius: @spacing-100;
-      padding: @spacing-100 @spacing-200;
-      cursor: pointer;
-      font-size: @font-size-xs;
-      font-weight: @font-weight-light;
-      color: @grey-900;
-    }
+      button {
+        background-color: transparent;
+        border: 1px solid @grey-500;
+        border-radius: @spacing-100;
+        padding: @spacing-100 @spacing-200;
+        cursor: pointer;
+        font-size: @font-size-xs;
+        font-weight: @font-weight-light;
+        color: @grey-900;
+      }
 
-    button:disabled {
-      color: @grey-300;
-    }
+      button:disabled {
+        color: @grey-300;
+      }
 
-
-    &__pages {
-      button.selected {
-        background-color: @grey-900;
-        color: @white;
+      &__pages {
+        button.selected {
+          background-color: @grey-900;
+          color: @white;
+        }
       }
     }
   }
-  }
-
 }
 </style>

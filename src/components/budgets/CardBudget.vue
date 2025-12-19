@@ -6,7 +6,7 @@ import Card from '../Card.vue'
 import ActionsModal from '../actionsModal/ActionsModal.vue'
 import TransactionsList from '../transactions/TransactionsList.vue'
 
-defineProps({
+const props = defineProps({
   budget: {
     type: Object as PropType<Budget>,
     required: true,
@@ -18,6 +18,20 @@ defineProps({
 })
 
 const openModalActions = ref(false)
+
+function totalSpendingPerCategory(category: string) {
+  return props.transactions
+    .filter((transaction: Transaction) => transaction.category === category)
+    .reduce((total: number, transaction: Transaction) => total + transaction.amount, 0)
+}
+
+function totalBudgetSpend(category: string) {
+  return formatCurrency(totalSpendingPerCategory(category))
+}
+
+function totalBudgetRemaining(category: string) {
+  return formatCurrency(props.budget.maximum - totalSpendingPerCategory(category))
+}
 
 function redirectToView(view: string) {
   console.log(view)
@@ -51,6 +65,16 @@ function redirectToView(view: string) {
     </div>
     <div class="card-budget__content">
       <p>{{ 'Maximum of ' + formatCurrency(budget.maximum) }}</p>
+    </div>
+    <div class="card-budget__content__cost">
+      <div class="card-budget__content__cost__spent">
+        <p>Spent</p>
+        <p>{{ totalBudgetSpend(budget.category) }}</p>
+      </div>
+      <div class="card-budget__content__cost__remaining">
+        <p>Remaining</p>
+        <p>{{ totalBudgetRemaining(budget.category) }}</p>
+      </div>
     </div>
     <div class="card-budget__info"></div>
     <div class="card-budget__list">
@@ -103,6 +127,19 @@ function redirectToView(view: string) {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    &__cost {
+      display: flex;
+      align-items: center;
+
+      &__spent { 
+        border-left: 4px solid @green;
+      }
+
+      &__remaining {
+        border-left: 4px solid @beige-100;
+      }
+    }
   }
 
   &__list {

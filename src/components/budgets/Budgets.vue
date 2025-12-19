@@ -12,9 +12,7 @@ const transactions = computed(() => financeStore.transactions)
 const showNewBudgetModal = ref(false)
 
 function handleShowNewBudgetModal() {
-  console.log('showNewBudgetModal', showNewBudgetModal.value)
   showNewBudgetModal.value = true
-  console.log('showNewBudgetModal', showNewBudgetModal.value)
 }
 
 function totalSpendingAmountByCategory(category: string) {
@@ -31,11 +29,11 @@ function totalSpendingAmountByCategory(category: string) {
 }
 
 function filterTransactionsByCategory(category: string) {
-  const groupedByCategory = Object.groupBy(
+  const groupedByCategoryFilter = Object.groupBy(
     transactions.value,
     (transaction) => transaction.category,
   )
-  return groupedByCategory[category]?.slice(0, 3)
+  return groupedByCategoryFilter[category]?.slice(0, 3)
 }
 </script>
 <template>
