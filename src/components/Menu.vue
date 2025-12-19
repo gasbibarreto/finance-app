@@ -19,7 +19,7 @@ function selectItem(itemName: ComponentsItens | string) {
 }
 
 function getIconUrl(iconFileName: string) {
-  return `/images/${iconFileName}`
+  return new URL(`../assets/images/${iconFileName}`, import.meta.url).href
 }
 
 const emit = defineEmits<{
@@ -33,14 +33,14 @@ const emit = defineEmits<{
       <img
         v-if="showMenu"
         class="menu__top__img"
-        src="/images/logo-large.svg"
+        src="../assets/images/logo-large.svg"
         alt="logo do app finance em tamanho grande"
       />
 
       <img
         v-else
         class="menu__top__img"
-        src="/images/logo-small.svg"
+        src="../assets/images/logo-small.svg"
         alt="logo do app finance em tamanho pequeno"
       />
 
@@ -62,7 +62,7 @@ const emit = defineEmits<{
     <div class="menu__bottom" @click="showMenu = !showMenu">
       <img
         :class="[{ menu__bottom__rotate: !showMenu }]"
-        src="/images/icon-minimize-menu.svg"
+        src="../assets/images/icon-minimize-menu.svg"
       />
       <button v-show="showMenu">Minimize Menu</button>
     </div>

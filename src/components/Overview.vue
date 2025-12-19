@@ -57,7 +57,7 @@ const emit = defineEmits<{
         <Card title="Pots" card-action="See Details" @actionClick="redirectToView('Pots')">
           <div class="overview__pots">
             <div class="overview__pots__total">
-              <img src="/images/icon-pot.svg" alt="" />
+              <img src="../assets/images/icon-pot.svg" alt="" />
               <div class="overview__pots__total-info">
                 <p>Total saved</p>
                 <span>{{ '$' + totalSaved }}</span>
@@ -93,7 +93,7 @@ const emit = defineEmits<{
         <Card title="Budgets" cardAction="See Details" @actionClick="redirectToView('Budgets')">
           <div class="overview__budgets">
             <div class="overview__budgets__total">
-              <img src="/images/chart.png" />
+              <img src="../assets/images/chart.png" />
             </div>
             <div class="overview__budgets__categories">
               <ul>

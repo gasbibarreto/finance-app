@@ -57,7 +57,7 @@ const emit = defineEmits<{
     <div class="pots__new">
       <div class="pots__new__header">
         <h1>{{ openModalEdit ? 'Edit Pot' : 'Add New Pot' }}</h1>
-        <img src="/images/icon-close-modal.svg" alt="close" @click="handleClose()" />
+        <img src="@/assets/images/icon-close-modal.svg" alt="close" @click="handleClose()" />
       </div>
 
       <p class="pots__new__description">

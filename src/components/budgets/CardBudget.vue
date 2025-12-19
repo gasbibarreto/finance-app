@@ -49,7 +49,7 @@ function redirectToView(view: string) {
       </div>
       <div class="card-budget__header__icon-wrapper">
         <img
-          src="/images/icon-ellipsis.svg"
+          src="@/assets/images/icon-ellipsis.svg"
           @click="openModalActions = !openModalActions"
           alt="ellipsis"
         />
