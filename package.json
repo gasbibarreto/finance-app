@@ -13,7 +13,7 @@
     "test:unit": "vitest",
     "build-only": "vite build",
     "type-check": "vue-tsc --build",
-    "clean": "node scripts/clean-vue-js.js",
+    "clean": "mkdir -p generated && find src -name '*.vue.js' -exec mv {} generated/ \\;",
     "lint": "eslint . --fix --cache",
     "format": "prettier --write src/",
     "predeploy": "npm run build && npm run clean",
