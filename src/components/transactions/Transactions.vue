@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import data from '@/assets/data/data.json'
 import { computed, ref } from 'vue'
-import { getImageUrl } from '@/common/common'
+import { getImagePath } from '@/common/common'
 import { useFinanceStore } from '@/stores/finance'
 import type { SortItens } from '@/types'
 
@@ -110,7 +110,7 @@ function changePage(page: number) {
               placeholder="Search transactions"
               @change="{ sortTransactions }"
             />
-            <img src="@/assets/images/icon-search.svg" alt="Icon search" />
+            <img src="/images/icon-search.svg" alt="Icon search" />
           </div>
           <div class="transactions__content__header__sort">
             <p>Sort by</p>
@@ -140,7 +140,7 @@ function changePage(page: number) {
             <tbody class="transactions__content__table__body">
               <tr v-for="transaction in sortTransactions">
                 <td>
-                  <img :src="getImageUrl(transaction.avatar)" alt="" />
+                  <img :src="getImagePath(transaction.avatar)" alt="" />
                   <span>{{ transaction.name }}</span>
                 </td>
                 <td>{{ transaction.category }}</td>

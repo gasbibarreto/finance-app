@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getImageUrl, formatCurrency, formatDate } from '@/common/common'
+import { formatCurrency, formatDate, getImagePath } from '@/common/common'
 import type { Transaction } from '@/interfaces'
 
 const props = defineProps<{
@@ -11,7 +11,7 @@ const props = defineProps<{
     <ul>
       <li v-for="transaction in transactions" :key="transaction.name">
         <div class="overview__transaction__name">
-          <img :src="getImageUrl(transaction.avatar)" alt="" />
+          <img :src="getImagePath(transaction.avatar)" alt="" />
           <span>{{ transaction.name }}</span>
         </div>
         <div class="overview__transaction__amount">

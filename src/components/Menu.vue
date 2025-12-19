@@ -1,13 +1,14 @@
 <script setup lang="ts">
+import { getImagePath } from '@/common/common'
 import type { ComponentsItens } from '@/types'
 import { ref } from 'vue'
 
 const menuItems = [
-  { name: 'Overview', icon: 'icon-nav-overview.svg' },
-  { name: 'Transactions', icon: 'icon-nav-transactions.svg' },
-  { name: 'Budgets', icon: 'icon-nav-budgets.svg' },
-  { name: 'Pots', icon: 'icon-nav-pots.svg' },
-  { name: 'Recurring Bills', icon: 'icon-nav-recurring-bills.svg' },
+  { name: 'Overview', icon: '/images/icon-nav-overview.svg' },
+  { name: 'Transactions', icon: '/images/icon-nav-transactions.svg' },
+  { name: 'Budgets', icon: '/images/icon-nav-budgets.svg' },
+  { name: 'Pots', icon: '/images/icon-nav-pots.svg' },
+  { name: 'Recurring Bills', icon: '/images/icon-nav-recurring-bills.svg' },
 ]
 
 const selectedItem = ref('')
@@ -16,10 +17,6 @@ const showMenu = ref(true)
 function selectItem(itemName: ComponentsItens | string) {
   selectedItem.value = itemName as string
   emit('selectedMenuItem', itemName as ComponentsItens)
-}
-
-function getIconUrl(iconFileName: string) {
-  return new URL(`../assets/images/${iconFileName}`, import.meta.url).href
 }
 
 const emit = defineEmits<{
@@ -33,14 +30,14 @@ const emit = defineEmits<{
       <img
         v-if="showMenu"
         class="menu__top__img"
-        src="../assets/images/logo-large.svg"
+        src="/images/logo-large.svg"
         alt="logo do app finance em tamanho grande"
       />
 
       <img
         v-else
         class="menu__top__img"
-        src="../assets/images/logo-small.svg"
+        src="/images/logo-small.svg"
         alt="logo do app finance em tamanho pequeno"
       />
 
@@ -54,7 +51,7 @@ const emit = defineEmits<{
           ]"
           @click="selectItem(item.name)"
         >
-          <img :src="getIconUrl(item.icon)" :alt="item.name + ' icon'" />
+          <img :src="getImagePath(item.icon)" :alt="item.name + ' icon'" />
           <button v-show="showMenu">{{ item.name }}</button>
         </li>
       </ul>
@@ -62,7 +59,7 @@ const emit = defineEmits<{
     <div class="menu__bottom" @click="showMenu = !showMenu">
       <img
         :class="[{ menu__bottom__rotate: !showMenu }]"
-        src="../assets/images/icon-minimize-menu.svg"
+        src="/images/icon-minimize-menu.svg"
       />
       <button v-show="showMenu">Minimize Menu</button>
     </div>

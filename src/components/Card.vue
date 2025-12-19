@@ -27,7 +27,7 @@ const onActionClick = () => {
         <h2>{{ props.title }}</h2>
         <div class="card__header-actions" @click="onActionClick">
           <p>{{ props.cardAction }}</p>
-          <img src="../assets/images/icon-caret-right.svg" alt="" />
+          <img src="/images/icon-caret-right.svg" alt="" />
         </div>
       </div>
       <slot></slot>

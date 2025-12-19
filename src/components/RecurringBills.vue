@@ -90,7 +90,7 @@ const recurringBillsFiltered = computed(() => {
       <div class="recurring-bills__content__list">
         <div>
           <input type="text" placeholder="Search bills" v-model="searchBill" />
-          <img src="../assets/images/icon-search.svg" alt="Icon search" />
+          <img src="/images/icon-search.svg" alt="Icon search" />
         </div>
         <div>
           <p>Sort by</p>

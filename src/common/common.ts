@@ -1,5 +1,8 @@
-export function getImageUrl(url: string) {
-  return new URL(url, import.meta.url).href
+export function getImagePath(path: string): string {
+  if (path.startsWith('/images/')) {
+    return import.meta.env.BASE_URL + path.slice(1)
+  }
+  return path
 }
 
 export function formatCurrency(amount: number): string {

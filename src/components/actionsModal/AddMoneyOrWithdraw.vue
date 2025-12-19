@@ -34,7 +34,7 @@ const emit = defineEmits<{
     <div class="pots__new">
       <div class="pots__new__header">
         <h1>{{ addMoneyWithdrawTitle }}</h1>
-        <img src="@/assets/images/icon-close-modal.svg" alt="close" @click="close()" />
+        <img src="/images/icon-close-modal.svg" alt="close" @click="close()" />
       </div>
       <div class="pots__new__content">
         <p>
