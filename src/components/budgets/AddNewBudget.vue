@@ -68,7 +68,7 @@ const emit = defineEmits<{
     <div class="new__budget">
       <div class="new__budget__header">
         <h1>{{ openModalEdit ? 'Edit Budget' : 'Add New Budget' }}</h1>
-        <img src="@/assets/images/icon-close-modal.svg" alt="close" @click="handleCloseBudget()" />
+        <img src="/images/icon-close-modal.svg" alt="close" @click="handleCloseBudget()" />
       </div>
 
       <div class="new__budget__content">

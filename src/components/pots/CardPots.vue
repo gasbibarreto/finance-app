@@ -25,7 +25,7 @@ const props = defineProps({
       </div>
       <div class="card__header__icon-wrapper">
         <img
-          src="@/assets/images/icon-ellipsis.svg"
+          src="/images/icon-ellipsis.svg"
           @click="openModalActions = !openModalActions"
           alt="ellipsis"
         />

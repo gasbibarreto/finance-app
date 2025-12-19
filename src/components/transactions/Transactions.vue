@@ -110,7 +110,7 @@ function changePage(page: number) {
               placeholder="Search transactions"
               @change="{ sortTransactions }"
             />
-            <img src="@/assets/images/icon-search.svg" alt="Icon search" />
+            <img src="/images/icon-search.svg" alt="Icon search" />
           </div>
           <div class="transactions__content__header__sort">
             <p>Sort by</p>

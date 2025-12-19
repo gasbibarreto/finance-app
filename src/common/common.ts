@@ -1,5 +1,14 @@
 export function getImageUrl(url: string) {
-  return new URL(url, import.meta.url).href
+  // Se a URL já começa com /images/, retorna como está
+  if (url.startsWith('/images/')) {
+    return url
+  }
+  // Se a URL começa com ../assets/images/ ou ./assets/images/, converte para /images/
+  if (url.includes('assets/images/')) {
+    return url.replace(/^(\.\.\/|\.\/)?assets\/images\//, '/images/')
+  }
+  // Caso contrário, retorna a URL original
+  return url
 }
 
 export function formatCurrency(amount: number): string {

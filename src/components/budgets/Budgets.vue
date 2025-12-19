@@ -45,7 +45,7 @@ function filterTransactionsByCategory(category: string) {
     </div>
     <div class="budgets__content">
       <div class="budgets__content__card__total">
-        <img src="@/assets/images/chart.png" alt="chart budget" />
+        <img src="/images/chart.png" alt="chart budget" />
         <p>Spending Summary</p>
         <ul class="budgets__content__card__total__list">
           <li
