@@ -69,11 +69,11 @@ function redirectToView(view: string) {
     <div class="card-budget__content__cost">
       <div class="card-budget__content__cost__spent">
         <p>Spent</p>
-        <p>{{ totalBudgetSpend(budget.category) }}</p>
+        <span>{{ totalBudgetSpend(budget.category) }}</span>
       </div>
       <div class="card-budget__content__cost__remaining">
         <p>Remaining</p>
-        <p>{{ totalBudgetRemaining(budget.category) }}</p>
+        <span>{{ totalBudgetRemaining(budget.category) }}</span>
       </div>
     </div>
     <div class="card-budget__info"></div>
@@ -95,7 +95,7 @@ function redirectToView(view: string) {
   background-color: @white;
   border-radius: @spacing-150;
   margin-top: @spacing-300;
-  padding: @spacing-250;
+  padding: @spacing-300;
 
   &__header {
     display: flex;
@@ -127,26 +127,47 @@ function redirectToView(view: string) {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-top: @spacing-200;
+
+    p {
+      font-size: @font-size-xs;
+      color: @grey-500;
+    }
 
     &__cost {
-      display: flex;
-      align-items: center;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      margin-top: @spacing-200;
+
+      p {
+        font-size: @font-size-xs;
+        color: @grey-500;
+        padding-bottom: @spacing-100;
+      }
+
+    span {
+      font-size: @font-size-sm;
+      font-weight: @font-weight-bold;
+    }
 
       &__spent { 
         border-left: 4px solid @green;
+        padding-left: @spacing-200;
       }
 
       &__remaining {
         border-left: 4px solid @beige-100;
+        padding-left: @spacing-200;
       }
     }
   }
 
   &__list {
-    padding: 10px;
-
+    margin-top: @spacing-200;
+    
     &__card {
       background-color: @beige-100;
+      border-radius: @spacing-150;
     }
 
     &__transactions {
@@ -156,6 +177,7 @@ function redirectToView(view: string) {
 
       &__item {
         display: flex;
+
         img {
           width: 24px;
           height: 24px;

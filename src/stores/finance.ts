@@ -158,7 +158,7 @@ export const useFinanceStore = defineStore('finance', () => {
     }
   }
 
-  function deletePot(name: String) {
+  function deletePot(name: string) {
     const potIndex = pots.value.findIndex((pot) => pot.name.toLowerCase() === name.toLowerCase())
     if (pots.value[potIndex]) {
       console.log('potIndex', potIndex)

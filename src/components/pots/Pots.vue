@@ -5,7 +5,7 @@ import { computed, ref } from 'vue'
 import { formatPercentage } from '@/common/common'
 import { useFinanceStore } from '@/stores/finance'
 
-const showNewPotModal = ref<Boolean>(false)
+const showNewPotModal = ref<boolean>(false)
 
 // STORE
 const financeStore = useFinanceStore()

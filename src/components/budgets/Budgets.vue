@@ -54,9 +54,11 @@ function filterTransactionsByCategory(category: string) {
             :style="{ borderLeft: '4px solid ' + item.theme }"
           >
             <div class="budgets__content__card__total__list__item">
-              <span>{{ item.category }}</span>
-              <span>{{ totalSpendingAmountByCategory(item.category) }}</span>
-              <span>of {{ formatCurrency(item.maximum) }}</span>
+              <span class="budgets__content__card__total__list__item__category">{{ item.category }}</span>
+              <div class="budgets__content__card__total__list__item__container">
+                <span class="budgets__content__card__total__list__item__container__amount">{{ totalSpendingAmountByCategory(item.category) }}</span>
+                <span class="budgets__content__card__total__list__item__container__maximum">of {{ formatCurrency(item.maximum) }}</span>
+              </div>
             </div>
           </li>
         </ul>
@@ -76,6 +78,7 @@ function filterTransactionsByCategory(category: string) {
 </template>
 <style lang="less" scoped>
 .budgets {
+  // Header
   &__header {
     display: flex;
     justify-content: space-between;
@@ -91,17 +94,37 @@ function filterTransactionsByCategory(category: string) {
     }
   }
 
+  // Content
   &__content {
     display: grid;
     grid-template-columns: 1fr 2fr;
     gap: @spacing-300;
+    margin-top: @spacing-300;
 
+    // Spending Summary Card
     &__card__total {
       display: flex;
       flex-direction: column;
       gap: @spacing-200;
+      margin-top: @spacing-300;
+      background-color: @white;
+      border-radius: @spacing-150;
+      padding: @spacing-300;
+
+      img {
+        align-self: center;
+        width: 200px;
+        height: 200px;
+      }
+
+      p {
+        font-size: @font-size-md;
+        font-weight: @font-weight-bold;
+        color: @grey-900;
+      }
     }
 
+    // Spending Summary List
     &__card__total__list {
       list-style: none;
       padding: 0px;
@@ -114,10 +137,37 @@ function filterTransactionsByCategory(category: string) {
         padding: @spacing-100;
         border-radius: @spacing-100;
         margin-bottom: @spacing-100;
+        color: @grey-900;
+
+        &__category {
+          font-size: @font-size-xs;
+          font-weight: @font-weight-normal;
+          color: @grey-900;
+        }
+
+        &__container {
+          display: flex;
+          align-items: flex-end;
+
+        &__amount {
+          font-size: @font-size-sm;
+          font-weight: @font-weight-bold;
+          color: @grey-900;
+          margin-right: @spacing-100;
+        }
+
+        &__maximum {
+          font-size: @font-size-xs;
+          font-weight: @font-weight-normal;
+          color: @grey-900;
+        }
+        }
+
       }
     }
   }
 
+  // Budget Cards
   &__card {
     &__list {
       list-style: none;

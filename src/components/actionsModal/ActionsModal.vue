@@ -93,7 +93,24 @@ const emit = defineEmits<{
   right: 0;
   width: 100px;
   border-radius: @spacing-150;
-  padding: @spacing-400;
   background-color: @white;
+  padding: @spacing-200;
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    gap: @spacing-100;
+  }
+
+  &__header__handle {
+    font-size: @font-size-sm;
+    cursor: pointer;
+  }
+
+  &__header__handle:last-child {
+    border-top: 1px solid @grey-100;
+    color: @red;
+    padding-top: @spacing-100;
+  }
 }
 </style>
