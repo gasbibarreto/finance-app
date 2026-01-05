@@ -97,10 +97,10 @@ const emit = defineEmits<{
 .pots__new {
   position: fixed;
   z-index: 999;
-  top: 20%;
+  top: 15%;
   left: 35%;
   width: 560px;
-  height: 512px;
+  height: 430px;
   max-width: 560px;
   border-radius: @spacing-150;
   padding: @spacing-400;

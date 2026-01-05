@@ -110,6 +110,7 @@ function filterTransactionsByCategory(category: string) {
       background-color: @white;
       border-radius: @spacing-150;
       padding: @spacing-300;
+      height: 400px;
 
       img {
         align-self: center;

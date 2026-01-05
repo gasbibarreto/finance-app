@@ -17,10 +17,12 @@ const financeStore = useFinanceStore()
 
 const openModalActions = ref(false)
 const openModalEdit = ref(false)
+const openModalEditBudget = ref(false)
 const openModalDelete = ref(false)
 
 function handleEditClick() {
-  openModalEdit.value = true
+  if(props.actionsType.includes('Budget')) openModalEditBudget.value = true
+  else openModalEdit.value = true
   openModalActions.value = false
 }
 
@@ -69,11 +71,11 @@ const emit = defineEmits<{
       @close-new-pot="handleClose()"
     />
     <AddNewBudget
-      v-if="openModalEdit && actionsType === 'Budget'"
+      v-if="openModalEditBudget"
       :budget-category="actionsTitle"
       :budget-maximum="actionsValue"
       :budget-theme="actionsTheme"
-      :open-modal-edit="true"
+      :open-modal-edit-budget="true"
       @close-new-budget="handleClose()"
     />
     <DeleteItem

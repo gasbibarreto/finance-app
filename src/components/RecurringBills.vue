@@ -88,20 +88,22 @@ const recurringBillsFiltered = computed(() => {
         </div>
       </div>
       <div class="recurring-bills__content__list">
-        <div>
-          <input type="text" placeholder="Search bills" v-model="searchBill" />
-          <img src="/images/icon-search.svg" alt="Icon search" />
-        </div>
-        <div>
-          <p>Sort by</p>
-          <select v-model="sortedBills">
-            <option value="Latest">Latest</option>
-            <option value="Oldest">Oldest</option>
-            <option value="Z-A">A to Z</option>
-            <option value="Z-A">Z to A</option>
-            <option value="Highest">Highest</option>
-            <option value="Lowest">Lowest</option>
-          </select>
+        <div class="recurring-bills__content__list__search">
+          <div>
+            <input type="text" placeholder="Search bills" v-model="searchBill" />
+            <img src="/images/icon-search.svg" alt="Icon search" />
+          </div>
+          <div>
+            <p>Sort by</p>
+            <select v-model="sortedBills">
+              <option value="Latest">Latest</option>
+              <option value="Oldest">Oldest</option>
+              <option value="Z-A">A to Z</option>
+              <option value="Z-A">Z to A</option>
+              <option value="Highest">Highest</option>
+              <option value="Lowest">Lowest</option>
+            </select>
+          </div>
         </div>
         <table>
           <thead>
@@ -137,6 +139,14 @@ const recurringBillsFiltered = computed(() => {
     gap: @spacing-300;
 
     &__list {
+      background-color: @white;
+      padding: @spacing-400;
+      border-radius: @spacing-150;
+
+      &__search {
+        display: flex;
+        justify-content: space-between;
+      }
     }
   }
 }
