@@ -55,7 +55,6 @@ export const useFinanceStore = defineStore('finance', () => {
     }
   }
 
-  // RECURRING BILLS
   const recurringBillsPaied = computed(() => {
     // capturar pagamentos com data anterior a hoje
     const dateToday = new Date().getDate()
@@ -120,7 +119,7 @@ export const useFinanceStore = defineStore('finance', () => {
   }
 
   function updateBudget(category: string, updatedBudget: Partial<Budget>) {
-    const budgetIndex = budgets.value.findIndex((budget) => budget.category === category)
+    const budgetIndex = budgets.value.findIndex((budget) => budget.category.toLowerCase() === category.toLowerCase())
     if (budgetIndex !== -1 && budgets.value[budgetIndex]) {
       Object.assign(budgets.value[budgetIndex], updatedBudget)
     } else {
@@ -129,11 +128,11 @@ export const useFinanceStore = defineStore('finance', () => {
   }
 
   function deleteBudget(category: string) {
-    const budgetIndex = budgets.value.findIndex((budget) => budget.category === category)
+    const budgetIndex = budgets.value.findIndex((budget) => budget.category.toLowerCase() === category.toLowerCase())
     if (budgetIndex !== -1 && budgets.value[budgetIndex]) {
       budgets.value.splice(budgetIndex, 1)
     } else {
-      console.warn(`Budget "${category}" not found to update`)
+      console.warn(`Budget "${category}" not found to delete`)
     }
   }
 

@@ -31,9 +31,9 @@ function handleDeleteClick() {
   openModalActions.value = false
 }
 
-function handleDeletePot(potsTitle: string) {
-  console.log(potsTitle)
-  financeStore.deletePot(potsTitle)
+function handleDelete(actionsTitle: string) {
+  if(props.actionsType.includes('Pot')) financeStore.deletePot(actionsTitle)
+  else financeStore.deleteBudget(actionsTitle)
   openModalDelete.value = false
 }
 
@@ -81,7 +81,7 @@ const emit = defineEmits<{
     <DeleteItem
       v-if="openModalDelete"
       :pots-title="actionsTitle"
-      @delete-pot="handleDeletePot(actionsTitle)"
+      @delete-pot="handleDelete(actionsTitle)"
       @cancel="handleCancelDelete()"
       @close-delete-item="handleClose()"
     />

@@ -100,7 +100,7 @@ function changePage(page: number) {
 </script>
 <template>
   <div class="transactions">
-    <h2>Transactions</h2>
+    <h1>Transactions</h1>
     <div class="transactions__content">
       <div class="transactions__content__container">
         <div class="transactions__content__header">
@@ -180,6 +180,13 @@ function changePage(page: number) {
 </template>
 <style lang="less" scoped>
 .transactions {
+
+  h1 {
+    font-size: @font-size-xl;
+    font-weight: @font-weight-bold;
+    color: @grey-900;
+  }
+
   &__content {
     background-color: @white;
     border-radius: @spacing-150;

@@ -65,26 +65,38 @@ const recurringBillsFiltered = computed(() => {
     </div>
     <div class="recurring-bills__content">
       <div>
-        <div>
-          <h2>Total Bills</h2>
-          <p>{{ '(' + formatCurrency(totalBills) + ')' }}</p>
-          <p>Paied Bills</p>
-          <p>
-            {{ recurringBillsPaied.count + ' (' + formatCurrency(recurringBillsPaied.total) + ')' }}
-          </p>
-          <p>Total Upcoming</p>
-          <p>
-            {{
-              recurringBillsUpcoming.count +
-              ' (' +
-              formatCurrency(recurringBillsUpcoming.total) +
-              ')'
-            }}
-          </p>
-          <p>Due Soon</p>
-          <p>
-            {{ recurringBillsDue.count + ' (' + formatCurrency(recurringBillsDue.total) + ')' }}
-          </p>
+        <div class="recurring-bills__content__summary">
+          <div class="recurring-bills__content__summary__total">
+            <img src="/images/icon-recurring-bills.svg" alt="Icon recurring bills" />
+            <h2>Total Bills</h2>
+            <span>{{ formatCurrency(totalBills) }}</span>
+          </div>
+          <div class="recurring-bills__content__summary__all-bills">
+            <h3>Summary</h3>
+            <div class="recurring-bills__content__summary__all-bills__summary-item">
+            <p>Paied Bills</p>
+            <span>
+              {{ recurringBillsPaied.count + ' (' + formatCurrency(recurringBillsPaied.total) + ')' }}
+            </span>
+            </div>
+            <div class="recurring-bills__content__summary__all-bills__summary-item">
+            <p>Total Upcoming</p>
+            <span>
+              {{
+                recurringBillsUpcoming.count +
+                ' (' +
+                formatCurrency(recurringBillsUpcoming.total) +
+                ')'
+              }}
+            </span>
+          </div>
+          <div class="recurring-bills__content__summary__all-bills__summary-item">
+            <p>Due Soon</p>
+            <span>
+              {{ recurringBillsDue.count + ' (' + formatCurrency(recurringBillsDue.total) + ')' }}
+            </span>
+          </div>
+        </div>
         </div>
       </div>
       <div class="recurring-bills__content__list">
@@ -131,12 +143,86 @@ const recurringBillsFiltered = computed(() => {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    h1 {
+      font-size: @font-size-xl;
+      font-weight: @font-weight-bold;
+      color: @grey-900;
+    }
   }
 
   &__content {
+    margin-top: @spacing-400;
     display: grid;
     grid-template-columns: 1fr 2fr;
     gap: @spacing-300;
+
+    &__summary {
+      display: flex;
+      flex-direction: column;
+      gap: @spacing-200;
+
+      &__total {
+        display: flex;
+        flex-direction: column;
+        gap: @spacing-100;
+        background-color: @grey-900;
+        color: @white;
+        padding: @spacing-300;
+        border-radius: @spacing-150;
+
+        img {
+          width: @spacing-500;
+          height: @spacing-500;
+        }
+
+        h2 {
+          margin-top: @spacing-400;
+          font-size: @font-size-md;
+          font-weight: @font-weight-bold;
+        }
+
+        span {
+          margin-top: @spacing-100;
+          font-size: @font-size-xl;
+          font-weight: @font-weight-bold;
+        }
+      }
+
+      &__all-bills {
+        display: flex;
+        flex-direction: column;
+        gap: @spacing-100;
+        background-color: @white;
+        padding: @spacing-300;
+        border-radius: @spacing-150;
+
+        &__summary-item {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: @spacing-100;
+          padding-bottom: @spacing-200;
+          margin-top: @spacing-150;
+
+          p {
+            font-size: @font-size-xs;
+            font-weight: @font-weight-light;
+            color: @grey-500;
+          }
+
+          span {
+            font-size: @font-size-xs;
+            font-weight: @font-weight-bold;
+            color: @grey-900;
+          }
+
+          &:not(:last-child) {
+            border-bottom: 1px solid @grey-100;
+          }
+        }
+      }
+    }
 
     &__list {
       background-color: @white;
@@ -150,4 +236,5 @@ const recurringBillsFiltered = computed(() => {
     }
   }
 }
+
 </style>

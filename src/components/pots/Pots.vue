@@ -47,8 +47,6 @@ function potsPercentage(pot: { total: number; target: number }): number {
     h1 {
       font-size: @font-size-xl;
       font-weight: @font-weight-bold;
-      line-height: 120%;
-      opacity: 1;
       color: @grey-900;
     }
 

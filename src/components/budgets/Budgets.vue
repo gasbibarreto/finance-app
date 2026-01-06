@@ -83,6 +83,12 @@ function filterTransactionsByCategory(category: string) {
     display: flex;
     justify-content: space-between;
 
+    h1 {
+      font-size: @font-size-xl;
+      font-weight: @font-weight-bold;
+      color: @grey-900;
+    }
+
     button {
       background-color: @grey-900;
       color: @white;
@@ -110,7 +116,8 @@ function filterTransactionsByCategory(category: string) {
       background-color: @white;
       border-radius: @spacing-150;
       padding: @spacing-300;
-      height: 400px;
+      min-height: 400px;
+      align-self: start; 
 
       img {
         align-self: center;
