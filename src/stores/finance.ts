@@ -119,7 +119,9 @@ export const useFinanceStore = defineStore('finance', () => {
   }
 
   function updateBudget(category: string, updatedBudget: Partial<Budget>) {
-    const budgetIndex = budgets.value.findIndex((budget) => budget.category.toLowerCase() === category.toLowerCase())
+    const budgetIndex = budgets.value.findIndex(
+      (budget) => budget.category.toLowerCase() === category.toLowerCase(),
+    )
     if (budgetIndex !== -1 && budgets.value[budgetIndex]) {
       Object.assign(budgets.value[budgetIndex], updatedBudget)
     } else {
@@ -128,7 +130,9 @@ export const useFinanceStore = defineStore('finance', () => {
   }
 
   function deleteBudget(category: string) {
-    const budgetIndex = budgets.value.findIndex((budget) => budget.category.toLowerCase() === category.toLowerCase())
+    const budgetIndex = budgets.value.findIndex(
+      (budget) => budget.category.toLowerCase() === category.toLowerCase(),
+    )
     if (budgetIndex !== -1 && budgets.value[budgetIndex]) {
       budgets.value.splice(budgetIndex, 1)
     } else {

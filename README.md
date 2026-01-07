@@ -257,21 +257,6 @@ Executa os testes unitários usando Vitest.
 
 ## 💻 Desenvolvimento
 
-### Configuração Recomendada do IDE
-
-- **VS Code** com as extensões:
-  - [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) - Suporte Vue 3
-  - Desabilite o Vetur se estiver instalado
-
-### Configuração Recomendada do Navegador
-
-- **Chromium-based browsers** (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Ative Custom Object Formatter no Chrome DevTools](http://bit.ly/object-formatters)
-- **Firefox**:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Ative Custom Object Formatter no Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
-
 ### Gerenciamento de Estado
 
 O projeto utiliza **Pinia** para gerenciamento de estado centralizado. A store principal (`finance.ts`) gerencia:
@@ -288,12 +273,11 @@ Para mais informações sobre configuração do Vite, consulte a [Documentação
 
 ## 📝 Licença
 
-Este projeto foi desenvolvido como solução para um desafio do Frontend Mentor. Sinta-se livre para usar este código em seu portfólio.
+Este projeto foi desenvolvido como solução para um desafio do Frontend Mentor.
 
 ## 🙏 Agradecimentos
 
 - [Frontend Mentor](https://www.frontendmentor.io) pelo desafio
-- Comunidade Vue.js pelo excelente framework e ferramentas
 
 ---
 

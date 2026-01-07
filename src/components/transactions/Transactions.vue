@@ -180,7 +180,6 @@ function changePage(page: number) {
 </template>
 <style lang="less" scoped>
 .transactions {
-
   h1 {
     font-size: @font-size-xl;
     font-weight: @font-weight-bold;

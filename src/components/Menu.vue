@@ -57,10 +57,7 @@ const emit = defineEmits<{
       </ul>
     </div>
     <div class="menu__bottom" @click="showMenu = !showMenu">
-      <img
-        :class="[{ menu__bottom__rotate: !showMenu }]"
-        src="/images/icon-minimize-menu.svg"
-      />
+      <img :class="[{ menu__bottom__rotate: !showMenu }]" src="/images/icon-minimize-menu.svg" />
       <button v-show="showMenu">Minimize Menu</button>
     </div>
   </div>

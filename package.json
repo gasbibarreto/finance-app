@@ -10,8 +10,10 @@
   "dev": "vite",
   "build": "vite build",
   "preview": "vite preview",
+  "test:unit": "vitest",
   "type-check": "vue-tsc --build",
-  "lint": "eslint . --fix --cache"
+  "lint": "eslint . --fix --cache",
+  "format": "prettier --write src/"
 },
   "dependencies": {
     "pinia": "^3.0.3",

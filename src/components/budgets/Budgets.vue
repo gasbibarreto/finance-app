@@ -54,10 +54,16 @@ function filterTransactionsByCategory(category: string) {
             :style="{ borderLeft: '4px solid ' + item.theme }"
           >
             <div class="budgets__content__card__total__list__item">
-              <span class="budgets__content__card__total__list__item__category">{{ item.category }}</span>
+              <span class="budgets__content__card__total__list__item__category">{{
+                item.category
+              }}</span>
               <div class="budgets__content__card__total__list__item__container">
-                <span class="budgets__content__card__total__list__item__container__amount">{{ totalSpendingAmountByCategory(item.category) }}</span>
-                <span class="budgets__content__card__total__list__item__container__maximum">of {{ formatCurrency(item.maximum) }}</span>
+                <span class="budgets__content__card__total__list__item__container__amount">{{
+                  totalSpendingAmountByCategory(item.category)
+                }}</span>
+                <span class="budgets__content__card__total__list__item__container__maximum"
+                  >of {{ formatCurrency(item.maximum) }}</span
+                >
               </div>
             </div>
           </li>
@@ -117,7 +123,7 @@ function filterTransactionsByCategory(category: string) {
       border-radius: @spacing-150;
       padding: @spacing-300;
       min-height: 400px;
-      align-self: start; 
+      align-self: start;
 
       img {
         align-self: center;
@@ -157,20 +163,19 @@ function filterTransactionsByCategory(category: string) {
           display: flex;
           align-items: flex-end;
 
-        &__amount {
-          font-size: @font-size-sm;
-          font-weight: @font-weight-bold;
-          color: @grey-900;
-          margin-right: @spacing-100;
-        }
+          &__amount {
+            font-size: @font-size-sm;
+            font-weight: @font-weight-bold;
+            color: @grey-900;
+            margin-right: @spacing-100;
+          }
 
-        &__maximum {
-          font-size: @font-size-xs;
-          font-weight: @font-weight-normal;
-          color: @grey-900;
+          &__maximum {
+            font-size: @font-size-xs;
+            font-weight: @font-weight-normal;
+            color: @grey-900;
+          }
         }
-        }
-
       }
     }
   }

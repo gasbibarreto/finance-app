@@ -145,12 +145,12 @@ function redirectToView(view: string) {
         padding-bottom: @spacing-100;
       }
 
-    span {
-      font-size: @font-size-sm;
-      font-weight: @font-weight-bold;
-    }
+      span {
+        font-size: @font-size-sm;
+        font-weight: @font-weight-bold;
+      }
 
-      &__spent { 
+      &__spent {
         border-left: 4px solid @green;
         padding-left: @spacing-200;
       }
@@ -164,7 +164,7 @@ function redirectToView(view: string) {
 
   &__list {
     margin-top: @spacing-200;
-    
+
     &__card {
       background-color: @beige-100;
       border-radius: @spacing-150;

@@ -21,7 +21,7 @@ const openModalEditBudget = ref(false)
 const openModalDelete = ref(false)
 
 function handleEditClick() {
-  if(props.actionsType.includes('Budget')) openModalEditBudget.value = true
+  if (props.actionsType.includes('Budget')) openModalEditBudget.value = true
   else openModalEdit.value = true
   openModalActions.value = false
 }
@@ -32,7 +32,7 @@ function handleDeleteClick() {
 }
 
 function handleDelete(actionsTitle: string) {
-  if(props.actionsType.includes('Pot')) financeStore.deletePot(actionsTitle)
+  if (props.actionsType.includes('Pot')) financeStore.deletePot(actionsTitle)
   else financeStore.deleteBudget(actionsTitle)
   openModalDelete.value = false
 }

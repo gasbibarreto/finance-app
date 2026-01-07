@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { useFinanceStore } from '@/stores/finance'
 import { computed, type Ref } from 'vue'
-import { formatCurrency } from '@/common/common'
+import { formatCurrency, getImagePath, formatDateOrdinal } from '@/common/common'
 import { ref } from 'vue'
 import type { SortItens } from '@/types'
 
+const dueSoon = ref(false)
 const searchBill = ref('')
 const sortedBills = ref<SortItens>('Latest')
 const financeStore = useFinanceStore()
@@ -57,6 +58,14 @@ const recurringBillsFiltered = computed(() => {
 
   return recurringBillsCopy
 })
+
+function dueSoonFormatDate(date: string) {
+  const dateToday = new Date().toISOString()
+  if(new Date(date).getTime() === new Date(dateToday).getTime()) {
+    dueSoon.value = true
+  }
+  return formatDateOrdinal(date)
+}
 </script>
 <template>
   <div class="recurring-bills">
@@ -74,38 +83,40 @@ const recurringBillsFiltered = computed(() => {
           <div class="recurring-bills__content__summary__all-bills">
             <h3>Summary</h3>
             <div class="recurring-bills__content__summary__all-bills__summary-item">
-            <p>Paied Bills</p>
-            <span>
-              {{ recurringBillsPaied.count + ' (' + formatCurrency(recurringBillsPaied.total) + ')' }}
-            </span>
+              <p>Paied Bills</p>
+              <span>
+                {{
+                  recurringBillsPaied.count + ' (' + formatCurrency(recurringBillsPaied.total) + ')'
+                }}
+              </span>
             </div>
             <div class="recurring-bills__content__summary__all-bills__summary-item">
-            <p>Total Upcoming</p>
-            <span>
-              {{
-                recurringBillsUpcoming.count +
-                ' (' +
-                formatCurrency(recurringBillsUpcoming.total) +
-                ')'
-              }}
-            </span>
+              <p>Total Upcoming</p>
+              <span>
+                {{
+                  recurringBillsUpcoming.count +
+                  ' (' +
+                  formatCurrency(recurringBillsUpcoming.total) +
+                  ')'
+                }}
+              </span>
+            </div>
+            <div class="recurring-bills__content__summary__all-bills__summary-item">
+              <p>Due Soon</p>
+              <span>
+                {{ recurringBillsDue.count + ' (' + formatCurrency(recurringBillsDue.total) + ')' }}
+              </span>
+            </div>
           </div>
-          <div class="recurring-bills__content__summary__all-bills__summary-item">
-            <p>Due Soon</p>
-            <span>
-              {{ recurringBillsDue.count + ' (' + formatCurrency(recurringBillsDue.total) + ')' }}
-            </span>
-          </div>
-        </div>
         </div>
       </div>
       <div class="recurring-bills__content__list">
         <div class="recurring-bills__content__list__search">
-          <div>
+          <div class="recurring-bills__content__list__search__input">
             <input type="text" placeholder="Search bills" v-model="searchBill" />
             <img src="/images/icon-search.svg" alt="Icon search" />
           </div>
-          <div>
+          <div class="recurring-bills__content__list__search__sort">
             <p>Sort by</p>
             <select v-model="sortedBills">
               <option value="Latest">Latest</option>
@@ -117,19 +128,27 @@ const recurringBillsFiltered = computed(() => {
             </select>
           </div>
         </div>
-        <table>
+        <table class="recurring-bills__content__table">
           <thead>
-            <tr>
+            <tr class="recurring-bills__content__table__header">
               <th>Bill Title</th>
               <th>Due Date</th>
               <th>Amount</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody class="recurring-bills__content__table__body">
             <tr v-for="bill in recurringBillsFiltered" :key="recurringBills.indexOf(bill)">
-              <td>{{ bill.name }}</td>
-              <td>{{ bill.date }}</td>
-              <td>{{ formatCurrency(bill.amount) }}</td>
+              <td class="recurring-bills__content__table__body__name">
+                <img :src="getImagePath(bill.avatar)" alt="Icon bill" />
+                <span>{{ bill.name }}</span>
+              </td>
+              <td class="recurring-bills__content__table__body__due-date">
+                <span>{{ dueSoonFormatDate(bill.date) }}</span>
+                <img src="/images/icon-bill-paid.svg" alt="Icon bill" />
+              </td>
+              <td class="recurring-bills__content__table__body__amount">
+                <span :class="{ 'recurring-bills__content__table__body__amount--color': dueSoon === true }">{{ formatCurrency(bill.amount) }}</span>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -231,10 +250,112 @@ const recurringBillsFiltered = computed(() => {
 
       &__search {
         display: flex;
+        align-items: center;
         justify-content: space-between;
+        gap: @spacing-100;
+
+        &__input {
+          display: flex;
+          align-items: center;
+          position: relative;
+          gap: @spacing-100;
+
+          input {
+            border-radius: @spacing-100;
+            border: 1px solid @grey-300;
+            padding: @spacing-100 @spacing-250 @spacing-100 @spacing-100;
+            width: 250px;
+            height: 20px;
+            font-size: @font-size-xs;
+            font-weight: @font-weight-light;
+          }
+
+          img {
+            position: absolute;
+            right: 10px;
+            pointer-events: none;
+          }
+        }
+
+        &__sort {
+          display: flex;
+          align-items: center;
+          gap: @spacing-100;
+
+          p {
+            font-size: @font-size-xs;
+            font-weight: @font-weight-light;
+            color: @grey-500;
+          }
+
+          select {
+            background-color: transparent;
+            font-size: @font-size-xs;
+            font-weight: @font-weight-light;
+            padding: @spacing-100;
+            border-radius: @spacing-100;
+            border: 1px solid @grey-300;
+          }
+        }
+      }
+    }
+
+    &__table {
+      width: 100%;
+      margin-top: @spacing-250;
+
+      &__header { 
+
+        th { 
+          color: @grey-500;
+          font-size: @font-size-xs;
+          font-weight: @font-weight-normal;
+          text-align: left;
+          padding: @spacing-250 0px;
+        }
+      }
+
+      &__body {
+        td {
+          border-top: 1px solid @grey-100;
+          padding: @spacing-250 0px;
+
+
+
+        }
+
+        &__name {
+          font-size: @font-size-xs;
+          font-weight: @font-weight-bold;
+          display: flex;
+          align-items: center;
+          gap: @spacing-150;
+          
+          img {
+            width: @spacing-400;
+            height: @spacing-400;
+            border-radius: 50%;
+          }
+        }
+
+        &__due-date {
+          font-size: @font-size-xs;
+          font-weight: @font-weight-light;
+          color: var(--color-green);
+
+          img {
+            margin-left: @spacing-50;
+            width: @spacing-200;
+            height: @spacing-200;
+          }
+        }
+
+        &__amount {
+          font-size: @font-size-xs;
+          font-weight: @font-weight-bold;
+        }
       }
     }
   }
 }
-
 </style>

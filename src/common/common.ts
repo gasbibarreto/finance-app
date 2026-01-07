@@ -29,3 +29,22 @@ export function formatDate(dateString: string): string {
     year: 'numeric',
   })
 }
+
+export function formatDateOrdinal(dateString: string): string {
+  const date = new Date(dateString)
+  const day = date.getDate()
+  
+  let suffix: string
+
+  if (day === 1 || day === 21 || day === 31) {
+    suffix = 'st'
+  } else if (day === 2 || day === 22) {
+    suffix = 'nd'
+  } else if (day === 3 || day === 23) {
+    suffix = 'rd'
+  } else {
+    suffix = 'th'
+  }
+
+  return `Monthly-${day}${suffix}`
+}
