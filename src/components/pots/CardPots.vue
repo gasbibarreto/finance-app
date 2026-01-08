@@ -83,7 +83,7 @@ const props = defineProps({
 
     &__title {
       display: flex;
-      align-items: flex-start;
+      align-items: center;
       gap: @spacing-100;
       width: 100%;
     }

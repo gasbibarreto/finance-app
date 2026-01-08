@@ -33,7 +33,7 @@ export function formatDate(dateString: string): string {
 export function formatDateOrdinal(dateString: string): string {
   const date = new Date(dateString)
   const day = date.getDate()
-  
+
   let suffix: string
 
   if (day === 1 || day === 21 || day === 31) {

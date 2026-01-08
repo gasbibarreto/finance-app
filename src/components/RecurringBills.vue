@@ -5,7 +5,7 @@ import { formatCurrency, getImagePath, formatDateOrdinal } from '@/common/common
 import { ref } from 'vue'
 import type { SortItens } from '@/types'
 
-const dueSoon = ref(false)
+const dateToday = ref(new Date().getDate())
 const searchBill = ref('')
 const sortedBills = ref<SortItens>('Latest')
 const financeStore = useFinanceStore()
@@ -60,11 +60,16 @@ const recurringBillsFiltered = computed(() => {
 })
 
 function dueSoonFormatDate(date: string) {
-  const dateToday = new Date().toISOString()
-  if(new Date(date).getTime() === new Date(dateToday).getTime()) {
-    dueSoon.value = true
+  const dateToday = new Date().getDate()
+  const dateBill = new Date(date).getDate()
+
+  console.log("dateToday", dateToday)
+  console.log("dateBill", dateBill)
+  if (dateBill.toString() === dateToday.toString()) {
+  } else {
   }
-  return formatDateOrdinal(date)
+
+  //return formatDateOrdinal(date)
 }
 </script>
 <template>
@@ -101,7 +106,7 @@ function dueSoonFormatDate(date: string) {
                 }}
               </span>
             </div>
-            <div class="recurring-bills__content__summary__all-bills__summary-item">
+            <div class="recurring-bills__content__summary__all-bills__summary-item due-soon">
               <p>Due Soon</p>
               <span>
                 {{ recurringBillsDue.count + ' (' + formatCurrency(recurringBillsDue.total) + ')' }}
@@ -143,11 +148,19 @@ function dueSoonFormatDate(date: string) {
                 <span>{{ bill.name }}</span>
               </td>
               <td class="recurring-bills__content__table__body__due-date">
-                <span>{{ dueSoonFormatDate(bill.date) }}</span>
-                <img src="/images/icon-bill-paid.svg" alt="Icon bill" />
+                <div>
+                  <span :class="{ 'recurring-bills__content__table__body__due-date__span--color': new Date(bill.date).getDate() === dateToday }">{{ formatDateOrdinal(bill.date) }}</span>
+                  <img v-if="new Date(bill.date).getDate() === dateToday" src="/images/icon-bill-due.svg" alt="Icon bill paid" />
+                  <img v-else src="/images/icon-bill-paid.svg" alt="Icon bill due" />
+                </div>
               </td>
               <td class="recurring-bills__content__table__body__amount">
-                <span :class="{ 'recurring-bills__content__table__body__amount--color': dueSoon === true }">{{ formatCurrency(bill.amount) }}</span>
+                <span
+                  :class="{
+                    'recurring-bills__content__table__body__amount--color': new Date(bill.date).getDate() === dateToday,
+                  }"
+                  >{{ formatCurrency(bill.amount) }}</span
+                >
               </td>
             </tr>
           </tbody>
@@ -236,11 +249,19 @@ function dueSoonFormatDate(date: string) {
             color: @grey-900;
           }
 
+          &.due-soon {
+            p, span {
+              color: @red;
+            }
+          }
+
           &:not(:last-child) {
             border-bottom: 1px solid @grey-100;
           }
+
         }
-      }
+        }
+
     }
 
     &__list {
@@ -304,9 +325,8 @@ function dueSoonFormatDate(date: string) {
       width: 100%;
       margin-top: @spacing-250;
 
-      &__header { 
-
-        th { 
+      &__header {
+        th {
           color: @grey-500;
           font-size: @font-size-xs;
           font-weight: @font-weight-normal;
@@ -319,9 +339,6 @@ function dueSoonFormatDate(date: string) {
         td {
           border-top: 1px solid @grey-100;
           padding: @spacing-250 0px;
-
-
-
         }
 
         &__name {
@@ -330,7 +347,7 @@ function dueSoonFormatDate(date: string) {
           display: flex;
           align-items: center;
           gap: @spacing-150;
-          
+
           img {
             width: @spacing-400;
             height: @spacing-400;
@@ -341,18 +358,32 @@ function dueSoonFormatDate(date: string) {
         &__due-date {
           font-size: @font-size-xs;
           font-weight: @font-weight-light;
-          color: var(--color-green);
+          color: @green;
 
-          img {
-            margin-left: @spacing-50;
-            width: @spacing-200;
-            height: @spacing-200;
+          div {
+            display: flex;
+            align-items: center;
+            gap: @spacing-100;
+
+            img {
+              width: @spacing-200;
+              height: @spacing-200;
+            }
           }
+
+          &__span--color {
+            color: @grey-900;
+          }
+
         }
 
         &__amount {
           font-size: @font-size-xs;
           font-weight: @font-weight-bold;
+
+          &--color {
+            color: @red;
+          }
         }
       }
     }
