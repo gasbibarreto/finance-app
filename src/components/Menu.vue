@@ -144,10 +144,11 @@ const emit = defineEmits<{
   }
 
   &__bottom {
+    position: absolute;
+    bottom: 0;
     display: flex;
     justify-content: left;
     padding: 16px 32px;
-    margin-bottom: @spacing-500;
 
     button {
       background: none;
