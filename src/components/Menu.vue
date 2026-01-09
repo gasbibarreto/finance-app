@@ -190,7 +190,13 @@ const emit = defineEmits<{
             gap: @spacing-100;
             width: 100px;
             margin-top: 6px;
+            padding-right: 0px;
+            padding-left: 0px;
     
+            img {
+              padding-right: 0px;
+            }
+
             button {
               font-size: @font-size-xs;
             }
