@@ -25,7 +25,7 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <div :class="['menu', { 'menu--collapsed': !showMenu }]">
+  <div :class="['menu', 'menu--responsive', { 'menu--collapsed': !showMenu }]">
     <div class="menu__top">
       <img
         v-if="showMenu"
@@ -69,10 +69,9 @@ const emit = defineEmits<{
   flex-direction: column;
   justify-content: space-between;
   background-color: @grey-900;
-  width: 300px;
-  height: 100vh;
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
+  width: 300px;
 
   &--collapsed {
     width: 80px;
@@ -83,9 +82,6 @@ const emit = defineEmits<{
           width: 40px;
         }
       }
-    }
-
-    @media (max-width: 768px) {
     }
   }
 
@@ -140,6 +136,7 @@ const emit = defineEmits<{
             &:hover {
               color: @grey-900;
             }
+
           }
         }
       }
@@ -164,6 +161,62 @@ const emit = defineEmits<{
     &__rotate {
       transform: rotate(180deg);
     }
+  }
+
+  &--responsive {
+  @media (max-width: 1024px) {
+    width: 100vw;
+    height: 80px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 0;
+    
+    .menu__top {
+        &__img {
+          display: none;
+        }
+
+        &__list {
+          flex-direction: row;
+          justify-content: space-around;
+          align-items: center;
+          padding: 0;
+          margin: 0;
+
+          &__itens {
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: @spacing-100;
+            width: 100px;
+            margin-top: 6px;
+    
+            button {
+              font-size: @font-size-xs;
+            }
+
+            &--selected {
+              border-top-right-radius: 10px;
+              border-top-left-radius: 10px;
+              border-bottom-right-radius: 0;
+              border-bottom-left-radius: 0;
+              border-left: none;
+              border-bottom: 5px solid @green;
+              padding-bottom: @spacing-50;
+              padding-left: 0px;
+            }
+          }
+      }
+    }
+    .menu__bottom {
+      display: none;
+    }
+
+  }
+  @media (max-width: 768px) {
+    width: 100vh;
+    height: 100vh;
+  }
   }
 }
 </style>

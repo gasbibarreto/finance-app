@@ -138,9 +138,6 @@ const emit = defineEmits<{
 </template>
 <style scoped lang="less">
 .overview {
-  display: flex;
-  flex-direction: column;
-
   &__title {
     font-size: @font-size-xl;
     font-weight: @font-weight-bold;
@@ -151,7 +148,7 @@ const emit = defineEmits<{
     display: flex;
     margin-top: @spacing-400;
     margin-bottom: @spacing-400;
-
+    
     &-card {
       background-color: @white;
       border-radius: 12px;
@@ -193,11 +190,13 @@ const emit = defineEmits<{
       &--left {
         display: flex;
         width: 580px;
+        width: 100%;
       }
 
       &--right {
         display: flex;
         width: 470px;
+        width: 100%;
       }
 
       &__content {
@@ -289,7 +288,6 @@ const emit = defineEmits<{
     margin-top: @spacing-400;
     margin-bottom: @spacing-250;
     padding: @spacing-100 0;
-
     &__total {
       p {
         font-size: @font-size-sm;
@@ -362,6 +360,23 @@ const emit = defineEmits<{
 
     &__due {
       border-left: 4px solid @cyan;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    align-items: flex-start;
+
+    &__summary {
+      align-items: flex-start;
+      justify-content: flex-start;
+      gap: @spacing-200;
+    }
+
+    &__categories {
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      gap: @spacing-200;
     }
   }
 }

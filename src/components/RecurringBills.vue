@@ -63,8 +63,8 @@ function dueSoonFormatDate(date: string) {
   const dateToday = new Date().getDate()
   const dateBill = new Date(date).getDate()
 
-  console.log("dateToday", dateToday)
-  console.log("dateBill", dateBill)
+  console.log('dateToday', dateToday)
+  console.log('dateBill', dateBill)
   if (dateBill.toString() === dateToday.toString()) {
   } else {
   }
@@ -149,15 +149,26 @@ function dueSoonFormatDate(date: string) {
               </td>
               <td class="recurring-bills__content__table__body__due-date">
                 <div>
-                  <span :class="{ 'recurring-bills__content__table__body__due-date__span--color': new Date(bill.date).getDate() === dateToday }">{{ formatDateOrdinal(bill.date) }}</span>
-                  <img v-if="new Date(bill.date).getDate() === dateToday" src="/images/icon-bill-due.svg" alt="Icon bill paid" />
+                  <span
+                    :class="{
+                      'recurring-bills__content__table__body__due-date__span--color':
+                        new Date(bill.date).getDate() === dateToday,
+                    }"
+                    >{{ formatDateOrdinal(bill.date) }}</span
+                  >
+                  <img
+                    v-if="new Date(bill.date).getDate() === dateToday"
+                    src="/images/icon-bill-due.svg"
+                    alt="Icon bill paid"
+                  />
                   <img v-else src="/images/icon-bill-paid.svg" alt="Icon bill due" />
                 </div>
               </td>
               <td class="recurring-bills__content__table__body__amount">
                 <span
                   :class="{
-                    'recurring-bills__content__table__body__amount--color': new Date(bill.date).getDate() === dateToday,
+                    'recurring-bills__content__table__body__amount--color':
+                      new Date(bill.date).getDate() === dateToday,
                   }"
                   >{{ formatCurrency(bill.amount) }}</span
                 >
@@ -250,7 +261,8 @@ function dueSoonFormatDate(date: string) {
           }
 
           &.due-soon {
-            p, span {
+            p,
+            span {
               color: @red;
             }
           }
@@ -258,10 +270,8 @@ function dueSoonFormatDate(date: string) {
           &:not(:last-child) {
             border-bottom: 1px solid @grey-100;
           }
-
         }
-        }
-
+      }
     }
 
     &__list {
@@ -374,7 +384,6 @@ function dueSoonFormatDate(date: string) {
           &__span--color {
             color: @grey-900;
           }
-
         }
 
         &__amount {

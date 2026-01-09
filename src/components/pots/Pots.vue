@@ -63,7 +63,8 @@ function potsPercentage(pot: { total: number; target: number }): number {
 
   &__card {
     margin-top: @spacing-300;
-
+    width: 100%;
+    
     &__list {
       display: grid;
       grid-template-columns: 1fr 1fr;

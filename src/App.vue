@@ -25,7 +25,7 @@ function changeMenuItem(itemName: ComponentsItens) {
 
 <template>
   <div class="app__container">
-    <Menu @selected-menu-item="changeMenuItem" />
+    <Menu class="app__container__menu" @selected-menu-item="changeMenuItem" />
     <component
       :is="menuItem"
       class="app__container__component"
@@ -37,13 +37,27 @@ function changeMenuItem(itemName: ComponentsItens) {
 <style scoped lang="less">
 .app__container {
   display: flex;
-  height: 100vh;
-
+  
   &__component {
     flex-grow: 1;
     margin: @spacing-400 @spacing-500;
-    overflow-y: auto;
     max-width: 1140px;
+  }
+
+
+  @media (max-width: 1024px) {
+    flex-direction: column;
+    width:100vw;
+    height: 100vh;
+
+    &__menu {
+      width: 100vw;
+    }
+
+    &__component {
+      height: 100vh;
+    }
+
   }
 }
 </style>
