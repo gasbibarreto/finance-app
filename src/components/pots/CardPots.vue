@@ -72,7 +72,6 @@ const props = defineProps({
 </template>
 <style lang="less" scoped>
 .card {
-  width: 455px;
   border-radius: @spacing-150;
   padding: @spacing-300;
   background-color: @white;
@@ -184,6 +183,10 @@ const props = defineProps({
         padding: @spacing-200;
       }
     }
+  }
+
+  @media (max-width: 1024px) {
+
   }
 }
 </style>
