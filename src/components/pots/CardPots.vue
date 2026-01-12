@@ -171,12 +171,12 @@ const props = defineProps({
       }
 
       &::-webkit-progress-value {
-        background-color: var(--progress-color, @grey-300);
+        background-color: var(--progress-color, @beige-100);
         border-radius: 10px;
       }
 
       &::-moz-progress-bar {
-        background-color: var(--progress-color, @grey-300);
+        background-color: var(--progress-color, @beige-100);
         border-radius: 10px;
       }
 

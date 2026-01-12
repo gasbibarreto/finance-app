@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref, type PropType } from 'vue'
+import { computed, ref, type PropType } from 'vue'
 import type { Budget, Transaction } from '@/interfaces'
-import { formatCurrency } from '@/common/common'
+import { formatCurrency, formatPercentage } from '@/common/common'
 import Card from '../Card.vue'
 import ActionsModal from '../actionsModal/ActionsModal.vue'
 import TransactionsList from '../transactions/TransactionsList.vue'
@@ -18,6 +18,11 @@ const props = defineProps({
 })
 
 const openModalActions = ref(false)
+
+const budgetValuePercentage = computed(() => {
+  const percentage = Math.abs((totalSpendingPerCategory(props.budget.category) / props.budget.maximum) * 100)
+  return formatPercentage(percentage)
+});
 
 function totalSpendingPerCategory(category: string) {
   return props.transactions
@@ -65,6 +70,14 @@ function redirectToView(view: string) {
     </div>
     <div class="card-budget__content">
       <p>{{ 'Maximum of ' + formatCurrency(budget.maximum) }}</p>
+      <progress 
+      class="card-budget__content__progress" 
+      :style="{ '--progress-color': budget.theme }"
+      :value="budgetValuePercentage" 
+      max="100">
+    </progress>
+    <p>{{ budgetValuePercentage }}%</p>
+
     </div>
     <div class="card-budget__content__cost">
       <div class="card-budget__content__cost__spent">
@@ -125,13 +138,38 @@ function redirectToView(view: string) {
 
   &__content {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
     margin-top: @spacing-200;
 
     p {
       font-size: @font-size-xs;
+      font-weight: @font-weight-normal;
       color: @grey-500;
+    }
+
+    &__progress {
+      width: 100%;
+      height: 30px;
+      appearance: none;
+      border: 3px solid @beige-100;
+      background-color: @beige-100;
+      border-radius: 5px;
+      margin-top: @spacing-150;
+
+      &::-webkit-progress-bar {
+        background-color: @beige-100;
+        border-radius: 5px;
+      }
+
+      &::-webkit-progress-value {
+        background-color: var(--progress-color, @beige-100);
+        border-radius: 5px;
+      }
+
+      &::-moz-progress-bar {
+        background-color: var(--progress-color, @beige-100);
+        border-radius: 5px;
+      }
     }
 
     &__cost {
