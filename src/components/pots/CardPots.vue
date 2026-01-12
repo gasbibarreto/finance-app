@@ -45,8 +45,16 @@ const props = defineProps({
       <p>{{ formatCurrency(potsValue || 0) }}</p>
     </div>
     <div class="card__target">
-      <p>{{ potsPercentage }}%</p>
-      <p>Target of {{ potsTargetValue }}</p>
+      <progress 
+        class="card__target__progress" 
+        :style="{ '--progress-color': potsTheme }"
+        :value="potsPercentage" 
+        max="100"
+      ></progress>
+      <div class="card__target__progress__info">
+        <p>{{ potsPercentage }}%</p>
+        <p>Target of ${{ potsTargetValue }}</p>
+      </div>
     </div>
     <div class="card__actions">
       <div>
@@ -146,9 +154,55 @@ const props = defineProps({
 
   &__target {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     gap: @spacing-100;
     margin-top: @spacing-200;
+
+    &__progress {
+      width: 100%;
+      height: 10px;
+      appearance: none; 
+      border: 1px solid @beige-100;
+      border-radius: 10px;
+
+      &::-webkit-progress-bar {
+        background-color: @beige-100;
+        border-radius: 10px;
+      }
+
+      &::-webkit-progress-value {
+        background-color: var(--progress-color, @grey-300);
+        border-radius: 10px;
+      }
+
+      &::-moz-progress-bar {
+        background-color: var(--progress-color, @grey-300);
+        border-radius: 10px;
+      }
+
+      &__info {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: @spacing-150;
+        
+        p {
+          font-size: @font-size-xs;
+          font-weight: @font-weight-normal;
+          color: @grey-500;
+        }
+
+        p:first-child {
+          font-weight: @font-weight-bold;
+        }
+      }
+    }
+
+    &__progress__info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
   }
 
   &__actions {
