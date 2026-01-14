@@ -47,7 +47,7 @@ function changeMenuItem(itemName: ComponentsItens) {
 
   @media (max-width: 1024px) {
     flex-direction: column;
-    width:100vw;
+    width: 100vw;
     height: 100vh;
 
     &__menu {
@@ -58,6 +58,13 @@ function changeMenuItem(itemName: ComponentsItens) {
       height: 100vh;
     }
 
+  }
+
+  @media (max-width: 768px) {
+    &__component {
+      padding-bottom: 100px; 
+    }
+    
   }
 }
 </style>

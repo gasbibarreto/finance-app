@@ -146,14 +146,18 @@ const emit = defineEmits<{
 
   &__summary {
     display: flex;
+    max-width: 100%; 
     margin-top: @spacing-400;
     margin-bottom: @spacing-400;
-    
+    gap: @spacing-150;
+
     &-card {
       background-color: @white;
       border-radius: 12px;
       padding: @spacing-300;
-      width: 100%;
+      flex: 1; 
+      min-width: 0; 
+      box-sizing: border-box;
 
       h2 {
         font-size: @font-size-sm;
@@ -164,11 +168,6 @@ const emit = defineEmits<{
         font-size: @font-size-xl;
         font-weight: @font-weight-bold;
         margin-top: @spacing-150;
-      }
-
-      /* spacing between cards */
-      & + & {
-        margin-left: @spacing-150;
       }
 
       &--balance {
@@ -186,6 +185,7 @@ const emit = defineEmits<{
     &-card {
       display: flex;
       flex-direction: column;
+      flex: 1; 
 
       &--left {
         display: flex;
@@ -379,5 +379,33 @@ const emit = defineEmits<{
       gap: @spacing-200;
     }
   }
+
+  @media (max-width: 768px) {
+    &__summary {
+      flex-direction: column;
+
+      &-card {
+        width: 100%;
+      }
+    }
+
+    .overview__budgets {
+      flex-direction: column;
+
+      &__categories {
+        ul {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+
+    }
+
+    .overview__pots {
+      flex-wrap: wrap;
+    }
+  }
+
+
 }
 </style>

@@ -6,8 +6,7 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/finance-app/',
-  plugins: [
+  base: process.env.NODE_ENV === 'production' ? '/finance-app/' : '/',  plugins: [
     vue(),
     //vueDevTools(),
   ],
@@ -22,7 +21,5 @@ export default defineConfig({
         additionalData: `@import "@/styles.less";`
       }
     }
-  }
-
-
+  },
 })

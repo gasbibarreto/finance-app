@@ -168,8 +168,7 @@ const emit = defineEmits<{
   @media (max-width: 1024px) {
     width: 100vw;
     height: 80px;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
+    border-top-right-radius: 0;
     border-bottom-right-radius: 0;
     
     .menu__top {
@@ -220,10 +219,16 @@ const emit = defineEmits<{
     }
 
   }
+  
   @media (max-width: 768px) {
-    width: 100vh;
-    height: 100vh;
-  }
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      height: 80px;
+      padding-bottom: 5px;
+    }
   }
 }
 </style>
