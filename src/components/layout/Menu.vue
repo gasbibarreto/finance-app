@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { getImagePath } from '@/common/common'
+import { getImagePath } from '@/utils/utils'
 import type { ComponentsItens } from '@/types'
 import { ref } from 'vue'
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import data from '@/assets/data/data.json'
 import { computed, ref } from 'vue'
-import { getImagePath } from '@/common/common'
+import { getImagePath } from '@/utils/utils'
 import { useFinanceStore } from '@/stores/finance'
 import type { SortItens } from '@/types'
 

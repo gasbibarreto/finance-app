@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import AddMoneyOrWithdraw from '../actionsModal/AddMoneyOrWithdraw.vue'
 import ActionsModal from '../actionsModal/ActionsModal.vue'
-import { formatCurrency } from '@/common/common'
+import { formatCurrency } from '@/utils/utils'
 
 const openModalMoney = ref(false)
 const openModalActions = ref(false)
@@ -217,22 +217,16 @@ const props = defineProps({
       cursor: pointer;
       font-size: @font-size-md;
       font-weight: @font-weight-bold;
-      line-height: 150%;
-      letter-spacing: 0px;
       color: @grey-900;
 
       &:first-child {
-        width: 227px;
         height: 53px;
-        gap: 16px;
         border-radius: 8px;
         padding: @spacing-200;
       }
 
       &:last-child {
-        width: 227px;
         height: 53px;
-        gap: 16px;
         border-radius: 8px;
         padding: @spacing-200;
       }

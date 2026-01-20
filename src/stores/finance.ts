@@ -1,7 +1,7 @@
 import { ref, computed, reactive } from 'vue'
 import { defineStore } from 'pinia'
 import dataJson from '@/assets/data/data.json'
-import type { Balance, Budget, Pot, Transaction } from '@/interfaces'
+import type { Balance, Budget, Pot, Transaction } from '@/types/interfaces'
 
 export const useFinanceStore = defineStore('finance', () => {
   // Estado reativo dos dados

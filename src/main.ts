@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-import '@/styles.less'
+import '@/styles/styles.less'
 
 import App from './App.vue'
 import router from './router'

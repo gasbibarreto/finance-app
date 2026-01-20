@@ -2,7 +2,7 @@
 import CardPots from './CardPots.vue'
 import AddNew from './AddNew.vue'
 import { computed, ref } from 'vue'
-import { formatPercentage } from '@/common/common'
+import { formatPercentage } from '@/utils/utils'
 import { useFinanceStore } from '@/stores/finance'
 
 const showNewPotModal = ref<boolean>(false)
@@ -63,18 +63,28 @@ function potsPercentage(pot: { total: number; target: number }): number {
 
   &__card {
     margin-top: @spacing-300;
-    width: 100%;
 
     &__list {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(2, 1fr);
+      gap: @spacing-300;
       list-style: none;
       padding: 0px;
-      gap: @spacing-300;
+      box-sizing: border-box;
+      width: 100%;
+      overflow-x: hidden;
+      max-width: 100%;
     }
   }
 
   @media (max-width: 1024px) {
+    &__card {
+      &__list {
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
     &__card {
       &__list {
         grid-template-columns: 1fr;

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
-import type { Pot } from '@/interfaces'
+import type { Pot } from '@/types/interfaces'
 import { useFinanceStore } from '@/stores/finance'
 import { useColors } from '@/composables/useColors'
 

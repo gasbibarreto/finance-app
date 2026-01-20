@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useFinanceStore } from '@/stores/finance'
 import { computed, type Ref } from 'vue'
-import { formatCurrency, getImagePath, formatDateOrdinal } from '@/common/common'
+import { formatCurrency, getImagePath, formatDateOrdinal } from '@/utils/utils'
 import { ref } from 'vue'
 import type { SortItens } from '@/types'
 

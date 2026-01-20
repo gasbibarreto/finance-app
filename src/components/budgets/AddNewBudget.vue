@@ -2,7 +2,7 @@
 import { useFinanceStore } from '@/stores/finance'
 import { computed, reactive, ref, type PropType } from 'vue'
 import { useColors } from '@/composables/useColors'
-import type { Budget } from '@/interfaces'
+import type { Budget } from '@/types/interfaces'
 import { BUDGET_CATEGORIES as budgetCategories } from '@/types'
 
 const financeStore = useFinanceStore()

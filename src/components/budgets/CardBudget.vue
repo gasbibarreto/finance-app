@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed, ref, type PropType } from 'vue'
-import type { Budget, Transaction } from '@/interfaces'
-import { formatCurrency, formatPercentage } from '@/common/common'
-import Card from '../Card.vue'
+import type { Budget, Transaction } from '@/types/interfaces'
+import { formatCurrency, formatPercentage } from '@/utils/utils'
+import Card from '../ui/Card.vue'
 import ActionsModal from '../actionsModal/ActionsModal.vue'
 import TransactionsList from '../transactions/TransactionsList.vue'
 

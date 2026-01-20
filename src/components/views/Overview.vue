@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { computed, ref, type Component } from 'vue'
-import Card from './Card.vue'
-import type { ComponentsItens } from '@/types.ts'
-import { formatCurrency } from '@/common/common'
+import Card from '../ui/Card.vue'
+import type { ComponentsItens } from '@/types'
+import { formatCurrency } from '@/utils/utils'
 import { useFinanceStore } from '@/stores/finance'
-import TransactionsList from './transactions/TransactionsList.vue'
+import TransactionsList from '../transactions/TransactionsList.vue'
 
 // STORE
 const financeStore = useFinanceStore()

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { useFinanceStore } from '@/stores/finance'
-import { formatCurrency } from '@/common/common'
+import { formatCurrency } from '@/utils/utils'
 import CardBudget from './CardBudget.vue'
 import AddNewBudget from './AddNewBudget.vue'
 
