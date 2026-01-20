@@ -48,21 +48,22 @@ function changeMenuItem(itemName: ComponentsItens) {
   @media (max-width: 1024px) {
     flex-direction: column;
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
 
     &__menu {
       width: 100vw;
     }
 
     &__component {
-      height: 100vh;
+      min-height: calc(100vh - 80px);
     }
 
   }
 
   @media (max-width: 768px) {
+    
     &__component {
-      padding-bottom: 100px; 
+      padding-bottom: 100px;
     }
     
   }

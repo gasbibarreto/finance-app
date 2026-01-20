@@ -225,8 +225,6 @@ const emit = defineEmits<{
       bottom: 0;
       left: 0;
       right: 0;
-      z-index: 1000;
-      height: 80px;
       padding-bottom: 5px;
     }
   }
