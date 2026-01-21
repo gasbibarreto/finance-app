@@ -7,7 +7,10 @@ import type { SortItens } from '@/types'
 
 const dateToday = ref(new Date().getDate())
 const searchBill = ref('')
-const sortedBills = ref<SortItens>('Latest')
+const sortedBills = ref<SortItens>('Latest' as SortItens)
+const openSelectSortMobile = ref(false)
+const sortItens = ref<SortItens[]>(['Latest', 'Oldest', 'A to Z', 'Z to A', 'Highest', 'Lowest'])
+
 const financeStore = useFinanceStore()
 const recurringBills = computed(() =>
   financeStore.transactions.filter((bill) => bill.recurring === true),
@@ -123,14 +126,14 @@ function dueSoonFormatDate(date: string) {
           </div>
           <div class="recurring-bills__content__list__search__sort">
             <p>Sort by</p>
-            <select v-model="sortedBills">
-              <option value="Latest">Latest</option>
-              <option value="Oldest">Oldest</option>
-              <option value="Z-A">A to Z</option>
-              <option value="Z-A">Z to A</option>
-              <option value="Highest">Highest</option>
-              <option value="Lowest">Lowest</option>
+            <select v-model="sortedBills" >
+              <option :value="option" v-for="option in sortItens" :key="option">{{ option || sortItens[0] }}</option>
             </select>
+            <!-- Overlay mobile com Teleport (substitui o select mobile) -->
+            <Teleport to="body">
+              
+            </Teleport>
+            <img class="recurring-bills__content__list__search__sort__icon-mobile" src="/images/icon-sort-mobile.svg" alt="Icon sort" @click="openSelectSortMobile = !openSelectSortMobile"/>
           </div>
         </div>
         <table class="recurring-bills__content__table">
@@ -327,6 +330,10 @@ function dueSoonFormatDate(date: string) {
             border-radius: @spacing-100;
             border: 1px solid @grey-300;
           }
+
+          &__icon-mobile {
+              display: none;
+          }
         }
       }
     }
@@ -395,6 +402,49 @@ function dueSoonFormatDate(date: string) {
           }
         }
       }
+    }
+  }
+
+  @media (max-width: 768px) {
+
+    &__content {
+      grid-template-columns: 1fr;
+    
+
+      &__list {
+        padding: @spacing-250;
+
+        &__search {
+          gap: @spacing-300;
+          
+
+          &__sort {
+            p, select {
+              display: none;
+            }
+
+            &__icon-mobile {
+              display: inline;
+              width: @spacing-200;
+              height: @spacing-200;
+              cursor: pointer;
+
+            }
+
+            &__open-select-sort-mobile {
+              display: inline;
+              position: absolute;
+              margin-top: @spacing-300;
+            }
+          }
+        }
+      }
+
+     &__table {
+      &__header {
+        display: none;
+      }
+     }
     }
   }
 }

@@ -5,22 +5,22 @@ import Transactions from './components/transactions/Transactions.vue'
 import Pots from './components/pots/Pots.vue'
 import RecurringBills from './components/views/RecurringBills.vue'
 import Budgets from './components/budgets/Budgets.vue'
-import { markRaw, ref, type Component } from 'vue'
+import { ref, shallowRef, type Component } from 'vue'
 import type { ComponentsItens } from './types'
 
-const menuItem = ref<Component>(markRaw(Overview))
+const menuItem = shallowRef<Component>(Overview)
 const selectedMenuItem = ref<ComponentsItens>('Overview')
 
 const components: Record<string, Component> = {
-  Overview: markRaw(Overview),
-  Transactions: markRaw(Transactions),
-  Pots: markRaw(Pots),
-  'Recurring Bills': markRaw(RecurringBills),
-  Budgets: markRaw(Budgets),
+  Overview: Overview,
+  Transactions: Transactions,
+  Pots: Pots,
+  'Recurring Bills': RecurringBills,
+  Budgets: Budgets,
 }
 
 function changeMenuItem(itemName: ComponentsItens) {
-  menuItem.value = components[itemName] || markRaw(Overview)
+  menuItem.value = components[itemName] || Overview
   selectedMenuItem.value = itemName
 }
 </script>
@@ -70,6 +70,7 @@ function changeMenuItem(itemName: ComponentsItens) {
     
     &__component {
       padding-bottom: 100px;
+      margin: @spacing-400 @spacing-300;
     }
     
   }
