@@ -9,6 +9,7 @@ import { markRaw, ref, type Component } from 'vue'
 import type { ComponentsItens } from './types'
 
 const menuItem = ref<Component>(markRaw(Overview))
+const selectedMenuItem = ref<ComponentsItens>('Overview')
 
 const components: Record<string, Component> = {
   Overview: markRaw(Overview),
@@ -20,12 +21,17 @@ const components: Record<string, Component> = {
 
 function changeMenuItem(itemName: ComponentsItens) {
   menuItem.value = components[itemName] || markRaw(Overview)
+  selectedMenuItem.value = itemName
 }
 </script>
 
 <template>
   <div class="app__container">
-    <Menu class="app__container__menu" @selected-menu-item="changeMenuItem" />
+    <Menu
+      class="app__container__menu"
+      :selected-menu="selectedMenuItem"
+      @selected-menu-item="changeMenuItem"
+    />
     <component
       :is="menuItem"
       class="app__container__component"

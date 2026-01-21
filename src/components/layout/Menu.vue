@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import { getImagePath } from '@/utils/utils'
 import type { ComponentsItens } from '@/types'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+
+const props = defineProps<{
+  selectedMenu: ComponentsItens | string
+}>()
 
 const menuItems = [
   { name: 'Overview', icon: '/images/icon-nav-overview.svg' },
@@ -22,6 +26,14 @@ function selectItem(itemName: ComponentsItens | string) {
 const emit = defineEmits<{
   (e: 'selectedMenuItem', value: ComponentsItens): void
 }>()
+
+//watch para sincronizar mudança no menu quando selecionado um item no overview
+watch(
+  () => props.selectedMenu,
+  (newVal) => {
+    selectedItem.value = newVal as string | ComponentsItens
+  }
+)
 </script>
 
 <template>
