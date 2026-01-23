@@ -146,7 +146,7 @@ const emit = defineEmits<{
 
   &__summary {
     display: flex;
-    max-width: 100%; 
+    max-width: 100%;
     margin-top: @spacing-400;
     margin-bottom: @spacing-400;
     gap: @spacing-150;
@@ -155,8 +155,8 @@ const emit = defineEmits<{
       background-color: @white;
       border-radius: 12px;
       padding: @spacing-300;
-      flex: 1; 
-      min-width: 0; 
+      flex: 1;
+      min-width: 0;
       box-sizing: border-box;
 
       h2 {
@@ -185,7 +185,7 @@ const emit = defineEmits<{
     &-card {
       display: flex;
       flex-direction: column;
-      flex: 1; 
+      flex: 1;
 
       &--left {
         display: flex;
@@ -398,14 +398,11 @@ const emit = defineEmits<{
           grid-template-columns: repeat(2, 1fr);
         }
       }
-
     }
 
     .overview__pots {
       flex-wrap: wrap;
     }
   }
-
-
 }
 </style>

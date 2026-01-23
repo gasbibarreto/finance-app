@@ -91,7 +91,5 @@ function potsPercentage(pot: { total: number; target: number }): number {
       }
     }
   }
-
-  
 }
 </style>

@@ -4,7 +4,7 @@ import type { ComponentsItens } from '@/types'
 import { ref, watch } from 'vue'
 
 const props = defineProps<{
-  selectedMenu: ComponentsItens | string
+  selectedMenu: ComponentsItens
 }>()
 
 const menuItems = [
@@ -15,11 +15,11 @@ const menuItems = [
   { name: 'Recurring Bills', icon: '/images/icon-nav-recurring-bills.svg' },
 ]
 
-const selectedItem = ref('')
+const selectedItem = ref<ComponentsItens>('Overview')
 const showMenu = ref(true)
 
 function selectItem(itemName: ComponentsItens | string) {
-  selectedItem.value = itemName as string
+  selectedItem.value = itemName as ComponentsItens
   emit('selectedMenuItem', itemName as ComponentsItens)
 }
 
@@ -31,8 +31,8 @@ const emit = defineEmits<{
 watch(
   () => props.selectedMenu,
   (newVal) => {
-    selectedItem.value = newVal as string | ComponentsItens
-  }
+    selectedItem.value = newVal as ComponentsItens
+  },
 )
 </script>
 
@@ -148,7 +148,6 @@ watch(
             &:hover {
               color: @grey-900;
             }
-
           }
         }
       }
@@ -177,13 +176,13 @@ watch(
   }
 
   &--responsive {
-  @media (max-width: 1024px) {
-    width: 100vw;
-    height: 80px;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    
-    .menu__top {
+    @media (max-width: 1024px) {
+      width: 100vw;
+      height: 80px;
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+
+      .menu__top {
         &__img {
           display: none;
         }
@@ -204,7 +203,7 @@ watch(
             margin-top: 6px;
             padding-right: 0px;
             padding-left: 0px;
-    
+
             img {
               padding-right: 0px;
             }
@@ -224,15 +223,14 @@ watch(
               padding-left: 0px;
             }
           }
+        }
+      }
+      .menu__bottom {
+        display: none;
       }
     }
-    .menu__bottom {
-      display: none;
-    }
 
-  }
-  
-  @media (max-width: 768px) {
+    @media (max-width: 768px) {
       position: fixed;
       bottom: 0;
       left: 0;

@@ -126,14 +126,19 @@ function dueSoonFormatDate(date: string) {
           </div>
           <div class="recurring-bills__content__list__search__sort">
             <p>Sort by</p>
-            <select v-model="sortedBills" >
-              <option :value="option" v-for="option in sortItens" :key="option">{{ option || sortItens[0] }}</option>
+            <select v-model="sortedBills">
+              <option :value="option" v-for="option in sortItens" :key="option">
+                {{ option || sortItens[0] }}
+              </option>
             </select>
             <!-- Overlay mobile com Teleport (substitui o select mobile) -->
-            <Teleport to="body">
-              
-            </Teleport>
-            <img class="recurring-bills__content__list__search__sort__icon-mobile" src="/images/icon-sort-mobile.svg" alt="Icon sort" @click="openSelectSortMobile = !openSelectSortMobile"/>
+            <Teleport to="body"> </Teleport>
+            <img
+              class="recurring-bills__content__list__search__sort__icon-mobile"
+              src="/images/icon-sort-mobile.svg"
+              alt="Icon sort"
+              @click="openSelectSortMobile = !openSelectSortMobile"
+            />
           </div>
         </div>
         <table class="recurring-bills__content__table">
@@ -145,7 +150,7 @@ function dueSoonFormatDate(date: string) {
             </tr>
           </thead>
           <tbody class="recurring-bills__content__table__body">
-            <tr v-for="bill in recurringBillsFiltered" :key="recurringBills.indexOf(bill)">
+            <tr v-for="bill in recurringBillsFiltered" :key="recurringBills.indexOf(bill)" >
               <td class="recurring-bills__content__table__body__name">
                 <img :src="getImagePath(bill.avatar)" alt="Icon bill" />
                 <span>{{ bill.name }}</span>
@@ -332,7 +337,7 @@ function dueSoonFormatDate(date: string) {
           }
 
           &__icon-mobile {
-              display: none;
+            display: none;
           }
         }
       }
@@ -353,8 +358,11 @@ function dueSoonFormatDate(date: string) {
       }
 
       &__body {
-        td {
+        tr {
           border-top: 1px solid @grey-100;
+        }
+        
+        td {
           padding: @spacing-250 0px;
         }
 
@@ -406,20 +414,22 @@ function dueSoonFormatDate(date: string) {
   }
 
   @media (max-width: 768px) {
-
     &__content {
       grid-template-columns: 1fr;
-    
 
       &__list {
         padding: @spacing-250;
 
         &__search {
           gap: @spacing-300;
-          
+
+          &__input {
+            width: 250px;
+          }
 
           &__sort {
-            p, select {
+            p,
+            select {
               display: none;
             }
 
@@ -428,7 +438,6 @@ function dueSoonFormatDate(date: string) {
               width: @spacing-200;
               height: @spacing-200;
               cursor: pointer;
-
             }
 
             &__open-select-sort-mobile {
@@ -440,11 +449,51 @@ function dueSoonFormatDate(date: string) {
         }
       }
 
-     &__table {
-      &__header {
-        display: none;
+      &__table {
+        table,
+        thead,
+        tbody,
+        th,
+        td,
+        tr {
+          display: block;
+        }
+
+        thead tr {
+          position: absolute;
+          top: -9999px;
+          left: -9999px;
+        }
+
+        tr {
+          margin-bottom: 15px; 
+          border-radius: 8px;
+        }
+
+        tbody tr {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          justify-items: center;
+        }
+
+        tbody td:first-child {
+          grid-column: 1 / 2;
+        }
+
+        tbody td:nth-child(2) {
+          grid-column: 1 / 2;
+          grid-row: 2 / 3;
+        }
+
+        tbody td:last-child {
+          grid-column: 2 / 2;
+          grid-row: 2 / 3;
+        }
+
+        tbody td {
+          padding: @spacing-100 0px;
+        }
       }
-     }
     }
   }
 }

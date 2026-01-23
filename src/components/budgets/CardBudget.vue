@@ -20,9 +20,11 @@ const props = defineProps({
 const openModalActions = ref(false)
 
 const budgetValuePercentage = computed(() => {
-  const percentage = Math.abs((totalSpendingPerCategory(props.budget.category) / props.budget.maximum) * 100)
+  const percentage = Math.abs(
+    (totalSpendingPerCategory(props.budget.category) / props.budget.maximum) * 100,
+  )
   return formatPercentage(percentage)
-});
+})
 
 function totalSpendingPerCategory(category: string) {
   return props.transactions
@@ -70,14 +72,13 @@ function redirectToView(view: string) {
     </div>
     <div class="card-budget__content">
       <p>{{ 'Maximum of ' + formatCurrency(budget.maximum) }}</p>
-      <progress 
-      class="card-budget__content__progress" 
-      :style="{ '--progress-color': budget.theme }"
-      :value="budgetValuePercentage" 
-      max="100">
-    </progress>
-    <p>{{ budgetValuePercentage }}%</p>
-
+      <progress
+        class="card-budget__content__progress"
+        :style="{ '--progress-color': budget.theme }"
+        :value="budgetValuePercentage"
+        max="100"
+      ></progress>
+      <p>{{ budgetValuePercentage }}%</p>
     </div>
     <div class="card-budget__content__cost">
       <div class="card-budget__content__cost__spent">

@@ -20,7 +20,7 @@ const components: Record<string, Component> = {
 }
 
 function changeMenuItem(itemName: ComponentsItens) {
-  menuItem.value = components[itemName] || Overview
+  menuItem.value = components[itemName] as Component
   selectedMenuItem.value = itemName
 }
 </script>
@@ -43,13 +43,12 @@ function changeMenuItem(itemName: ComponentsItens) {
 <style scoped lang="less">
 .app__container {
   display: flex;
-  
+
   &__component {
     flex-grow: 1;
     margin: @spacing-400 @spacing-500;
     max-width: 1140px;
   }
-
 
   @media (max-width: 1024px) {
     flex-direction: column;
@@ -63,16 +62,13 @@ function changeMenuItem(itemName: ComponentsItens) {
     &__component {
       min-height: calc(100vh - 80px);
     }
-
   }
 
   @media (max-width: 768px) {
-    
     &__component {
       padding-bottom: 100px;
       margin: @spacing-400 @spacing-300;
     }
-    
   }
 }
 </style>

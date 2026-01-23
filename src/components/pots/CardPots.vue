@@ -45,10 +45,10 @@ const props = defineProps({
       <p>{{ formatCurrency(potsValue || 0) }}</p>
     </div>
     <div class="card__target">
-      <progress 
-        class="card__target__progress" 
+      <progress
+        class="card__target__progress"
         :style="{ '--progress-color': potsTheme }"
-        :value="potsPercentage" 
+        :value="potsPercentage"
         max="100"
       ></progress>
       <div class="card__target__progress__info">
@@ -161,7 +161,7 @@ const props = defineProps({
     &__progress {
       width: 100%;
       height: 10px;
-      appearance: none; 
+      appearance: none;
       border: 1px solid @beige-100;
       border-radius: 10px;
 
@@ -185,7 +185,7 @@ const props = defineProps({
         justify-content: space-between;
         align-items: center;
         margin-top: @spacing-150;
-        
+
         p {
           font-size: @font-size-xs;
           font-weight: @font-weight-normal;
@@ -234,7 +234,6 @@ const props = defineProps({
   }
 
   @media (max-width: 1024px) {
-
   }
 }
 </style>

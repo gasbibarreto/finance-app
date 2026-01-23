@@ -13,7 +13,7 @@ const selectedSort = ref('Latest')
 const pageNumber = ref(1)
 const itemsPerPage = ref(10)
 
-// STORE
+// Store
 const financeStore = useFinanceStore()
 const transactions = computed(() => financeStore.transactions)
 
@@ -336,6 +336,66 @@ function changePage(page: number) {
         button.selected {
           background-color: @grey-900;
           color: @white;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    &__content {
+      padding: 10px;
+
+      &__header {
+        &__sort {
+          p,
+          select {
+            display: none;
+          }
+        }
+      }
+
+      &__table {
+        table,
+        thead,
+        tbody,
+        th,
+        td,
+        tr {
+          display: block;
+        }
+
+        thead tr {
+          position: absolute;
+          top: -9999px;
+          left: -9999px;
+        }
+
+        tr {
+          margin-bottom: 15px; /* Espaçamento entre os cartões */
+          border-radius: 8px;
+        }
+
+        tbody tr {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          justify-items: center;
+        }
+
+        tbody td:first-child {
+          grid-column: 1 / 2;
+        }
+
+        tbody td:nth-child(2) {
+          grid-column: 1 / 2;
+          grid-row: 2 / 3;
+        }
+
+        tbody td:last-child {
+          grid-column: 2 / 2;
+        }
+
+        tbody td {
+          padding: @spacing-100 0px;
         }
       }
     }

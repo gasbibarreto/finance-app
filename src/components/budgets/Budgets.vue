@@ -188,5 +188,11 @@ function filterTransactionsByCategory(category: string) {
       margin: 0px;
     }
   }
+
+  @media (max-width: 768px) {
+    &__content {
+      grid-template-columns: 1fr;
+    }
+  }
 }
 </style>
