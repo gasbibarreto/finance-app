@@ -4,6 +4,7 @@ import { computed, ref } from 'vue'
 import { getImagePath } from '@/utils/utils'
 import { useFinanceStore } from '@/stores/finance'
 import type { SortItens } from '@/types'
+import OverlayMobile from '../actionsModal/OverlayModal.vue'
 
 // Variables
 const term = ref()
@@ -12,6 +13,8 @@ const sortedItens = ref<SortItens[]>(['Latest', 'Oldest', 'A to Z', 'Z to A', 'H
 const selectedSort = ref('Latest')
 const pageNumber = ref(1)
 const itemsPerPage = ref(10)
+const openSelectSortMobile = ref(false)
+const openSelectCategoryMobile = ref(false)
 
 // Store
 const financeStore = useFinanceStore()
@@ -97,6 +100,13 @@ const categoryList = computed(() => {
 function changePage(page: number) {
   pageNumber.value = page
 }
+
+const selectSortOption = (option: SortItens) => {
+  selectedSort.value = option
+  openSelectSortMobile.value = false
+  console.log('option', option)
+  console.log('selectedSort', selectedSort.value)
+}
 </script>
 <template>
   <div class="transactions">
@@ -126,6 +136,29 @@ function changePage(page: number) {
               </option>
             </select>
           </div>
+          <!-- Overlay mobile com Teleport (substitui o select mobile) -->
+          <OverlayMobile
+            v-if="openSelectSortMobile"
+            :sort-itens="sortedItens"
+            @select-sort-option="selectSortOption"
+          />
+          <OverlayMobile
+            v-if="openSelectSortMobile"
+            :sort-itens="sortedItens"
+            @select-sort-option="selectSortOption"
+          />
+          <img
+            class="transactions__content__header_sort__icon-mobile"
+            src="/images/icon-sort-mobile.svg"
+            alt="Icon sort"
+            @click="openSelectSortMobile = !openSelectSortMobile"
+          />
+          <img
+            class="transactions__content__header_sort__icon-mobile"
+            src="/images/icon-filter-mobile.svg"
+            alt="Icon sort"
+            @click="openSelectCategoryMobile = !openSelectCategoryMobile"
+          />
         </div>
         <div class="transactions__content__table">
           <table class="transactions__content__table__header">
@@ -345,11 +378,37 @@ function changePage(page: number) {
     &__content {
       padding: 10px;
 
+      &__container {
+
+        &__header {
+
+          &__search {
+            input {
+              width: 100%;
+            }
+          }
+        }
+
+      }
+
       &__header {
         &__sort {
           p,
           select {
             display: none;
+          }
+
+          &__icon-mobile {
+            display: inline;
+            width: @spacing-200;
+            height: @spacing-200;
+            cursor: pointer;
+          }
+
+          &__open-select-sort-mobile {
+            display: inline;
+            position: absolute;
+            margin-top: @spacing-300;
           }
         }
       }

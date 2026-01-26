@@ -4,6 +4,7 @@ import { computed, type Ref } from 'vue'
 import { formatCurrency, getImagePath, formatDateOrdinal } from '@/utils/utils'
 import { ref } from 'vue'
 import type { SortItens } from '@/types'
+import OverlayMobile from '../actionsModal/OverlayModal.vue'
 
 const dateToday = ref(new Date().getDate())
 const searchBill = ref('')
@@ -71,8 +72,13 @@ function dueSoonFormatDate(date: string) {
   if (dateBill.toString() === dateToday.toString()) {
   } else {
   }
+}
 
-  //return formatDateOrdinal(date)
+const selectSortOption = (option: SortItens) => {
+  sortedBills.value = option
+  openSelectSortMobile.value = false
+  console.log('option', option)
+  console.log('sortedBills', sortedBills.value)
 }
 </script>
 <template>
@@ -132,7 +138,11 @@ function dueSoonFormatDate(date: string) {
               </option>
             </select>
             <!-- Overlay mobile com Teleport (substitui o select mobile) -->
-            <Teleport to="body"> </Teleport>
+            <OverlayMobile
+              v-if="openSelectSortMobile"
+              :sort-itens="sortItens"
+              @select-sort-option="selectSortOption"
+            />
             <img
               class="recurring-bills__content__list__search__sort__icon-mobile"
               src="/images/icon-sort-mobile.svg"
@@ -150,7 +160,7 @@ function dueSoonFormatDate(date: string) {
             </tr>
           </thead>
           <tbody class="recurring-bills__content__table__body">
-            <tr v-for="bill in recurringBillsFiltered" :key="recurringBills.indexOf(bill)" >
+            <tr v-for="bill in recurringBillsFiltered" :key="recurringBills.indexOf(bill)">
               <td class="recurring-bills__content__table__body__name">
                 <img :src="getImagePath(bill.avatar)" alt="Icon bill" />
                 <span>{{ bill.name }}</span>
@@ -361,7 +371,7 @@ function dueSoonFormatDate(date: string) {
         tr {
           border-top: 1px solid @grey-100;
         }
-        
+
         td {
           padding: @spacing-250 0px;
         }
@@ -466,7 +476,7 @@ function dueSoonFormatDate(date: string) {
         }
 
         tr {
-          margin-bottom: 15px; 
+          margin-bottom: 15px;
           border-radius: 8px;
         }
 
