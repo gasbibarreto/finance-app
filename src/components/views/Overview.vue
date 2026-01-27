@@ -5,6 +5,9 @@ import type { ComponentsItens } from '@/types'
 import { formatCurrency } from '@/utils/utils'
 import { useFinanceStore } from '@/stores/finance'
 import TransactionsList from '../transactions/TransactionsList.vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 // STORE
 const financeStore = useFinanceStore()
@@ -23,7 +26,8 @@ const totalSaved = computed(() => {
 
 // FUNCTIONS
 function redirectToView(viewName: ComponentsItens) {
-  emit('selectedMenuItem', viewName)
+  //emit('selectedMenuItem', viewName)
+  router.push({ name: viewName })
 }
 
 // EMITS

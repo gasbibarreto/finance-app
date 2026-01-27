@@ -1,10 +1,19 @@
 <script setup lang="ts">
 import data from '@/assets/data/data.json'
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { getImagePath } from '@/utils/utils'
 import { useFinanceStore } from '@/stores/finance'
 import type { BudgetCategories, SortItens } from '@/types'
 import OverlayMobile from '../actionsModal/OverlayModal.vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+
+onMounted(() => {
+  if(route.query.category) {
+    category.value = route.query.category as string
+  }
+})
 
 // Variables
 const term = ref()
@@ -70,7 +79,6 @@ const sortTransactions = computed(() => {
   if (!category.value.includes('All Transactions')) {
     //como o filter nao altera o array que o chama ele precisa ser reatribuido a variavel
     transactionsCopy = transactionsCopy.filter((transaction) => {
-      console.log('passei aqui categoria')
       return transaction.category.includes(category.value)
     })
   }
@@ -116,6 +124,8 @@ const selectSortOption = (option: SortItens | BudgetCategories) => {
         <div class="transactions__content__header">
           <div class="transactions__content__header__search">
             <input
+              type="text"
+              class="transactions__content__header__search__input"
               v-model="term"
               placeholder="Search transactions"
               @change="{ sortTransactions }"
@@ -136,29 +146,28 @@ const selectSortOption = (option: SortItens | BudgetCategories) => {
               </option>
             </select>
           </div>
-          <img
-            class="transactions__content__header_sort__icon-mobile"
-            src="/images/icon-sort-mobile.svg"
-            alt="Icon sort"
-            @click="openSelectSortMobile = !openSelectSortMobile"
-          />
-          <img
+          <div class="transactions__content__header__sort-mobile-wrapper">
+            <img
+              class="transactions__content__header_sort__icon-mobile"
+              src="/images/icon-sort-mobile.svg"
+              alt="Icon sort"
+              @click="openSelectSortMobile = !openSelectSortMobile"
+            />
+
+            <OverlayMobile
+              v-if="openSelectSortMobile"
+              :sort-itens="sortedItens"
+              @select-sort-option="selectSortOption"
+            />
+          </div>
+          <div class="transactions__content__header__category-mobile-wrapper">
+            <img
             class="transactions__content__header_sort__icon-mobile"
             src="/images/icon-filter-mobile.svg"
             alt="Icon sort"
             @click="openSelectCategoryMobile = !openSelectCategoryMobile"
           />
-          <!-- Overlay mobile com Teleport (substitui o select quando mobile) -->
-          <OverlayMobile
-            v-if="openSelectSortMobile"
-            :sort-itens="sortedItens"
-            @select-sort-option="selectSortOption"
-          />
-          <OverlayMobile
-            v-if="openSelectCategoryMobile"
-            :sort-itens="categoryList as BudgetCategories[]"
-            @select-sort-option="selectSortOption"
-          />
+          </div>
         </div>
         <div class="transactions__content__table">
           <table class="transactions__content__table__header">
@@ -240,7 +249,7 @@ const selectSortOption = (option: SortItens | BudgetCategories) => {
         position: relative;
         gap: @spacing-100;
 
-        input {
+        &__input {
           border-radius: @spacing-100;
           border: 1px solid @grey-300;
           padding: @spacing-100 @spacing-250 @spacing-100 @spacing-100;
@@ -255,7 +264,6 @@ const selectSortOption = (option: SortItens | BudgetCategories) => {
           right: 10px;
           pointer-events: none;
         }
-        
       }
 
       &__sort {
@@ -288,6 +296,14 @@ const selectSortOption = (option: SortItens | BudgetCategories) => {
             color: @grey-500;
           }
         }
+
+        &__mobile-wrapper {
+          display: none;
+        }   
+
+        &__category-mobile-wrapper {
+          display: none;
+        }
       }
     }
 
@@ -313,7 +329,7 @@ const selectSortOption = (option: SortItens | BudgetCategories) => {
             border-top: 1px solid @grey-100;
           }
 
-          td {
+            td {
             padding: @spacing-300 0px;
             align-items: center;
             font-size: @font-size-xs;
@@ -380,16 +396,12 @@ const selectSortOption = (option: SortItens | BudgetCategories) => {
       padding: 10px;
 
       &__container {
-
         &__header {
-
           &__search {
-            input {
-              width: 100%;
+            &__input {
             }
           }
         }
-
       }
 
       &__header {
@@ -410,6 +422,12 @@ const selectSortOption = (option: SortItens | BudgetCategories) => {
             display: inline;
             position: absolute;
             margin-top: @spacing-300;
+          }
+
+          &__mobile-wrapper, &__category-mobile-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
           }
         }
       }

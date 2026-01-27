@@ -3,12 +3,12 @@ import { useFinanceStore } from '@/stores/finance'
 import { computed, type Ref } from 'vue'
 import { formatCurrency, getImagePath, formatDateOrdinal } from '@/utils/utils'
 import { ref } from 'vue'
-import type { SortItens } from '@/types'
+import { SORT_ITENS, type BudgetCategories, type SortItens } from '@/types'
 import OverlayMobile from '../actionsModal/OverlayModal.vue'
 
 const dateToday = ref(new Date().getDate())
 const searchBill = ref('')
-const sortedBills = ref<SortItens>('Latest' as SortItens)
+const sortedBills = ref<SortItens>(SORT_ITENS[0])
 const openSelectSortMobile = ref(false)
 const sortItens = ref<SortItens[]>(['Latest', 'Oldest', 'A to Z', 'Z to A', 'Highest', 'Lowest'])
 
@@ -74,8 +74,8 @@ function dueSoonFormatDate(date: string) {
   }
 }
 
-const selectSortOption = (option: SortItens) => {
-  sortedBills.value = option
+const selectSortOption = (option: SortItens | BudgetCategories) => {
+  sortedBills.value = option as SortItens
   openSelectSortMobile.value = false
   console.log('option', option)
   console.log('sortedBills', sortedBills.value)
@@ -137,17 +137,10 @@ const selectSortOption = (option: SortItens) => {
                 {{ option || sortItens[0] }}
               </option>
             </select>
-          <!-- Overlay mobile com Teleport (substitui o select quando mobile) -->
-          <OverlayMobile
-              v-if="openSelectSortMobile"
-              :sort-itens="sortItens"
-              @select-sort-option="selectSortOption"
-            />
             <img
               class="recurring-bills__content__list__search__sort__icon-mobile"
               src="/images/icon-sort-mobile.svg"
               alt="Icon sort"
-              @click="openSelectSortMobile = !openSelectSortMobile"
             />
           </div>
         </div>

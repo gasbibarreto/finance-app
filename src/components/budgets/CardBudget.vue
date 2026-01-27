@@ -5,6 +5,9 @@ import { formatCurrency, formatPercentage } from '@/utils/utils'
 import Card from '../ui/Card.vue'
 import ActionsModal from '../actionsModal/ActionsModal.vue'
 import TransactionsList from '../transactions/TransactionsList.vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const props = defineProps({
   budget: {
@@ -40,9 +43,15 @@ function totalBudgetRemaining(category: string) {
   return formatCurrency(props.budget.maximum - totalSpendingPerCategory(category))
 }
 
-function redirectToView(view: string) {
-  console.log(view)
+function redirectToTransactions() {
+  router.push({
+    name: 'Transactions',
+    query: {
+      category: props.budget.category,
+    },
+  })
 }
+
 </script>
 <template>
   <div class="card-budget">
@@ -97,7 +106,7 @@ function redirectToView(view: string) {
         title="Latest Spendings"
         cardAction="See All"
         :style-color="true"
-        @actionClick="redirectToView('Transactions')"
+        @actionClick="redirectToTransactions"
       >
         <TransactionsList :transactions="transactions.slice(0, 3)" />
       </Card>

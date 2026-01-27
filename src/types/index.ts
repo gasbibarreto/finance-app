@@ -1,6 +1,6 @@
 type ComponentsItens = 'Overview' | 'Transactions' | 'Budgets' | 'Pots' | 'Recurring Bills'
 
-type SortItens = 'Latest' | 'Oldest' | 'A to Z' | 'Z to A' | 'Highest' | 'Lowest'
+export const SORT_ITENS = ['Latest', 'Oldest', 'A to Z', 'Z to A', 'Highest', 'Lowest'] as const
 
 export const BUDGET_CATEGORIES = [
   'Food & Drink',
@@ -12,6 +12,8 @@ export const BUDGET_CATEGORIES = [
   'Other',
   'All Transactions',
 ] as const
+
+type SortItens = (typeof SORT_ITENS)[number]
 
 type BudgetCategories = (typeof BUDGET_CATEGORIES)[number]
 

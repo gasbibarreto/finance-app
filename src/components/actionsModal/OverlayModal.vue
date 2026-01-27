@@ -3,7 +3,7 @@ import type { BudgetCategories, SortItens } from '@/types'
 import { type PropType } from 'vue'
 
 const props = defineProps({
-  sortItens: { type: Array as PropType<SortItens[] | BudgetCategories[] >, required: true },
+  sortItens: { type: Array as PropType<SortItens[] | BudgetCategories[]>, required: true },
 })
 
 const emit = defineEmits<{
@@ -15,58 +15,50 @@ function handleSelectOption(option: SortItens | BudgetCategories) {
 }
 </script>
 <template>
-  <Teleport to="body">
-    <div class="overlay__modal">
-      <div class="overlay__modal__container">
-        <div class="overlay__modal__container__list">
-          <div
-            class="overlay__modal__container__list__item"
-            v-for="option in sortItens"
-            :key="option"
-            @click="handleSelectOption(option)"
-          >
-            {{ option }}
-          </div>
-        </div>
-      </div>
-    </div>
-  </Teleport>
+  <div class="overlay__container">
+    <ul class="overlay__container__list">
+      <li v-for="option in sortItens" :key="option" class="overlay__container__item">
+        <button type="button" class="overlay__button" @click="handleSelectOption(option)">
+          {{ option }}
+        </button>
+      </li>
+    </ul>
+  </div>
 </template>
 <style lang="less" scoped>
-.overlay__modal {
+.overlay__container {
   position: absolute;
-  top: 91%;
-  right: 22px;
-  z-index: 999;
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
+  right: 0;
+  z-index: 20;
+  background: #fff;
+  border-radius: 12px;
+}
 
-  &__container {
-    background-color: @white;
-    border-radius: @spacing-100;
-    padding: @spacing-100;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+.overlay__container__list {
+  list-style: none;
+  margin: 0;
+  padding: 8px 0;
+}
 
-    &__list {
-      display: flex;
-      flex-direction: column;
-      gap: @spacing-100;
+.overlay__container__item + .overlay__container__item {
+  border-top: 1px solid #eee;
+}
 
-      &__item {
-        font-size: @font-size-sm;
-        cursor: pointer;
-        padding: @spacing-100;
-        border-radius: @spacing-100;
-        transition: background-color 0.2s;
+.overlay__container__item {
+  padding: 12px 16px;
+  cursor: pointer;
 
-        &:hover {
-        }
+  button {
+    background: none;
+    border: none;
+    font-size: @font-size-xs;
+    font-weight: @font-weight-light;
+    color: @grey-500;
+    cursor: pointer;
+  }
 
-        &:active {
-        }
-      }
-    }
+  &:active {
+    background-color: #f5f5f5;
   }
 }
 </style>

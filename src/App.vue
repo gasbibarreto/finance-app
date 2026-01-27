@@ -30,13 +30,14 @@ function changeMenuItem(itemName: ComponentsItens) {
     <Menu
       class="app__container__menu"
       :selected-menu="selectedMenuItem"
-      @selected-menu-item="changeMenuItem"
     />
-    <component
+  <router-view class="app__container__component" />
+  <!-- <component
       :is="menuItem"
       class="app__container__component"
       @selected-menu-item="changeMenuItem"
     />
+  -->
   </div>
 </template>
 

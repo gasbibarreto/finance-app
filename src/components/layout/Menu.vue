@@ -2,25 +2,30 @@
 import { getImagePath } from '@/utils/utils'
 import type { ComponentsItens } from '@/types'
 import { ref, watch } from 'vue'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const props = defineProps<{
   selectedMenu: ComponentsItens
 }>()
 
 const menuItems = [
-  { name: 'Overview', icon: '/images/icon-nav-overview.svg' },
-  { name: 'Transactions', icon: '/images/icon-nav-transactions.svg' },
-  { name: 'Budgets', icon: '/images/icon-nav-budgets.svg' },
-  { name: 'Pots', icon: '/images/icon-nav-pots.svg' },
-  { name: 'Recurring Bills', icon: '/images/icon-nav-recurring-bills.svg' },
+  { name: 'Overview', icon: '/images/icon-nav-overview.svg', path: '/overview' },
+  { name: 'Transactions', icon: '/images/icon-nav-transactions.svg', path: '/transactions' },
+  { name: 'Budgets', icon: '/images/icon-nav-budgets.svg', path: '/budgets' },
+  { name: 'Pots', icon: '/images/icon-nav-pots.svg', path: '/pots' },
+  { name: 'Recurring Bills', icon: '/images/icon-nav-recurring-bills.svg', path: '/recurring-bills' },
 ]
 
 const selectedItem = ref<ComponentsItens>('Overview')
 const showMenu = ref(true)
 
-function selectItem(itemName: ComponentsItens | string) {
+function selectItem(itemName: ComponentsItens | string, path: string) {
   selectedItem.value = itemName as ComponentsItens
-  emit('selectedMenuItem', itemName as ComponentsItens)
+  //emit('selectedMenuItem', itemName as ComponentsItens)
+  router.push({ path: path || '/overview'})
+  console.log('path', path)
 }
 
 const emit = defineEmits<{
@@ -61,7 +66,7 @@ watch(
             'menu__top__list__itens',
             { 'menu__top__list__itens--selected': selectedItem === item.name },
           ]"
-          @click="selectItem(item.name)"
+          @click="selectItem(item.name, item.path)"
         >
           <img :src="getImagePath(item.icon)" :alt="item.name + ' icon'" />
           <button v-show="showMenu">{{ item.name }}</button>
