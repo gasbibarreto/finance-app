@@ -3,7 +3,7 @@ import data from '@/assets/data/data.json'
 import { computed, ref } from 'vue'
 import { getImagePath } from '@/utils/utils'
 import { useFinanceStore } from '@/stores/finance'
-import type { SortItens } from '@/types'
+import type { BudgetCategories, SortItens } from '@/types'
 import OverlayMobile from '../actionsModal/OverlayModal.vue'
 
 // Variables
@@ -101,7 +101,7 @@ function changePage(page: number) {
   pageNumber.value = page
 }
 
-const selectSortOption = (option: SortItens) => {
+const selectSortOption = (option: SortItens | BudgetCategories) => {
   selectedSort.value = option
   openSelectSortMobile.value = false
   console.log('option', option)
@@ -136,17 +136,6 @@ const selectSortOption = (option: SortItens) => {
               </option>
             </select>
           </div>
-          <!-- Overlay mobile com Teleport (substitui o select mobile) -->
-          <OverlayMobile
-            v-if="openSelectSortMobile"
-            :sort-itens="sortedItens"
-            @select-sort-option="selectSortOption"
-          />
-          <OverlayMobile
-            v-if="openSelectSortMobile"
-            :sort-itens="sortedItens"
-            @select-sort-option="selectSortOption"
-          />
           <img
             class="transactions__content__header_sort__icon-mobile"
             src="/images/icon-sort-mobile.svg"
@@ -158,6 +147,17 @@ const selectSortOption = (option: SortItens) => {
             src="/images/icon-filter-mobile.svg"
             alt="Icon sort"
             @click="openSelectCategoryMobile = !openSelectCategoryMobile"
+          />
+          <!-- Overlay mobile com Teleport (substitui o select quando mobile) -->
+          <OverlayMobile
+            v-if="openSelectSortMobile"
+            :sort-itens="sortedItens"
+            @select-sort-option="selectSortOption"
+          />
+          <OverlayMobile
+            v-if="openSelectCategoryMobile"
+            :sort-itens="categoryList as BudgetCategories[]"
+            @select-sort-option="selectSortOption"
           />
         </div>
         <div class="transactions__content__table">
@@ -255,6 +255,7 @@ const selectSortOption = (option: SortItens) => {
           right: 10px;
           pointer-events: none;
         }
+        
       }
 
       &__sort {

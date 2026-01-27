@@ -137,8 +137,8 @@ const selectSortOption = (option: SortItens) => {
                 {{ option || sortItens[0] }}
               </option>
             </select>
-            <!-- Overlay mobile com Teleport (substitui o select mobile) -->
-            <OverlayMobile
+          <!-- Overlay mobile com Teleport (substitui o select quando mobile) -->
+          <OverlayMobile
               v-if="openSelectSortMobile"
               :sort-itens="sortItens"
               @select-sort-option="selectSortOption"

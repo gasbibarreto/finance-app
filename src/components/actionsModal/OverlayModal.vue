@@ -1,16 +1,16 @@
 <script setup lang="ts">
-import type { SortItens } from '@/types'
+import type { BudgetCategories, SortItens } from '@/types'
 import { type PropType } from 'vue'
 
 const props = defineProps({
-  sortItens: { type: Array as PropType<SortItens[]>, required: true },
+  sortItens: { type: Array as PropType<SortItens[] | BudgetCategories[] >, required: true },
 })
 
 const emit = defineEmits<{
-  (e: 'selectSortOption', value: SortItens): void
+  (e: 'selectSortOption', value: SortItens | BudgetCategories): void
 }>()
 
-function handleSelectOption(option: SortItens) {
+function handleSelectOption(option: SortItens | BudgetCategories) {
   emit('selectSortOption', option)
 }
 </script>
@@ -35,7 +35,7 @@ function handleSelectOption(option: SortItens) {
 <style lang="less" scoped>
 .overlay__modal {
   position: absolute;
-  top: 92%;
+  top: 91%;
   right: 22px;
   z-index: 999;
   display: flex;
