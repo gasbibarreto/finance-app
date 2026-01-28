@@ -77,8 +77,6 @@ function dueSoonFormatDate(date: string) {
 const selectSortOption = (option: SortItens | BudgetCategories) => {
   sortedBills.value = option as SortItens
   openSelectSortMobile.value = false
-  console.log('option', option)
-  console.log('sortedBills', sortedBills.value)
 }
 </script>
 <template>
@@ -137,11 +135,20 @@ const selectSortOption = (option: SortItens | BudgetCategories) => {
                 {{ option || sortItens[0] }}
               </option>
             </select>
-            <img
-              class="recurring-bills__content__list__search__sort__icon-mobile"
-              src="/images/icon-sort-mobile.svg"
-              alt="Icon sort"
-            />
+
+            <div class="recurring-bills__content__list__search__sort__mobile-wrapper">
+              <img
+                @click="openSelectSortMobile = !openSelectSortMobile"
+                class="recurring-bills__content__list__search__sort__mobile-wrapper__icon-mobile"
+                src="/images/icon-sort-mobile.svg"
+                alt="Icon sort"
+              />
+              <OverlayMobile
+                :sort-itens="sortItens"
+                @select-sort-option="selectSortOption"
+                v-if="openSelectSortMobile"
+              />
+            </div>
           </div>
         </div>
         <table class="recurring-bills__content__table">
@@ -339,7 +346,7 @@ const selectSortOption = (option: SortItens | BudgetCategories) => {
             border: 1px solid @grey-300;
           }
 
-          &__icon-mobile {
+          &__mobile-wrapper {
             display: none;
           }
         }
@@ -436,17 +443,17 @@ const selectSortOption = (option: SortItens | BudgetCategories) => {
               display: none;
             }
 
-            &__icon-mobile {
-              display: inline;
-              width: @spacing-200;
-              height: @spacing-200;
-              cursor: pointer;
-            }
+            &__mobile-wrapper {
+              position: relative;
+              display: flex;
+              align-items: center;
 
-            &__open-select-sort-mobile {
-              display: inline;
-              position: absolute;
-              margin-top: @spacing-300;
+              &__icon-mobile {
+                display: inline;
+                width: @spacing-200;
+                height: @spacing-200;
+                cursor: pointer;
+              }
             }
           }
         }

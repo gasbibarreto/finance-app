@@ -15,7 +15,11 @@ const menuItems = [
   { name: 'Transactions', icon: '/images/icon-nav-transactions.svg', path: '/transactions' },
   { name: 'Budgets', icon: '/images/icon-nav-budgets.svg', path: '/budgets' },
   { name: 'Pots', icon: '/images/icon-nav-pots.svg', path: '/pots' },
-  { name: 'Recurring Bills', icon: '/images/icon-nav-recurring-bills.svg', path: '/recurring-bills' },
+  {
+    name: 'Recurring Bills',
+    icon: '/images/icon-nav-recurring-bills.svg',
+    path: '/recurring-bills',
+  },
 ]
 
 const selectedItem = ref<ComponentsItens>('Overview')
@@ -24,7 +28,7 @@ const showMenu = ref(true)
 function selectItem(itemName: ComponentsItens | string, path: string) {
   selectedItem.value = itemName as ComponentsItens
   //emit('selectedMenuItem', itemName as ComponentsItens)
-  router.push({ path: path || '/overview'})
+  router.push({ path: path || '/overview' })
   console.log('path', path)
 }
 

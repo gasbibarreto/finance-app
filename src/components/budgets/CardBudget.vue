@@ -51,7 +51,6 @@ function redirectToTransactions() {
     },
   })
 }
-
 </script>
 <template>
   <div class="card-budget">

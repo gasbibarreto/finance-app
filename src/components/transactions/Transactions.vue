@@ -10,7 +10,7 @@ import { useRoute } from 'vue-router'
 const route = useRoute()
 
 onMounted(() => {
-  if(route.query.category) {
+  if (route.query.category) {
     category.value = route.query.category as string
   }
 })
@@ -111,9 +111,9 @@ function changePage(page: number) {
 
 const selectSortOption = (option: SortItens | BudgetCategories) => {
   selectedSort.value = option
+  category.value = option
   openSelectSortMobile.value = false
-  console.log('option', option)
-  console.log('selectedSort', selectedSort.value)
+  openSelectCategoryMobile.value = false
 }
 </script>
 <template>
@@ -146,7 +146,7 @@ const selectSortOption = (option: SortItens | BudgetCategories) => {
               </option>
             </select>
           </div>
-          <div class="transactions__content__header__sort-mobile-wrapper">
+          <div class="transactions__content__header__sort__mobile-wrapper">
             <img
               class="transactions__content__header_sort__icon-mobile"
               src="/images/icon-sort-mobile.svg"
@@ -159,14 +159,18 @@ const selectSortOption = (option: SortItens | BudgetCategories) => {
               :sort-itens="sortedItens"
               @select-sort-option="selectSortOption"
             />
-          </div>
-          <div class="transactions__content__header__category-mobile-wrapper">
             <img
-            class="transactions__content__header_sort__icon-mobile"
-            src="/images/icon-filter-mobile.svg"
-            alt="Icon sort"
-            @click="openSelectCategoryMobile = !openSelectCategoryMobile"
-          />
+              class="transactions__content__header_sort__icon-mobile"
+              src="/images/icon-filter-mobile.svg"
+              alt="Icon sort"
+              @click="openSelectCategoryMobile = !openSelectCategoryMobile"
+            />
+
+            <OverlayMobile
+              v-if="openSelectCategoryMobile"
+              :sort-itens="categoryList as BudgetCategories[]"
+              @select-sort-option="selectSortOption"
+            />
           </div>
         </div>
         <div class="transactions__content__table">
@@ -299,10 +303,6 @@ const selectSortOption = (option: SortItens | BudgetCategories) => {
 
         &__mobile-wrapper {
           display: none;
-        }   
-
-        &__category-mobile-wrapper {
-          display: none;
         }
       }
     }
@@ -329,7 +329,7 @@ const selectSortOption = (option: SortItens | BudgetCategories) => {
             border-top: 1px solid @grey-100;
           }
 
-            td {
+          td {
             padding: @spacing-300 0px;
             align-items: center;
             font-size: @font-size-xs;
@@ -424,7 +424,7 @@ const selectSortOption = (option: SortItens | BudgetCategories) => {
             margin-top: @spacing-300;
           }
 
-          &__mobile-wrapper, &__category-mobile-wrapper {
+          &__mobile-wrapper {
             position: relative;
             display: flex;
             align-items: center;

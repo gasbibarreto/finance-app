@@ -35,7 +35,7 @@ const router = createRouter({
     },
     {
       path: '/recurring-bills',
-      name: 'RecurringBills',
+      name: 'Recurring Bills',
       component: RecurringBills
     },
   ],
