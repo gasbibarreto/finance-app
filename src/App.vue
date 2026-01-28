@@ -20,7 +20,7 @@ const components: Record<string, Component> = {
 }
 
 function changeMenuItem(itemName: ComponentsItens) {
-  menuItem.value = components[itemName] as Component
+  //menuItem.value = components[itemName] as Component
   selectedMenuItem.value = itemName
 }
 </script>
@@ -31,11 +31,11 @@ function changeMenuItem(itemName: ComponentsItens) {
       class="app__container__menu"
       :selected-menu="selectedMenuItem"
     />
-  <router-view class="app__container__component" />
+  <router-view class="app__container__component" @selected-menu-item="changeMenuItem"/>
   <!-- <component
       :is="menuItem"
       class="app__container__component"
-      @selected-menu-item="changeMenuItem"
+      
     />
   -->
   </div>

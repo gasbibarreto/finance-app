@@ -26,7 +26,7 @@ const totalSaved = computed(() => {
 
 // FUNCTIONS
 function redirectToView(viewName: ComponentsItens) {
-  //emit('selectedMenuItem', viewName)
+  emit('selectedMenuItem', viewName)
   router.push({ name: viewName })
 }
 
