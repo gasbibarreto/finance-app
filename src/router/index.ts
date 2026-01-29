@@ -15,28 +15,28 @@ const router = createRouter({
     {
       path: '/overview',
       name: 'Overview',
-      component: Overview
+      component: Overview,
     },
     {
       path: '/transactions',
       name: 'Transactions',
       component: Transactions,
-      props: true
+      props: true,
     },
     {
       path: '/budgets',
       name: 'Budgets',
-      component: Budgets
+      component: Budgets,
     },
     {
       path: '/pots',
       name: 'Pots',
-      component: Pots
+      component: Pots,
     },
     {
       path: '/recurring-bills',
       name: 'Recurring Bills',
-      component: RecurringBills
+      component: RecurringBills,
     },
   ],
 })

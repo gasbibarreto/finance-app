@@ -27,7 +27,6 @@ const showMenu = ref(true)
 function selectItem(path: string) {
   router.push({ path: path })
 }
-
 </script>
 
 <template>
@@ -63,8 +62,8 @@ function selectItem(path: string) {
       </ul>
     </div>
     <div class="menu__bottom" @click="showMenu = !showMenu">
-      <img :class="[{ menu__bottom__rotate: !showMenu }]" src="/images/icon-minimize-menu.svg" />
-      <button v-show="showMenu">Minimize Menu</button>
+        <img :class="[{ menu__bottom__rotate: !showMenu }]" src="/images/icon-minimize-menu.svg" />
+        <button v-show="showMenu">Minimize Menu</button>
     </div>
   </div>
 </template>
@@ -109,6 +108,7 @@ function selectItem(path: string) {
         padding-top: @spacing-200;
         padding-bottom: @spacing-200;
         padding-left: @spacing-300;
+        cursor: pointer;
 
         img {
           padding-right: @spacing-200;
@@ -154,6 +154,7 @@ function selectItem(path: string) {
     display: flex;
     justify-content: left;
     padding: 16px 32px;
+    cursor: pointer;
 
     button {
       background: none;
