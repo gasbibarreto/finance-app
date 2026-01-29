@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Menu from './components/layout/Menu.vue'
-import { computed, ref, shallowRef, watch, type Component } from 'vue'
+import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import type { ComponentsItens } from './types'
 
@@ -26,7 +26,7 @@ const selectedMenuItem = computed(() => getMenuFromPath(route.path))
   <div class="app__container">
     <Menu class="app__container__menu" :selected-menu="selectedMenuItem" />
     <router-view class="app__container__component" />
-    </div>
+  </div>
 </template>
 
 <style scoped lang="less">

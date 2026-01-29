@@ -60,36 +60,43 @@ const emit = defineEmits<{
         <img src="/images/icon-close-modal.svg" alt="close" @click="handleClose()" />
       </div>
 
-      <p class="pots__new__description">
-        {{
-          openModalEdit
-            ? 'If your saving targets change, feel free to update your pots.'
-            : 'Create a pot to set savings targets. These can help keep you on track as you save for'
-        }}
-      </p>
-      <form class="pots__new__form" @submit.prevent="handleSubmit()">
-        <label for="pot-name">Pot Name</label>
-        <input id="pot-name" v-model="formData.potName" type="text" placeholder="e.g. Rainy Days" />
+      <div class="pots__new__content">
+        <p class="pots__new__content__description">
+          {{
+            openModalEdit
+              ? 'If your saving targets change, feel free to update your pots.'
+              : 'Create a pot to set savings targets. These can help keep you on track as you save for'
+          }}
+        </p>
+        <form class="pots__new__content__form" @submit.prevent="handleSubmit()">
+          <label for="pot-name">Pot Name</label>
+          <input
+            id="pot-name"
+            v-model="formData.potName"
+            type="text"
+            placeholder="e.g. Rainy Days"
+          />
 
-        <label for="pot-target">Target</label>
-        <input
-          id="pot-target"
-          v-model="formData.potTarget"
-          type="number"
-          placeholder="$ e.g. 2000"
-          min="0"
-        />
+          <label for="pot-target">Target</label>
+          <input
+            id="pot-target"
+            v-model="formData.potTarget"
+            type="number"
+            placeholder="$ e.g. 2000"
+            min="0"
+          />
 
-        <label for="theme">Theme</label>
-        <select id="theme" v-model="formData.selectedColor">
-          <option v-for="color in colorOptions" :key="color.name" :value="color.value">
-            {{ color.displayName }}
-          </option>
-        </select>
-        <button type="submit" class="pots__new__button">
-          {{ openModalEdit ? 'Save Changes' : 'Add Pot' }}
-        </button>
-      </form>
+          <label for="theme">Theme</label>
+          <select id="theme" v-model="formData.selectedColor">
+            <option v-for="color in colorOptions" :key="color.name" :value="color.value">
+              {{ color.displayName }}
+            </option>
+          </select>
+          <button type="submit" class="pots__new__button">
+            {{ openModalEdit ? 'Save Changes' : 'Add Pot' }}
+          </button>
+        </form>
+      </div>
     </div>
   </Teleport>
 </template>
@@ -98,7 +105,7 @@ const emit = defineEmits<{
   position: fixed;
   z-index: 999;
   top: 15%;
-  left: 35%;
+  left: calc(50% - 560px / 2);
   width: 560px;
   height: 430px;
   max-width: 560px;
@@ -120,77 +127,62 @@ const emit = defineEmits<{
       color: @grey-900;
     }
   }
-
-  &__description {
-    font-size: @font-size-md;
-    font-weight: @font-weight-normal;
-    font-size: @font-size-sm;
-    letter-spacing: 0px;
-    line-height: 150%;
-    opacity: 1;
-    color: @grey-500;
-  }
-
-  &__form {
+  &__content {
     display: flex;
     flex-direction: column;
-    width: 496px;
-    height: 255px;
     gap: @spacing-200;
-    margin-top: @spacing-200;
-    margin-bottom: @spacing-400;
 
-    & label {
+    &__description {
+      font-size: @font-size-md;
+      font-weight: @font-weight-normal;
       font-size: @font-size-sm;
-      font-weight: @font-weight-bold;
-      font-style: Bold;
-      line-height: 150%;
-      letter-spacing: 0px;
       color: @grey-500;
     }
 
-    & input {
-      width: 496px;
-      height: 45px;
-      gap: @spacing-200;
-      opacity: 1;
-      border-radius: @spacing-100;
-      border-width: 1px;
-      padding: @spacing-150 @spacing-250;
-    }
+    &__form {
+      display: flex;
+      flex-direction: column;
+      gap: @spacing-150;
 
-    & select {
-      width: 536px;
-      height: 45px;
-      gap: @spacing-200;
-      opacity: 1;
-      border-radius: @spacing-100;
-      border-width: 1px;
-      padding: @spacing-150 @spacing-250;
+      & select {
+        font-size: @font-size-sm;
+        font-weight: @font-weight-normal;
+        padding: @spacing-100;
+        border-radius: @spacing-100;
+        cursor: pointer;
+      }
 
-      & option {
+      & label {
+        font-size: @font-size-sm;
+        font-weight: @font-weight-normal;
+      }
+
+      & input {
+        font-size: @font-size-sm;
+        font-weight: @font-weight-normal;
+        padding: @spacing-100;
+        border-radius: @spacing-100;
+        cursor: pointer;
+        border-width: 1px;
+      }
+
+      & button {
+        background-color: @grey-900;
+        color: @white;
         font-size: @font-size-sm;
         font-weight: @font-weight-normal;
         line-height: 150%;
-        letter-spacing: 0px;
-        color: @grey-500;
+        gap: @spacing-200;
+        border-radius: @spacing-100;
+        padding: @spacing-200;
+        cursor: pointer;
       }
     }
   }
-
-  &__button {
-    background-color: @grey-900;
-    color: @white;
-    font-size: @font-size-sm;
-    font-weight: @font-weight-normal;
-    line-height: 150%;
-    width: 536px;
-    height: 53px;
-    gap: @spacing-200;
-    opacity: 1;
-    border-radius: @spacing-100;
-    padding: @spacing-200;
-    cursor: pointer;
+  @media (max-width: 768px) {
+    width: 100%;
+    max-width: 300px;
+    left: calc(42% - 300px / 2);
   }
 }
 </style>

@@ -102,7 +102,7 @@ const emit = defineEmits<{
   position: fixed;
   z-index: 999;
   top: 15%;
-  left: 35%;
+  left: calc(50% - 560px / 2);
   width: 560px;
   height: 400px;
   max-width: 560px;
@@ -160,6 +160,12 @@ const emit = defineEmits<{
         border: none;
       }
     }
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    max-width: 300px;
+    left: calc(42% - 300px / 2);
   }
 }
 </style>
