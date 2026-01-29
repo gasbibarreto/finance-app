@@ -32,14 +32,18 @@ const handleSubmit = () => {
     theme: formData.selectedColor,
   }
 
-  console.log(potData)
-
+  if(potData.name.trim() === '' || potData.theme.trim() === '' || potData.total === 0 || potData.target === 0) {
+    console.warn(`Pot "${potData.name}" is invalid`)
+    return
+  }
+  
   if (props.potsName) {
     financeStore.updatePot(props.potsName, potData)
+    handleClose()
   } else {
     financeStore.addPot(potData)
+    handleClose()
   }
-  handleClose()
 }
 
 // FUNCTIONS
@@ -75,6 +79,7 @@ const emit = defineEmits<{
             v-model="formData.potName"
             type="text"
             placeholder="e.g. Rainy Days"
+            maxlength="20"
           />
 
           <label for="pot-target">Target</label>
@@ -84,6 +89,7 @@ const emit = defineEmits<{
             type="number"
             placeholder="$ e.g. 2000"
             min="0"
+            max="1000000"
           />
 
           <label for="theme">Theme</label>

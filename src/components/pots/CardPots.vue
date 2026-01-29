@@ -63,6 +63,7 @@ const props = defineProps({
           v-if="openModalMoney"
           :add-money-withdraw-title="props.potsTitle"
           :money="true"
+          :pots-target-value="potsTargetValue || 0"
           @close-add-money-withdraw="openModalMoney = false"
         />
       </div>
@@ -72,6 +73,7 @@ const props = defineProps({
           v-if="openModalWithdraw"
           :add-money-withdraw-title="props.potsTitle"
           :withdraw="true"
+          :pots-target-value="potsTargetValue || 0"
           @close-add-money-withdraw="openModalWithdraw = false"
         />
       </div>

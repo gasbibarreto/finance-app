@@ -145,7 +145,9 @@ export const useFinanceStore = defineStore('finance', () => {
     const existingPot = pots.value.find(
       (pot) => pot.name.toLowerCase() === newPot.name.toLowerCase(),
     )
+
     if (existingPot) {
+      console.warn(`Pot "${newPot.name}" already exists`)
       return
     } else {
       pots.value.push(newPot)

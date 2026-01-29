@@ -5,6 +5,7 @@ import { ref } from 'vue'
 const props = defineProps({
   addMoneyWithdrawTitle: { type: String, required: true },
   money: { type: Boolean },
+  potsTargetValue: {type: Number, required: true },
   withdraw: { type: Boolean },
 })
 
@@ -13,12 +14,18 @@ const financeStore = useFinanceStore()
 const amount = ref(0)
 
 const handleSubmitMoneyOrWithdraw = () => {
+  if(amount.value > props.potsTargetValue) {
+    console.warn(`Amount is greater than pots target value`)
+    return
+  }
+
   if (props.money) {
     financeStore.addMoneyToPot(props.addMoneyWithdrawTitle, amount.value)
+    close()
   } else {
     financeStore.withdrawMoneyFromPot(props.addMoneyWithdrawTitle, amount.value)
+    close()
   }
-  close()
 }
 
 function close() {
@@ -43,7 +50,7 @@ const emit = defineEmits<{
         </p>
         <form class="pots__new__form" @submit.prevent="handleSubmitMoneyOrWithdraw()">
           <label for="amount">{{ props.money ? 'Amount to Add' : 'Amount to Withdraw' }}</label>
-          <input id="amount" type="number" v-model="amount" placeholder="$ 20" min="0" />
+          <input id="amount" type="number" v-model="amount" placeholder="$ 20" min="0" max="1000000"/>
           <button type="submit" class="pots__new__button">
             {{ props.money ? 'Confirm Addition' : 'Confirm Withdraw' }}
           </button>
@@ -103,7 +110,6 @@ const emit = defineEmits<{
       }
 
       input {
-        width: 496px;
         gap: @spacing-200;
         border-radius: @spacing-100;
         border-width: 1px;
@@ -115,14 +121,18 @@ const emit = defineEmits<{
         color: @white;
         font-size: @font-size-sm;
         font-weight: @font-weight-normal;
-        line-height: 150%;
-        letter-spacing: 0px;
         padding: @spacing-200;
         border-radius: @spacing-100;
         cursor: pointer;
         border: none;
       }
     }
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    max-width: 300px;
+    left: calc(42% - 300px / 2);
   }
 }
 </style>

@@ -3,7 +3,7 @@ import { useFinanceStore } from '@/stores/finance'
 import { computed, reactive, ref, type PropType } from 'vue'
 import { useColors } from '@/composables/useColors'
 import type { Budget } from '@/types/interfaces'
-import { BUDGET_CATEGORIES as budgetCategories } from '@/types'
+import { BUDGET_CATEGORIES, BUDGET_CATEGORIES as budgetCategories } from '@/types'
 
 const financeStore = useFinanceStore()
 const budgets = computed(() => financeStore.budgets)
@@ -23,9 +23,9 @@ const normalizedTheme = computed(() => {
 })
 
 const formData = reactive({
-  category: props.budgetCategory || '',
+  category: props.budgetCategory || BUDGET_CATEGORIES[0],
   maximum: props.budgetMaximum || 0,
-  theme: normalizedTheme.value || '',
+  theme: normalizedTheme.value,
 })
 
 const handleSubmitBudget = () => {
@@ -35,13 +35,18 @@ const handleSubmitBudget = () => {
     theme: formData.theme,
   }
 
+  if(budgetData.category.trim() === '' || budgetData.theme.trim() === '' || budgetData.maximum === 0) {
+    console.warn(`Budget "${budgetData.category}" is invalid`)
+    return
+  }
+
   if (props.openModalEditBudget) {
     financeStore.updateBudget(formData.category, budgetData)
+    handleCloseBudget()
   } else {
     financeStore.addBudget(budgetData)
+    handleCloseBudget()
   }
-  console.log(budgetData)
-  handleCloseBudget()
 }
 
 const handleCloseBudget = () => {
@@ -81,6 +86,7 @@ const emit = defineEmits<{
             type="number"
             placeholder="$ 50"
             min="0"
+            max="1000000"
             v-model="formData.maximum"
           />
           <label for="budget-theme">Theme</label>

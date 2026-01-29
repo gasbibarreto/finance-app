@@ -89,5 +89,11 @@ const emit = defineEmits<{
       color: @grey-500;
     }
   }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    max-width: 300px;
+    left: calc(42% - 300px / 2);
+  }
 }
 </style>
