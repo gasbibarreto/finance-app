@@ -22,27 +22,12 @@ const menuItems = [
   },
 ]
 
-const selectedItem = ref<ComponentsItens>('Overview')
 const showMenu = ref(true)
 
-function selectItem(itemName: ComponentsItens | string, path: string) {
-  selectedItem.value = itemName as ComponentsItens
-  //emit('selectedMenuItem', itemName as ComponentsItens)
-  router.push({ path: path || '/overview' })
-  console.log('path', path)
+function selectItem(path: string) {
+  router.push({ path: path })
 }
 
-const emit = defineEmits<{
-  (e: 'selectedMenuItem', value: ComponentsItens): void
-}>()
-
-//watch para sincronizar mudança no menu quando selecionado um item no overview
-watch(
-  () => props.selectedMenu,
-  (newVal) => {
-    selectedItem.value = newVal as ComponentsItens
-  },
-)
 </script>
 
 <template>
@@ -68,9 +53,9 @@ watch(
           :key="item.name"
           :class="[
             'menu__top__list__itens',
-            { 'menu__top__list__itens--selected': selectedItem === item.name },
+            { 'menu__top__list__itens--selected': selectedMenu === item.name },
           ]"
-          @click="selectItem(item.name, item.path)"
+          @click="selectItem(item.path)"
         >
           <img :src="getImagePath(item.icon)" :alt="item.name + ' icon'" />
           <button v-show="showMenu">{{ item.name }}</button>

@@ -1,34 +1,34 @@
 <script setup lang="ts">
 import Menu from './components/layout/Menu.vue'
-import Overview from './components/views/Overview.vue'
-import Transactions from './components/transactions/Transactions.vue'
-import Pots from './components/pots/Pots.vue'
-import RecurringBills from './components/views/RecurringBills.vue'
-import Budgets from './components/budgets/Budgets.vue'
-import { ref, shallowRef, type Component } from 'vue'
+import { computed, ref, shallowRef, watch, type Component } from 'vue'
+import { useRoute } from 'vue-router'
 import type { ComponentsItens } from './types'
 
-const menuItem = shallowRef<Component>(Overview)
-const selectedMenuItem = ref<ComponentsItens>('Overview')
+const route = useRoute()
 
-const components: Record<string, Component> = {
-  Overview: Overview,
-  Transactions: Transactions,
-  Pots: Pots,
-  'Recurring Bills': RecurringBills,
-  Budgets: Budgets,
+const pathToMenuName: Record<string, ComponentsItens> = {
+  '/': 'Overview',
+  '/overview': 'Overview',
+  '/transactions': 'Transactions',
+  '/budgets': 'Budgets',
+  '/pots': 'Pots',
+  '/recurring-bills': 'Recurring Bills',
 }
 
-function changeMenuItem(itemName: ComponentsItens) {
-  //menuItem.value = components[itemName] as Component
-  selectedMenuItem.value = itemName
+function getMenuFromPath(path: string): ComponentsItens {
+  return pathToMenuName[path] ?? 'Overview'
 }
+
+const selectedMenuItem = computed(() => getMenuFromPath(route.path))
+
 </script>
 
 <template>
   <div class="app__container">
-    <Menu class="app__container__menu" :selected-menu="selectedMenuItem" />
-    <router-view class="app__container__component" @selected-menu-item="changeMenuItem" />
+    <Menu class="app__container__menu" 
+      :selected-menu="selectedMenuItem"
+    />
+    <router-view class="app__container__component" />
     <!-- <component
       :is="menuItem"
       class="app__container__component"
