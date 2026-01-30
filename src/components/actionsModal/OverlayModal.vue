@@ -29,7 +29,7 @@ function handleSelectOption(option: SortItens | BudgetCategories) {
 .overlay__container {
   position: absolute;
   right: 0;
-  z-index: 20;
+  z-index: 2;
   background: #fff;
   border-radius: 12px;
 }

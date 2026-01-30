@@ -106,7 +106,7 @@ const emit = defineEmits<{
 <style lang="less" scoped>
 .new__budget {
   position: fixed;
-  z-index: 999;
+  z-index: 2;
   top: 15%;
   left: calc(50% - 560px / 2);
   width: 560px;

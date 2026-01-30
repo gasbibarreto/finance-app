@@ -12,7 +12,7 @@ const financeStore = useFinanceStore()
 const pots = computed(() => financeStore.pots)
 
 // FUNCTIONS
-function potsPercentage(pot: { total: number; target: number }): number {
+function potsPercentage(pot: { total: number; target: number }) {
   return formatPercentage((pot.total / pot.target) * 100)
 }
 </script>

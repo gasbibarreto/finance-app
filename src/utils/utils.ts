@@ -12,14 +12,10 @@ export function formatCurrency(amount: number): string {
   }).format(amount)
 }
 
-export function formatPercentage(amount: number): number {
-  return Number(
-    new Intl.NumberFormat('en-US', {
-      minimumFractionDigits: 1,
-      maximumFractionDigits: 2,
-    }).format(amount),
-  )
+export function formatPercentage(amount: number) {
+  return `${(amount).toFixed(2)}`;
 }
+
 
 export function formatDate(dateString: string): string {
   const date = new Date(dateString)

@@ -32,7 +32,7 @@ const handleSubmit = () => {
     theme: formData.selectedColor,
   }
 
-  if(potData.name.trim() === '' || potData.theme.trim() === '' || potData.total === 0 || potData.target === 0) {
+  if(potData.name.trim() === '' || potData.theme.trim() === '' || potData.target === 0) {
     console.warn(`Pot "${potData.name}" is invalid`)
     return
   }
@@ -88,7 +88,7 @@ const emit = defineEmits<{
             v-model="formData.potTarget"
             type="number"
             placeholder="$ e.g. 2000"
-            min="0"
+            min="0,1"
             max="1000000"
           />
 
@@ -109,7 +109,7 @@ const emit = defineEmits<{
 <style lang="less" scoped>
 .pots__new {
   position: fixed;
-  z-index: 999;
+  z-index: 2;
   top: 15%;
   left: calc(50% - 560px / 2);
   width: 560px;

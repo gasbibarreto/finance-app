@@ -90,7 +90,7 @@ const emit = defineEmits<{
 <style lang="less" scoped>
 .card__actions {
   position: absolute;
-  z-index: 999;
+  z-index: 2;
   top: 100%;
   right: 0;
   width: 100px;

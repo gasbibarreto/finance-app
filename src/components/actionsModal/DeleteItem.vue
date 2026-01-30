@@ -38,7 +38,7 @@ const emit = defineEmits<{
 <style lang="less" scoped>
 .pots__actions {
   position: fixed;
-  z-index: 999;
+  z-index: 2;
   top: 20%;
   left: 35%;
   width: 560px;

@@ -11,7 +11,7 @@ const openModalWithdraw = ref(false)
 const props = defineProps({
   potsTitle: { type: String, required: true },
   potsValue: { type: Number },
-  potsPercentage: { type: Number },
+  potsPercentage: { type: String },
   potsTargetValue: { type: Number },
   potsTheme: { type: String },
 })

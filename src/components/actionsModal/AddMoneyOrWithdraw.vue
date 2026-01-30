@@ -14,11 +14,6 @@ const financeStore = useFinanceStore()
 const amount = ref(0)
 
 const handleSubmitMoneyOrWithdraw = () => {
-  if(amount.value > props.potsTargetValue) {
-    console.warn(`Amount is greater than pots target value`)
-    return
-  }
-
   if (props.money) {
     financeStore.addMoneyToPot(props.addMoneyWithdrawTitle, amount.value)
     close()
@@ -62,7 +57,7 @@ const emit = defineEmits<{
 <style lang="less" scoped>
 .pots__new {
   position: fixed;
-  z-index: 999;
+  z-index: 2;
   top: 20%;
   left: 35%;
   width: 560px;

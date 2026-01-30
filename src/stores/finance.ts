@@ -125,7 +125,7 @@ export const useFinanceStore = defineStore('finance', () => {
     if (budgetIndex !== -1 && budgets.value[budgetIndex]) {
       Object.assign(budgets.value[budgetIndex], updatedBudget)
     } else {
-      console.warn(`Budget "${category}" not found to update`)
+      alert(`Budget "${category}" not found to update`)
     }
   }
 
@@ -136,7 +136,7 @@ export const useFinanceStore = defineStore('finance', () => {
     if (budgetIndex !== -1 && budgets.value[budgetIndex]) {
       budgets.value.splice(budgetIndex, 1)
     } else {
-      console.warn(`Budget "${category}" not found to delete`)
+      alert(`Budget "${category}" not found to delete`)
     }
   }
 
@@ -147,7 +147,7 @@ export const useFinanceStore = defineStore('finance', () => {
     )
 
     if (existingPot) {
-      console.warn(`Pot "${newPot.name}" already exists`)
+      alert(`Pot "${newPot.name}" already exists`)
       return
     } else {
       pots.value.push(newPot)
@@ -159,7 +159,7 @@ export const useFinanceStore = defineStore('finance', () => {
     if (potIndex !== -1 && pots.value[potIndex]) {
       Object.assign(pots.value[potIndex], updatedPot)
     } else {
-      console.warn(`Pot "${name}" not found to update`)
+      alert(`Pot "${name}" not found to update`)
     }
   }
 
@@ -169,7 +169,7 @@ export const useFinanceStore = defineStore('finance', () => {
       console.log('potIndex', potIndex)
       pots.value.splice(potIndex, 1)
     } else {
-      console.warn(`Pot "${name}" not found to delete`)
+      alert(`Pot "${name}" not found to delete`)
     }
   }
 
@@ -179,7 +179,7 @@ export const useFinanceStore = defineStore('finance', () => {
     if (potIndex !== -1 && pots.value[potIndex]) {
       pots.value[potIndex].total += amount
     } else {
-      console.warn(`Pot "${name}" not found to add money`)
+      alert(`Pot "${name}" not found to add money`)
     }
   }
 
@@ -188,7 +188,7 @@ export const useFinanceStore = defineStore('finance', () => {
     if (potIndex !== -1 && pots.value[potIndex] && pots.value[potIndex].total >= amount) {
       pots.value[potIndex].total -= amount
     } else {
-      console.warn(`Pot "${name}" not found to withdraw money or amount is greater than total`)
+      alert(`Pot "${name}" not found to withdraw money is greater than total`)
     }
   }
 
