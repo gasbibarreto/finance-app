@@ -32,7 +32,7 @@ const handleSubmit = () => {
     theme: formData.selectedColor,
   }
 
-  if(potData.name.trim() === '' || potData.theme.trim() === '' || potData.target === 0) {
+  if(potData.name.trim() === '' || potData.theme.trim() === '' || potData.target < 0) {
     console.warn(`Pot "${potData.name}" is invalid`)
     return
   }
@@ -131,6 +131,10 @@ const emit = defineEmits<{
       line-height: 120%;
       opacity: 1;
       color: @grey-900;
+    }
+
+    & img {
+      cursor: pointer;
     }
   }
   &__content {
