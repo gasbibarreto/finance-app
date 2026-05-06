@@ -5,6 +5,8 @@ import { formatCurrency } from '@/utils/utils'
 import CardBudget from './CardBudget.vue'
 import AddNewBudget from './AddNewBudget.vue'
 
+import { type Transaction } from '@/types/interfaces'
+
 const financeStore = useFinanceStore()
 const budgets = computed(() => financeStore.budgets)
 const transactions = computed(() => financeStore.transactions)
@@ -18,10 +20,10 @@ function handleShowNewBudgetModal() {
 function totalSpendingAmountByCategory(category: string) {
   const groupedByCategory = Object.groupBy(
     transactions.value,
-    (transaction) => transaction.category,
+    (transaction: Transaction) => transaction.category,
   )
   const total = groupedByCategory[category]?.reduce(
-    (total, transaction) => total + transaction.amount,
+    (total: number, transaction: Transaction) => total + transaction.amount,
     0,
   )
   const absoluteTotal = Math.abs(total ?? 0)
@@ -31,7 +33,7 @@ function totalSpendingAmountByCategory(category: string) {
 function filterTransactionsByCategory(category: string) {
   const groupedByCategoryFilter = Object.groupBy(
     transactions.value,
-    (transaction) => transaction.category,
+    (transaction: Transaction) => transaction.category,
   )
   return groupedByCategoryFilter[category]?.slice(0, 3)
 }

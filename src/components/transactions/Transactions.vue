@@ -66,14 +66,11 @@ const endIndex = computed(() => {
 })
 
 const paginatedTransactions = computed(() => {
-  if (sortTransactions.value.length > itemsPerPage.value) {
-    return sortTransactions.value.slice(startIndex.value, endIndex.value)
-  }
-  return sortTransactions.value
+  return sortTransactions.value.slice(startIndex.value, endIndex.value)
 })
 
 const pageNumberTotal = computed(() => {
-  return Math.ceil(paginatedTransactions.value?.length/ itemsPerPage.value)
+  return Math.ceil(paginatedTransactions.value?.length / itemsPerPage.value)
 })
 
 const categoryList = computed(() => {
@@ -193,8 +190,9 @@ const selectSortOption = (option: SortItens | BudgetCategories) => {
               :class="{ selected: pageNumber == page }"
             >
               {{ page }}
-            </button>
+              </button>
           </div>
+          {{ console.log(pageNumberTotal) }}
           <div class="transactions__content__pagination__next">
             <button @click="changePage(pageNumber + 1)" :disabled="pageNumber === pageNumberTotal">
               Next
