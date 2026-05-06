@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import data from '@/assets/data/data.json'
-import { computed, onMounted, ref } from 'vue'
-import { getImagePath } from '@/utils/utils'
+import { computed, onMounted, ref, watch } from 'vue'
+import { dataSortFunction, getImagePath } from '@/utils/utils'
 import { useFinanceStore } from '@/stores/finance'
 import type { BudgetCategories, SortItens } from '@/types'
 import OverlayMobile from '../actionsModal/OverlayModal.vue'
@@ -29,42 +29,9 @@ const openSelectCategoryMobile = ref(false)
 const financeStore = useFinanceStore()
 const transactions = computed(() => financeStore.transactions)
 
-// Computed
-const pageNumberTotal = computed(() => {
-  return Math.ceil(transactions.value.length / itemsPerPage.value)
-})
-
-const startIndex = computed(() => {
-  return (pageNumber.value - 1) * itemsPerPage.value
-})
-
-const endIndex = computed(() => {
-  return startIndex.value + itemsPerPage.value
-})
-
+// Computed 
 const sortTransactions = computed(() => {
   let transactionsCopy = [...transactions.value]
-
-  const selectedSortFunction = {
-    Latest: function latest(a: any, b: any) {
-      return new Date(b.date).getTime() - new Date(a.date).getTime()
-    },
-    Oldest: function oldest(a: any, b: any) {
-      return new Date(a.date).getTime() - new Date(b.date).getTime()
-    },
-    'A to Z': function aToZ(a: any, b: any) {
-      return a.name.localeCompare(b.name)
-    },
-    'Z to A': function zToA(a: any, b: any) {
-      return b.name.localeCompare(a.name)
-    },
-    Highest: function highest(a: any, b: any) {
-      return b.amount - a.amount
-    },
-    Lowest: function lowest(a: any, b: any) {
-      return a.amount - b.amount
-    },
-  }
 
   if (term.value) {
     //como o filter nao altera o array que o chama ele precisa ser reatribuido a variavel
@@ -83,15 +50,30 @@ const sortTransactions = computed(() => {
     })
   }
 
-  if (selectedSort.value in selectedSortFunction) {
-    transactionsCopy.sort((a, b) => selectedSortFunction[selectedSort.value as SortItens](a, b))
-  }
-
-  if (transactionsCopy.length > itemsPerPage.value) {
-    transactionsCopy = transactionsCopy.slice(startIndex.value, endIndex.value)
+  if (selectedSort.value in dataSortFunction) {
+    transactionsCopy.sort((a, b) => dataSortFunction[selectedSort.value as SortItens](a, b))
   }
 
   return transactionsCopy
+})
+
+const startIndex = computed(() => {
+  return (pageNumber.value - 1) * itemsPerPage.value
+})
+
+const endIndex = computed(() => {
+  return startIndex.value + itemsPerPage.value
+})
+
+const paginatedTransactions = computed(() => {
+  if (sortTransactions.value.length > itemsPerPage.value) {
+    return sortTransactions.value.slice(startIndex.value, endIndex.value)
+  }
+  return sortTransactions.value
+})
+
+const pageNumberTotal = computed(() => {
+  return Math.ceil(paginatedTransactions.value?.length/ itemsPerPage.value)
 })
 
 const categoryList = computed(() => {
@@ -128,19 +110,18 @@ const selectSortOption = (option: SortItens | BudgetCategories) => {
               class="transactions__content__header__search__input"
               v-model="term"
               placeholder="Search transactions"
-              @change="{ sortTransactions }"
             />
             <img src="/images/icon-search.svg" alt="Icon search" />
           </div>
           <div class="transactions__content__header__sort">
             <p>Sort by</p>
-            <select v-model="selectedSort" @change="{ sortTransactions }">
+            <select v-model="selectedSort">
               <option v-for="option in sortedItens" :key="option" :value="option">
                 {{ option }}
               </option>
             </select>
             <p>Category</p>
-            <select v-model="category" @change="{ sortTransactions }">
+            <select v-model="category">
               <option v-for="option in categoryList" :key="option" :value="option">
                 {{ option }}
               </option>
@@ -184,7 +165,7 @@ const selectSortOption = (option: SortItens | BudgetCategories) => {
               </tr>
             </thead>
             <tbody class="transactions__content__table__body">
-              <tr v-for="transaction in sortTransactions">
+              <tr v-for="transaction in sortTransactions" :key="Math.random() * 1000">
                 <td>
                   <img :src="getImagePath(transaction.avatar)" alt="" />
                   <span>{{ transaction.name }}</span>

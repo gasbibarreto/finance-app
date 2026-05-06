@@ -55,7 +55,7 @@ export const useFinanceStore = defineStore('finance', () => {
     }
   }
 
-  const recurringBillsPaied = computed(() => {
+  const recurringBillsPaid = computed(() => {
     // capturar pagamentos com data anterior a hoje
     const dateToday = new Date().getDate()
     const paidBillsPerDate = transactions.value.filter((bill) => {
@@ -218,7 +218,7 @@ export const useFinanceStore = defineStore('finance', () => {
     pots,
     // Computed
     updatedBalance,
-    recurringBillsPaied,
+    recurringBillsPaid,
     recurringBillsUpcoming,
     recurringBillsDue,
     // Funções de transações

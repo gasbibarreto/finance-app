@@ -44,3 +44,24 @@ export function formatDateOrdinal(dateString: string): string {
 
   return `Monthly-${day}${suffix}`
 }
+
+export const dataSortFunction = {
+      Latest: function latest(a: any, b: any) {
+        return new Date(b.date).getTime() - new Date(a.date).getTime()
+      },
+      Oldest: function oldest(a: any, b: any) {
+        return new Date(a.date).getTime() - new Date(b.date).getTime()
+      },
+      'A to Z': function aToZ(a: any, b: any) {
+        return a.name.localeCompare(b.name)
+      },
+      'Z to A': function zToA(a: any, b: any) {
+        return b.name.localeCompare(a.name)
+      },
+      Highest: function highest(a: any, b: any) {
+        return b.amount - a.amount
+      },
+      Lowest: function lowest(a: any, b: any) {
+        return a.amount - b.amount
+      },
+} as const

@@ -15,7 +15,7 @@ const balance = computed(() => financeStore.balance)
 const pots = computed(() => financeStore.pots.slice(0, 4))
 const transactions = computed(() => financeStore.transactions)
 const budgets = computed(() => financeStore.budgets)
-const recurringBillsPaied = computed(() => financeStore.recurringBillsPaied)
+const recurringBillsPaid = computed(() => financeStore.recurringBillsPaid)
 const recurringBillsUpcoming = computed(() => financeStore.recurringBillsUpcoming)
 const recurringBillsDue = computed(() => financeStore.recurringBillsDue.total)
 
@@ -123,7 +123,7 @@ const emit = defineEmits<{
           <div class="overview__recurring-bills">
             <div class="overview__recurring-bills__paied">
               <p>Paid Bills</p>
-              <span>{{ formatCurrency(recurringBillsPaied.total) }}</span>
+              <span>{{ formatCurrency(recurringBillsPaid.total) }}</span>
             </div>
             <div class="overview__recurring-bills__upcoming">
               <p>Upcoming Bills</p>

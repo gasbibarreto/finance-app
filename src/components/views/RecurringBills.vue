@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { useFinanceStore } from '@/stores/finance'
-import { computed, type Ref } from 'vue'
+import { computed } from 'vue'
 import { formatCurrency, getImagePath, formatDateOrdinal } from '@/utils/utils'
 import { ref } from 'vue'
 import { SORT_ITENS, type BudgetCategories, type SortItens } from '@/types'
 import OverlayMobile from '../actionsModal/OverlayModal.vue'
+import { dataSortFunction } from '@/utils/utils'
 
 const dateToday = ref(new Date().getDate())
 const searchBill = ref('')
@@ -16,12 +17,12 @@ const financeStore = useFinanceStore()
 const recurringBills = computed(() =>
   financeStore.transactions.filter((bill) => bill.recurring === true),
 )
-const recurringBillsPaied = computed(() => financeStore.recurringBillsPaied)
+const recurringBillsPaid = computed(() => financeStore.recurringBillsPaid)
 const recurringBillsUpcoming = computed(() => financeStore.recurringBillsUpcoming)
 const recurringBillsDue = computed(() => financeStore.recurringBillsDue)
 const totalBills = computed(
   () =>
-    recurringBillsPaied.value.total +
+    recurringBillsPaid.value.total +
     recurringBillsUpcoming.value.total +
     recurringBillsDue.value.total,
 )
@@ -29,35 +30,14 @@ const totalBills = computed(
 const recurringBillsFiltered = computed(() => {
   let recurringBillsCopy = [...recurringBills.value]
 
-  const selectedSortFunction = {
-    Latest: function latest(a: any, b: any) {
-      return new Date(b.date).getTime() - new Date(a.date).getTime()
-    },
-    Oldest: function oldest(a: any, b: any) {
-      return new Date(a.date).getTime() - new Date(b.date).getTime()
-    },
-    'A to Z': function aToZ(a: any, b: any) {
-      return a.name.localeCompare(b.name)
-    },
-    'Z to A': function zToA(a: any, b: any) {
-      return b.name.localeCompare(a.name)
-    },
-    Highest: function highest(a: any, b: any) {
-      return b.amount - a.amount
-    },
-    Lowest: function lowest(a: any, b: any) {
-      return a.amount - b.amount
-    },
-  }
-
   if (searchBill.value !== '') {
     recurringBillsCopy = recurringBillsCopy.filter((bill) =>
       bill.name.toLowerCase().includes(searchBill.value.toLowerCase()),
     )
   }
 
-  if (sortedBills.value in selectedSortFunction) {
-    recurringBillsCopy.sort((a, b) => selectedSortFunction[sortedBills.value as SortItens](a, b))
+  if (sortedBills.value in dataSortFunction) {
+    recurringBillsCopy.sort((a, b) => dataSortFunction[sortedBills.value as SortItens](a, b))
   }
 
   return recurringBillsCopy
@@ -67,8 +47,6 @@ function dueSoonFormatDate(date: string) {
   const dateToday = new Date().getDate()
   const dateBill = new Date(date).getDate()
 
-  console.log('dateToday', dateToday)
-  console.log('dateBill', dateBill)
   if (dateBill.toString() === dateToday.toString()) {
   } else {
   }
@@ -98,7 +76,7 @@ const selectSortOption = (option: SortItens | BudgetCategories) => {
               <p>Paied Bills</p>
               <span>
                 {{
-                  recurringBillsPaied.count + ' (' + formatCurrency(recurringBillsPaied.total) + ')'
+                  recurringBillsPaid.count + ' (' + formatCurrency(recurringBillsPaid.total) + ')'
                 }}
               </span>
             </div>
