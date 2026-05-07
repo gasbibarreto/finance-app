@@ -1,7 +1,8 @@
 import { ref, computed, reactive } from 'vue'
 import { defineStore } from 'pinia'
 import dataJson from '@/assets/data/data.json'
-import type { Balance, Budget, Pot, Transaction } from '@/types/interfaces'
+import { normalizeDate } from '@/utils/utils'
+import type { Balance, Budget, Pot, Transaction } from '@/types/index'
 
 export const useFinanceStore = defineStore('finance', () => {
   // Estado reativo dos dados
@@ -57,9 +58,9 @@ export const useFinanceStore = defineStore('finance', () => {
 
   const recurringBillsPaid = computed(() => {
     // capturar pagamentos com data anterior a hoje
-    const dateToday = new Date().getDate()
+    const dateToday = normalizeDate(new Date())
     const paidBillsPerDate = transactions.value.filter((bill) => {
-      const billDate = new Date(bill.date).getDate()
+      const billDate = normalizeDate(new Date(bill.date))
       if (bill.recurring === true && billDate < dateToday) {
         return bill.amount
       }
@@ -76,9 +77,9 @@ export const useFinanceStore = defineStore('finance', () => {
 
   const recurringBillsUpcoming = computed(() => {
     // capturar pagamentos com data posterior a hoje
-    const dateToday = new Date().getDate()
+    const dateToday = normalizeDate(new Date())
     const upcomingBillsPerDate = transactions.value.filter((bill) => {
-      const billDate = new Date(bill.date).getDate()
+      const billDate = normalizeDate(new Date(bill.date))
       if (bill.recurring === true && billDate >= dateToday) {
         return bill.amount
       }
@@ -96,10 +97,10 @@ export const useFinanceStore = defineStore('finance', () => {
 
   const recurringBillsDue = computed(() => {
     // capturar pagamentos com data igual a hoje
-    const dateToday = new Date().getDate()
+    const dateToday = normalizeDate(new Date())
     const dueBillsPerDate = transactions.value.filter((bill) => {
-      const billDate = new Date(bill.date).getDate()
-      if (bill.recurring === true && billDate === dateToday) {
+      const billDate = normalizeDate(new Date(bill.date))
+      if (bill.recurring === true && billDate.getTime() === dateToday.getTime()) {
         return bill.amount
       }
     })

@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Overview from '@/components/views/Overview.vue'
+import Overview from '@/views/Overview.vue'
 import Transactions from '@/components/transactions/Transactions.vue'
 import Pots from '@/components/pots/Pots.vue'
-import RecurringBills from '@/components/views/RecurringBills.vue'
+import RecurringBills from '@/views/RecurringBills.vue'
 import Budgets from '@/components/budgets/Budgets.vue'
 
 const router = createRouter({

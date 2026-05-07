@@ -5,9 +5,8 @@ import { formatCurrency, getImagePath, formatDateOrdinal } from '@/utils/utils'
 import { ref } from 'vue'
 import { SORT_ITENS, type BudgetCategories, type SortItens } from '@/types'
 import OverlayMobile from '../components/actionsModal/OverlayModal.vue'
-import { dataSortFunction } from '@/utils/utils'
+import { dataSortFunction, normalizeDate } from '@/utils/utils'
 
-const dateToday = ref(new Date().getDate())
 const searchBill = ref('')
 const sortedBills = ref<SortItens>(SORT_ITENS[0])
 const openSelectSortMobile = ref(false)
@@ -43,13 +42,10 @@ const recurringBillsFiltered = computed(() => {
   return recurringBillsCopy
 })
 
-function dueSoonFormatDate(date: string) {
-  const dateToday = new Date().getDate()
-  const dateBill = new Date(date).getDate()
-
-  if (dateBill.toString() === dateToday.toString()) {
-  } else {
-  }
+function isBillDueToday(bill: any) {
+  const today = normalizeDate(new Date())
+  const billDate = normalizeDate(new Date(bill.date))
+  return today.getTime() === billDate.getTime()
 }
 
 const selectSortOption = (option: SortItens | BudgetCategories) => {
@@ -148,12 +144,12 @@ const selectSortOption = (option: SortItens | BudgetCategories) => {
                   <span
                     :class="{
                       'recurring-bills__content__table__body__due-date__span--color':
-                        new Date(bill.date).getDate() === dateToday,
+                        isBillDueToday(bill),
                     }"
                     >{{ formatDateOrdinal(bill.date) }}</span
                   >
                   <img
-                    v-if="new Date(bill.date).getDate() === dateToday"
+                    v-if="isBillDueToday(bill)"
                     src="/images/icon-bill-due.svg"
                     alt="Icon bill paid"
                   />
@@ -163,8 +159,7 @@ const selectSortOption = (option: SortItens | BudgetCategories) => {
               <td class="recurring-bills__content__table__body__amount">
                 <span
                   :class="{
-                    'recurring-bills__content__table__body__amount--color':
-                      new Date(bill.date).getDate() === dateToday,
+                    'recurring-bills__content__table__body__amount--color': isBillDueToday(bill),
                   }"
                   >{{ formatCurrency(bill.amount) }}</span
                 >
