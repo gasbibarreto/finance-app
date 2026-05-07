@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { computed, ref, type Component } from 'vue'
-import Card from '../ui/Card.vue'
-import type { ComponentsItens } from '@/types'
+import { computed } from 'vue'
+import Card from '../components/ui/Card.vue'
+import type { ComponentsItens, Pot } from '@/types'
 import { formatCurrency } from '@/utils/utils'
 import { useFinanceStore } from '@/stores/finance'
-import TransactionsList from '../transactions/TransactionsList.vue'
+import TransactionsList from '../components/transactions/TransactionsList.vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -21,7 +21,7 @@ const recurringBillsDue = computed(() => financeStore.recurringBillsDue.total)
 
 // POTS
 const totalSaved = computed(() => {
-  return pots.value.reduce((total, pot) => total + (pot.total ?? 0), 0)
+  return pots.value.reduce((total: number, pot: Pot) => total + (pot.total ?? 0), 0)
 })
 
 // FUNCTIONS

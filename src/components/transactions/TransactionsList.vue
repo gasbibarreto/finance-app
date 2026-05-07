@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { formatCurrency, formatDate, getImagePath } from '@/utils/utils'
-import type { Transaction } from '@/types/interfaces'
+import type { Transaction } from '@/types/index'
 
 const props = defineProps<{
   transactions: Transaction[]

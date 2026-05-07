@@ -1,4 +1,4 @@
-type ComponentsItens = 'Overview' | 'Transactions' | 'Budgets' | 'Pots' | 'Recurring Bills'
+export type ComponentsItens = 'Overview' | 'Transactions' | 'Budgets' | 'Pots' | 'Recurring Bills'
 
 export const SORT_ITENS = ['Latest', 'Oldest', 'A to Z', 'Z to A', 'Highest', 'Lowest'] as const
 
@@ -13,8 +13,34 @@ export const BUDGET_CATEGORIES = [
   'All Transactions',
 ] as const
 
-type SortItens = (typeof SORT_ITENS)[number]
+export type SortItens = (typeof SORT_ITENS)[number]
 
-type BudgetCategories = (typeof BUDGET_CATEGORIES)[number]
+export type BudgetCategories = (typeof BUDGET_CATEGORIES)[number]
 
-export type { ComponentsItens, SortItens, BudgetCategories }
+export interface Transaction {
+  avatar: string
+  name: string
+  category: string
+  date: string
+  amount: number
+  recurring: boolean
+}
+
+export interface Budget {
+  category: string
+  maximum: number
+  theme: string
+}
+
+export interface Pot {
+  name: string
+  total: number
+  target: number
+  theme: string
+}
+
+export interface Balance {
+  current: number
+  income: number
+  expenses: number
+}

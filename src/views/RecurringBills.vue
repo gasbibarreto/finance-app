@@ -4,7 +4,7 @@ import { computed } from 'vue'
 import { formatCurrency, getImagePath, formatDateOrdinal } from '@/utils/utils'
 import { ref } from 'vue'
 import { SORT_ITENS, type BudgetCategories, type SortItens } from '@/types'
-import OverlayMobile from '../actionsModal/OverlayModal.vue'
+import OverlayMobile from '../components/actionsModal/OverlayModal.vue'
 import { dataSortFunction } from '@/utils/utils'
 
 const dateToday = ref(new Date().getDate())
@@ -15,7 +15,7 @@ const sortItens = ref<SortItens[]>(['Latest', 'Oldest', 'A to Z', 'Z to A', 'Hig
 
 const financeStore = useFinanceStore()
 const recurringBills = computed(() =>
-  financeStore.transactions.filter((bill) => bill.recurring === true),
+  financeStore.transactions.filter((bill: any) => bill.recurring === true),
 )
 const recurringBillsPaid = computed(() => financeStore.recurringBillsPaid)
 const recurringBillsUpcoming = computed(() => financeStore.recurringBillsUpcoming)

@@ -5,7 +5,7 @@ import { formatCurrency } from '@/utils/utils'
 import CardBudget from './CardBudget.vue'
 import AddNewBudget from './AddNewBudget.vue'
 
-import { type Transaction } from '@/types/interfaces'
+import { type Transaction } from '@/types/index'
 
 const financeStore = useFinanceStore()
 const budgets = computed(() => financeStore.budgets)

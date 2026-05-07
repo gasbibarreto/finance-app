@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import AddNew from '../pots/AddNew.vue'
+import AddNew from '../pots/AddNewPots.vue'
 import AddNewBudget from '../budgets/AddNewBudget.vue'
 import DeleteItem from '../actionsModal/DeleteItem.vue'
 import { useFinanceStore } from '@/stores/finance'

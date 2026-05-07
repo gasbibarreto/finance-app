@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import data from '@/assets/data/data.json'
-import { computed, onMounted, ref, watch } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { dataSortFunction, getImagePath } from '@/utils/utils'
 import { useFinanceStore } from '@/stores/finance'
 import type { BudgetCategories, SortItens } from '@/types'

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { getImagePath } from '@/utils/utils'
 import type { ComponentsItens } from '@/types'
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()

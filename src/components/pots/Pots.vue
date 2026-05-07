@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import CardPots from './CardPots.vue'
-import AddNew from './AddNew.vue'
+import AddNew from './AddNewPots.vue'
 import { computed, ref } from 'vue'
 import { formatPercentage } from '@/utils/utils'
 import { useFinanceStore } from '@/stores/finance'
